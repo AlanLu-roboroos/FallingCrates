@@ -13,6 +13,9 @@ class Background {
 
   sf::Sprite platform_sprites[8];
   sf::Sprite spawn_sprites[8];
+
+  sf::RectangleShape borderLine;
+  sf::RectangleShape header;
   bool loadTextures();
 
   public:

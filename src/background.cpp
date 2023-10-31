@@ -16,6 +16,12 @@ bool Background::init() {
                               GameConstants::CRATE_SIZE.y / spawn_sprites[i].getLocalBounds().height);
     spawn_sprites[i].setPosition(GameConstants::SPAWN_POS[i]);
   }
+  borderLine = sf::RectangleShape(sf::Vector2f(1924, 10));
+  borderLine.setFillColor(sf::Color(50, 50, 50));
+  borderLine.setPosition(0, 146);
+
+  header = sf::RectangleShape(sf::Vector2f(1924, 146));
+  header.setFillColor(sf::Color(120, 120, 120));
   return 1;
 }
 
@@ -31,4 +37,6 @@ void Background::drawBackground(sf::RenderWindow &window) {
     window.draw(platform);
   for (sf::Sprite spawn : spawn_sprites)
     window.draw(spawn);
+  window.draw(header);
+  window.draw(borderLine);
 }
