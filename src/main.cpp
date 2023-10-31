@@ -1,9 +1,14 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window/Mouse.hpp"
+#include "background.hpp"
+#include "constants.hpp"
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(1920, 1200), "Falling Crates");
+  sf::RenderWindow window(sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT), "Falling Crates");
   window.setVerticalSyncEnabled(true);
+
+  Background background;
+  background.init();
 
   while (window.isOpen()) {
     sf::Event event;
@@ -17,7 +22,8 @@ int main() {
       }
     }
 
-    window.clear();
+    window.clear(sf::Color(180, 180, 180));
+    background.drawBackground(window);
     window.display();
   }
 
