@@ -9,7 +9,10 @@
 class Background {
   private:
   sf::Texture PLATFORM_TEXTURE;
+  sf::Texture SPAWN_TEXTURE;
+
   sf::Sprite platform_sprites[8];
+  sf::Sprite spawn_sprites[8];
   bool loadTextures();
 
   public:

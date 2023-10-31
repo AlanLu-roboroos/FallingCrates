@@ -27,8 +27,10 @@ class GameConstants {
   static sf::Vector2f CRATE_SIZE;
 
   static std::vector<sf::Vector2f> PLATFORM_POS;
+  static std::vector<sf::Vector2f> SPAWN_POS;
 
   static std::string PLATFORM_TEXTURE_PATH;
+  static std::string SPAWN_TEXTURE_PATH;
 };
 
 #endif
