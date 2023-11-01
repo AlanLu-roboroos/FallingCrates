@@ -3,8 +3,11 @@
 
 #include "constants.hpp"
 #include "crates/crate.hpp"
+#include "crates/purpleCrate.hpp"
+#include <algorithm>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <vector>
 using namespace std;
 
@@ -21,6 +24,7 @@ public:
   Crates();
   ~Crates();
   bool linePlacable(int line);
+  bool spawnCrate();
   bool placeCrate(int line, Crate *crate);
   Crate *popCrate(int line);
   void destroyCrate(int line, int row);

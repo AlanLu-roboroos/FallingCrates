@@ -15,12 +15,31 @@ sf::Vector2f Crates::getCratePos(int line, int row) {
 }
 
 bool Crates::linePlacable(int line) { return crates[line].size() < 6; }
+
+bool Crates::spawnCrate() {
+  vector<int> spawnableLines;
+  for (int i = 0; i < crates.size(); i++) {
+    if (linePlacable(i))
+      spawnableLines.push_back(i);
+  }
+  if (spawnableLines.size() == 0)
+    return false;
+
+  std::vector<int> out;
+  size_t nelems = 1;
+  std::sample(spawnableLines.begin(), spawnableLines.end(),
+              std::back_inserter(out), nelems,
+              std::mt19937{std::random_device{}()});
+  crates[out[0]].push_back(new PurpleCrate());
+
+  return true;
+}
+
 bool Crates::placeCrate(int line, Crate *crate) {
   if (!linePlacable(line)) {
     delete crate;
     return false;
   }
-  std::cout << "testin" << std::endl;
   crates[line].push_back(crate);
   return true;
 }

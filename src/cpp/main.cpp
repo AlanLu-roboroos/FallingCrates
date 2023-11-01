@@ -31,18 +31,22 @@ int main() {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
         } else if (event.key.code == sf::Keyboard::A) {
-          Crate *crate(new PurpleCrate());
-          crates.placeCrate(0, crate);
+          if (!crates.spawnCrate()) {
+            std::cout << "Full" << std::endl;
+          }
         }
       }
     }
 
     window.clear(GameConstants::BACKGROUND_COLOR);
+
+    crates.update();
+    grabber.update();
+
     background.drawBackground(window);
     grabber.drawGrabber(window);
     crates.drawCrates(window);
-    crates.update();
-    grabber.update();
+
     window.display();
   }
 
