@@ -36,7 +36,7 @@ private:
   void closeGripper();
 
 public:
-  bool init();
+  Grabber();
   void update();
   void goTo(int column, Crates crates);
   void drawGrabber(sf::RenderWindow &window);

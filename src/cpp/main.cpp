@@ -18,17 +18,8 @@ int main() {
   }
 
   Background background;
-  background.init();
-
   Grabber grabber;
-  grabber.init();
-
-  PurpleCrate crate;
-  crate.setPosition(164, 1236);
-
-  std::shared_ptr<Crate> crate1;
-  crate1 = crate.nextCrate();
-  crate1->setPosition(164, 1108);
+  Crates crates;
 
   while (window.isOpen()) {
     sf::Event event;

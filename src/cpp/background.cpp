@@ -1,6 +1,6 @@
 #include "background.hpp"
 
-bool Background::init() {
+Background::Background() {
   for (int i = 0; i < 8; i++) {
     platform_sprites[i] = sf::Sprite();
     platform_sprites[i].setTexture(GameConstants::Textures::PLATFORM_TEXTURE);
@@ -28,7 +28,6 @@ bool Background::init() {
   header = sf::RectangleShape(
       sf::Vector2f(GameConstants::WINDOW_WIDTH, GameConstants::BORDER_HEIGHT));
   header.setFillColor(GameConstants::HEADER_COLOR);
-  return 1;
 }
 
 void Background::drawBackground(sf::RenderWindow &window) {

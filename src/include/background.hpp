@@ -15,7 +15,7 @@ private:
   sf::RectangleShape header;
 
 public:
-  bool init();
+  Background();
   void drawBackground(sf::RenderWindow &window);
 };
 
