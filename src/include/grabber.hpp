@@ -38,6 +38,8 @@ class Grabber {
   bool loadTextures();
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);
+  void openGripper();
+  void closeGripper();
 
   public:
   bool init();

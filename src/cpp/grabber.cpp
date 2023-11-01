@@ -39,6 +39,20 @@ void Grabber::setPosition(int x, int y) {
   setPosition(sf::Vector2f(x, y));
 }
 
+void Grabber::openGripper() {
+  grabLeft.setOrigin(sf::Vector2f(27, 14));
+  grabRight.setOrigin(sf::Vector2f(-11, 14));
+  grabHori.setScale((GameConstants::CRATE_SIZE.x + 6 * grabHori.getScale().x) / grabVert.getLocalBounds().width,
+                    (GameConstants::CRATE_SIZE.y) / grabVert.getLocalBounds().height);
+}
+
+void Grabber::closeGripper() {
+  grabLeft.setOrigin(sf::Vector2f(24, 14));
+  grabRight.setOrigin(sf::Vector2f(-8, 14));
+  grabHori.setScale((GameConstants::CRATE_SIZE.x) / grabVert.getLocalBounds().width,
+                    (GameConstants::CRATE_SIZE.y) / grabVert.getLocalBounds().height);
+}
+
 bool Grabber::init() {
   column = 0;
 
@@ -94,6 +108,22 @@ void Grabber::update() {
   switch (state) {
   case GrabberState::STARTING:
     setPosition(GameConstants::GRABBER_START_POS);
+    state = GrabberState::FULL;
+    break;
+  case GrabberState::EMPTY:
+    openGripper();
+    break;
+  case GrabberState::FULL:
+    break;
+  case GrabberState::GRABBING:
+    break;
+  case GrabberState::PLACING:
+    break;
+  case GrabberState::LIFTINGCRATE:
+    break;
+  case GrabberState::RETURNING:
+    break;
+  default:
     break;
   }
 }
