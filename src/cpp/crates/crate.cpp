@@ -1,6 +1,6 @@
 #include "crates/crate.hpp"
 
-Crate::Crate() {
+void Crate::init() {
   crate = sf::Sprite();
   crate.setTexture(getTexture());
   crate.setScale(GameConstants::CRATE_SIZE.x / crate.getLocalBounds().width,

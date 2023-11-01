@@ -5,9 +5,9 @@ bool Background::init() {
     platform_sprites[i] = sf::Sprite();
     platform_sprites[i].setTexture(GameConstants::Textures::PLATFORM_TEXTURE);
     platform_sprites[i].setScale(
-        GameConstants::CRATE_SIZE.x /
+        GameConstants::PLATFORM_SIZE.x /
             platform_sprites[i].getLocalBounds().width,
-        GameConstants::CRATE_SIZE.y /
+        GameConstants::PLATFORM_SIZE.y /
             platform_sprites[i].getLocalBounds().height);
     platform_sprites[i].setOrigin(sf::Vector2f(11, 11));
     platform_sprites[i].setPosition(GameConstants::PLATFORM_POS[i]);

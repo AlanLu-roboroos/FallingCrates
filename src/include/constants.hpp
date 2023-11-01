@@ -24,8 +24,12 @@ public:
   static int WINDOW_WIDTH;
   static int WINDOW_HEIGHT;
 
+  static int CRATES_PER_LINE;
+  static int CRATE_COLUMNS;
+
   static sf::Vector2f CRATE_SIZE;
   static sf::Vector2f SPAWN_SIZE;
+  static sf::Vector2f PLATFORM_SIZE;
 
   static sf::Vector2f GRABBER_START_POS;
 
@@ -35,6 +39,8 @@ public:
   static sf::Color BORDER_COLOR;
   static sf::Color HEADER_COLOR;
 
+  static int PLATFORM_HEIGHT;
+  static int SPAWN_HEIGHT;
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
 
@@ -48,7 +54,14 @@ public:
     static sf::Texture GRABBER_RIGHT;
     static sf::Texture GRABBER_VERT;
 
+    static sf::Texture CRATE_PURPLE_TEXTURE;
+    static sf::Texture CRATE_BLUE_TEXTURE;
+    static sf::Texture CRATE_GREEN_TEXTURE;
+    static sf::Texture CRATE_YELLOW_TEXTURE;
+    static sf::Texture CRATE_ORANGE_TEXTURE;
     static sf::Texture CRATE_RED_TEXTURE;
+    static sf::Texture CRATE_PINK_TEXTURE;
+    static sf::Texture CRATE_GOLD_TEXTURE;
     static bool loadTextures();
   };
 };

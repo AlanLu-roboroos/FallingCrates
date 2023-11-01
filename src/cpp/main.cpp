@@ -2,7 +2,7 @@
 #include "SFML/Window/Mouse.hpp"
 #include "background.hpp"
 #include "constants.hpp"
-#include "crates/crate.hpp"
+#include "crates/purpleCrate.hpp"
 #include "grabber.hpp"
 #include <iostream>
 
@@ -10,7 +10,7 @@ int main() {
   sf::RenderWindow window(
       sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
       "Falling Crates");
-  window.setVerticalSyncEnabled(true);
+  window.setFramerateLimit(60);
 
   if (!GameConstants::Textures::loadTextures()) {
     std::cout << "IMAGES NOT LOADED" << std::endl;
@@ -22,6 +22,13 @@ int main() {
 
   Grabber grabber;
   grabber.init();
+
+  PurpleCrate crate;
+  crate.setPosition(164, 1236);
+
+  std::shared_ptr<Crate> crate1;
+  crate1 = crate.nextCrate();
+  crate1->setPosition(164, 1108);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -38,6 +45,8 @@ int main() {
     window.clear(sf::Color(180, 180, 180));
     background.drawBackground(window);
     grabber.drawGrabber(window);
+    crate.drawCrate(window);
+    crate1->drawCrate(window);
     grabber.update();
     window.display();
   }
