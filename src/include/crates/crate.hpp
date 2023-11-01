@@ -11,7 +11,7 @@ private:
   bool infected;
   bool settled;
 
-  sf::Sprite crate;
+  sf::Sprite crateSprite;
 
   virtual sf::Texture &getTexture() = 0;
 
@@ -25,9 +25,10 @@ public:
   void setPosition(int x, int y);
   sf::Vector2f getPos();
 
+  virtual ~Crate() = default;
   virtual bool explodable() = 0;
   virtual bool moveable() = 0;
-  virtual std::shared_ptr<Crate> nextCrate() = 0;
+  virtual Crate *nextCrate() = 0;
 };
 
 #endif

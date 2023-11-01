@@ -9,7 +9,7 @@ sf::Texture &PurpleCrate::getTexture() {
 bool PurpleCrate::explodable() { return true; }
 bool PurpleCrate::moveable() { return true; }
 
-std::shared_ptr<Crate> PurpleCrate::nextCrate() {
-  std::shared_ptr<Crate> temp(new BlueCrate());
+Crate *PurpleCrate::nextCrate() {
+  Crate *temp(new BlueCrate());
   return temp;
 }

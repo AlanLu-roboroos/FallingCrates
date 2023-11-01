@@ -12,7 +12,7 @@ public:
   virtual sf::Texture &getTexture();
   virtual bool explodable();
   virtual bool moveable();
-  virtual std::shared_ptr<Crate> nextCrate();
+  virtual Crate *nextCrate();
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "SFML/Window/Mouse.hpp"
 #include "background.hpp"
 #include "constants.hpp"
+#include "crates.hpp"
 #include "crates/purpleCrate.hpp"
 #include "grabber.hpp"
 #include <iostream>
@@ -29,6 +30,9 @@ int main() {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
+        } else if (event.key.code == sf::Keyboard::A) {
+          Crate *crate(new PurpleCrate());
+          crates.placeCrate(0, crate);
         }
       }
     }
@@ -36,8 +40,8 @@ int main() {
     window.clear(GameConstants::BACKGROUND_COLOR);
     background.drawBackground(window);
     grabber.drawGrabber(window);
-    crate.drawCrate(window);
-    crate1->drawCrate(window);
+    crates.drawCrates(window);
+    crates.update();
     grabber.update();
     window.display();
   }
