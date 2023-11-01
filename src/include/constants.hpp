@@ -25,12 +25,27 @@ class GameConstants {
   static int WINDOW_HEIGHT;
 
   static sf::Vector2f CRATE_SIZE;
+  static sf::Vector2f SPAWN_SIZE;
+
+  static sf::Vector2f GRABBER_START_POS;
+
+  static int BORDER_HEIGHT;
+  static int BORDER_WIDTH;
+
+  static sf::Color BORDER_COLOR;
+  static sf::Color HEADER_COLOR;
 
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
 
   static std::string PLATFORM_TEXTURE_PATH;
   static std::string SPAWN_TEXTURE_PATH;
+
+  static std::string GRABBER_HORI_PATH;
+  static std::string GRABBER_LEFT_PATH;
+  static std::string GRABBER_RIGHT_PATH;
+  static std::string GRABBER_VERT_PATH;
+  static std::string CRATE_RED_TEXTURE_PATH;
 };
 
 #endif

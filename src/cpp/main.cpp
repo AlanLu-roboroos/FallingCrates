@@ -2,6 +2,8 @@
 #include "SFML/Window/Mouse.hpp"
 #include "background.hpp"
 #include "constants.hpp"
+#include "crates/crate.hpp"
+#include "grabber.hpp"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT), "Falling Crates");
@@ -9,6 +11,11 @@ int main() {
 
   Background background;
   background.init();
+
+  Grabber grabber;
+  grabber.init();
+
+  Crate crate(0, 0, 100);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -24,6 +31,9 @@ int main() {
 
     window.clear(sf::Color(180, 180, 180));
     background.drawBackground(window);
+    crate.drawCrate(window);
+    grabber.drawGrabber(window);
+    grabber.update();
     window.display();
   }
 
