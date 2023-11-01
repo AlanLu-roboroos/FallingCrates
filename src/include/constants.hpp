@@ -20,7 +20,7 @@ class GameConstants {
   // #define WINDOW_HEIGHT 1200
 
   // #define PLATFORM_TEXTURE_PATH std::string("res/objects/platform.png")
-  public:
+public:
   static int WINDOW_WIDTH;
   static int WINDOW_HEIGHT;
 
@@ -38,14 +38,19 @@ class GameConstants {
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
 
-  static std::string PLATFORM_TEXTURE_PATH;
-  static std::string SPAWN_TEXTURE_PATH;
+  class Textures {
+  public:
+    static sf::Texture PLATFORM_TEXTURE;
+    static sf::Texture SPAWN_TEXTURE;
 
-  static std::string GRABBER_HORI_PATH;
-  static std::string GRABBER_LEFT_PATH;
-  static std::string GRABBER_RIGHT_PATH;
-  static std::string GRABBER_VERT_PATH;
-  static std::string CRATE_RED_TEXTURE_PATH;
+    static sf::Texture GRABBER_HORI;
+    static sf::Texture GRABBER_LEFT;
+    static sf::Texture GRABBER_RIGHT;
+    static sf::Texture GRABBER_VERT;
+
+    static sf::Texture CRATE_RED_TEXTURE;
+    static bool loadTextures();
+  };
 };
 
 #endif

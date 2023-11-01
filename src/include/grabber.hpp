@@ -6,14 +6,9 @@
 #include "crates.hpp"
 
 class Grabber {
-  private:
+private:
   int column;
   float x, y;
-
-  sf::Texture t_grabHori;
-  sf::Texture t_grabLeft;
-  sf::Texture t_grabRight;
-  sf::Texture t_grabVert;
 
   sf::Sprite grabHori;
   sf::Sprite grabLeft;
@@ -35,13 +30,12 @@ class Grabber {
 
   GrabberState state;
 
-  bool loadTextures();
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);
   void openGripper();
   void closeGripper();
 
-  public:
+public:
   bool init();
   void update();
   void goTo(int column, Crates crates);

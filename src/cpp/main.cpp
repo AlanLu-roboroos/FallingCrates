@@ -4,10 +4,18 @@
 #include "constants.hpp"
 #include "crates/crate.hpp"
 #include "grabber.hpp"
+#include <iostream>
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT), "Falling Crates");
+  sf::RenderWindow window(
+      sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
+      "Falling Crates");
   window.setVerticalSyncEnabled(true);
+
+  if (!GameConstants::Textures::loadTextures()) {
+    std::cout << "IMAGES NOT LOADED" << std::endl;
+    return 1;
+  }
 
   Background background;
   background.init();

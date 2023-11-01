@@ -6,18 +6,15 @@
 #include "constants.hpp"
 
 class Crate {
-  private:
+private:
   int row, column, x, y;
   bool infected;
   bool explodable;
   float fallStartTime;
 
-  sf::Texture crate_texture;
   sf::Sprite crate;
 
-  bool loadTextures();
-
-  public:
+public:
   Crate(int i_row, int i_column, int startHeight);
   void drawCrate(sf::RenderWindow &window);
 };

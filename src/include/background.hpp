@@ -7,18 +7,14 @@
 #include <vector>
 
 class Background {
-  private:
-  sf::Texture PLATFORM_TEXTURE;
-  sf::Texture SPAWN_TEXTURE;
-
+private:
   sf::Sprite platform_sprites[8];
   sf::Sprite spawn_sprites[8];
 
   sf::RectangleShape borderLine;
   sf::RectangleShape header;
-  bool loadTextures();
 
-  public:
+public:
   bool init();
   void drawBackground(sf::RenderWindow &window);
 };
