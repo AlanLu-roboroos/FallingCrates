@@ -15,6 +15,7 @@ sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;
 
+sf::Color GameConstants::BACKGROUND_COLOR = sf::Color(180, 180, 180);
 sf::Color GameConstants::BORDER_COLOR = sf::Color(50, 50, 50);
 sf::Color GameConstants::HEADER_COLOR = sf::Color(120, 120, 120);
 

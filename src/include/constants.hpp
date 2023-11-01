@@ -36,6 +36,7 @@ public:
   static int BORDER_HEIGHT;
   static int BORDER_WIDTH;
 
+  static sf::Color BACKGROUND_COLOR;
   static sf::Color BORDER_COLOR;
   static sf::Color HEADER_COLOR;
 

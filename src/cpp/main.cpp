@@ -42,7 +42,7 @@ int main() {
       }
     }
 
-    window.clear(sf::Color(180, 180, 180));
+    window.clear(GameConstants::BACKGROUND_COLOR);
     background.drawBackground(window);
     grabber.drawGrabber(window);
     crate.drawCrate(window);
