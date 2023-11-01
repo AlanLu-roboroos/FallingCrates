@@ -1,17 +1,18 @@
 #include "crates/crate.hpp"
 
-Crate::Crate(int i_row, int i_column, int i_startHeight) {
-  row = i_row;
-  column = i_column;
-
+Crate::Crate() {
   crate = sf::Sprite();
-  crate.setTexture(GameConstants::Textures::CRATE_RED_TEXTURE);
+  crate.setTexture(getTexture());
   crate.setScale(GameConstants::CRATE_SIZE.x / crate.getLocalBounds().width,
                  GameConstants::CRATE_SIZE.y / crate.getLocalBounds().height);
   crate.setOrigin(sf::Vector2f(8, 8));
 }
 
-void Crate::drawCrate(sf::RenderWindow &window) {
-  crate.setPosition(sf::Vector2f(164, 596));
-  window.draw(crate);
-}
+void Crate::drawCrate(sf::RenderWindow &window) { window.draw(crate); }
+
+void Crate::setPosition(sf::Vector2f pos) { crate.setPosition(pos); }
+void Crate::setPosition(int x, int y) { setPosition(sf::Vector2f(x, y)); }
+
+void Crate::setSettled(bool _settled) { settled = _settled; }
+
+sf::Vector2f Crate::getPos() { return crate.getPosition(); }

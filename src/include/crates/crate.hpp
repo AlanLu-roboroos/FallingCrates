@@ -7,16 +7,24 @@
 
 class Crate {
 private:
-  int row, column, x, y;
   bool infected;
-  bool explodable;
-  float fallStartTime;
+  bool settled;
 
   sf::Sprite crate;
 
+  void setPosition(sf::Vector2f pos);
+  void setPosition(int x, int y);
+  virtual sf::Texture getTexture() = 0;
+
 public:
-  Crate(int i_row, int i_column, int startHeight);
+  Crate();
   void drawCrate(sf::RenderWindow &window);
+  void setSettled(bool _settled);
+  sf::Vector2f getPos();
+
+  virtual bool explodable() = 0;
+  virtual bool moveable() = 0;
+  virtual Crate &nextCrate() = 0;
 };
 
 #endif

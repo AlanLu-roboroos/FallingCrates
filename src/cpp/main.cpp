@@ -23,8 +23,6 @@ int main() {
   Grabber grabber;
   grabber.init();
 
-  Crate crate(0, 0, 100);
-
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -39,7 +37,6 @@ int main() {
 
     window.clear(sf::Color(180, 180, 180));
     background.drawBackground(window);
-    crate.drawCrate(window);
     grabber.drawGrabber(window);
     grabber.update();
     window.display();
