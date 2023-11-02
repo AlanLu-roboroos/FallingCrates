@@ -16,10 +16,11 @@ sf::Vector2f Crates::getCratePos(int line, int row) {
 
 bool Crates::linePlacable(int line) { return crates[line].size() < 6; }
 
-bool Crates::spawnCrate() {
+bool Crates::spawnCrate(int grabberLine, bool isActive) {
   vector<int> spawnableLines;
+  std::cout << grabberLine << std::endl;
   for (int i = 0; i < crates.size(); i++) {
-    if (linePlacable(i))
+    if (linePlacable(i) && (!isActive || i != grabberLine))
       spawnableLines.push_back(i);
   }
   if (spawnableLines.size() == 0)
@@ -43,6 +44,8 @@ bool Crates::placeCrate(int line, Crate *crate) {
   crates[line].push_back(crate);
   return true;
 }
+
+bool Crates::isLineGrabbable(int line) { return crates[line].size() > 0; }
 
 Crate *Crates::popCrate(int line) {
   Crate *temp = crates[line].back();

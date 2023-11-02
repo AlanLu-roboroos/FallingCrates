@@ -24,8 +24,9 @@ public:
   Crates();
   ~Crates();
   bool linePlacable(int line);
-  bool spawnCrate();
+  bool spawnCrate(int grabberLine, bool isActive);
   bool placeCrate(int line, Crate *crate);
+  bool isLineGrabbable(int line);
   Crate *popCrate(int line);
   void destroyCrate(int line, int row);
   void update();

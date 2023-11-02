@@ -11,6 +11,7 @@ sf::Vector2f GameConstants::SPAWN_SIZE = sf::Vector2f(176, 176);
 sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(176, 176);
 
 sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
+float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
 
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;

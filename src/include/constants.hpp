@@ -32,6 +32,7 @@ public:
   static sf::Vector2f PLATFORM_SIZE;
 
   static sf::Vector2f GRABBER_START_POS;
+  static float GRABBER_HORIZONTAL_SPEED;
 
   static int BORDER_HEIGHT;
   static int BORDER_WIDTH;

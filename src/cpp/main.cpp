@@ -31,17 +31,25 @@ int main() {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
         } else if (event.key.code == sf::Keyboard::A) {
-          if (!crates.spawnCrate()) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
             std::cout << "Full" << std::endl;
           }
+        }
+      }
+      if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+          int line = std::abs(
+              (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
+              (0.1185031185 * window.getSize().x));
+          grabber.goTo(line, crates);
         }
       }
     }
 
     window.clear(GameConstants::BACKGROUND_COLOR);
 
+    grabber.update(crates);
     crates.update();
-    grabber.update();
 
     background.drawBackground(window);
     grabber.drawGrabber(window);
