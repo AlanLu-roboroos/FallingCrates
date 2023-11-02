@@ -5,6 +5,7 @@
 #include "crates/crate.hpp"
 #include "crates/purpleCrate.hpp"
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <memory>
 #include <random>

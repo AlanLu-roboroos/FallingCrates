@@ -18,10 +18,15 @@ bool Crates::linePlacable(int line) { return crates[line].size() < 6; }
 
 bool Crates::spawnCrate(int grabberLine, bool isActive) {
   vector<int> spawnableLines;
-  std::cout << grabberLine << std::endl;
   for (int i = 0; i < crates.size(); i++) {
-    if (linePlacable(i) && (!isActive || i != grabberLine))
-      spawnableLines.push_back(i);
+    if (linePlacable(i) && (!isActive || i != grabberLine)) {
+      if (crates[i].size() == 0) {
+        spawnableLines.push_back(i);
+      } else if (crates[i].back()->getPos().y >
+                 GameConstants::SPAWN_HEIGHT + GameConstants::CRATE_SIZE.y) {
+        spawnableLines.push_back(i);
+      }
+    }
   }
   if (spawnableLines.size() == 0)
     return false;
@@ -31,7 +36,9 @@ bool Crates::spawnCrate(int grabberLine, bool isActive) {
   std::sample(spawnableLines.begin(), spawnableLines.end(),
               std::back_inserter(out), nelems,
               std::mt19937{std::random_device{}()});
-  crates[out[0]].push_back(new PurpleCrate());
+  Crate *tempCrate = new PurpleCrate();
+  tempCrate->setState(Crate::CrateState::SPAWNING);
+  crates[out[0]].push_back(tempCrate);
 
   return true;
 }
@@ -61,7 +68,38 @@ void Crates::destroyCrate(int line, int row) {
 void Crates::update() {
   for (int column = 0; column < crates.size(); column++) {
     for (int row = 0; row < crates[column].size(); row++) {
-      crates[column][row]->setPosition(getCratePos(column, row));
+      Crate *currentCrate = crates[column][row];
+      float temp;
+
+      switch (currentCrate->getState()) {
+      case Crate::CrateState::SPAWNING:
+        currentCrate->setPosition(GameConstants::SPAWN_POS[column]);
+        temp = GameConstants::CRATE_GROWTH_SPEED *
+               currentCrate->getElapsedTime().asMilliseconds();
+        if (temp > GameConstants::CRATE_SIZE.x) {
+          temp = GameConstants::CRATE_SIZE.x;
+          currentCrate->restartClock();
+          currentCrate->setState(Crate::CrateState::FALLING);
+        }
+        currentCrate->setSize(sf::Vector2f(temp, temp));
+        break;
+      case Crate::CrateState::FALLING:
+        temp =
+            GameConstants::CRATE_FALLING_ACCELERATION *
+                std::pow(currentCrate->getElapsedTime().asMilliseconds(), 2) +
+            GameConstants::SPAWN_HEIGHT;
+        if (temp > GameConstants::ROW_Y[row]) {
+          temp = GameConstants::ROW_Y[row];
+          currentCrate->restartClock();
+          currentCrate->setState(Crate::CrateState::IDLE);
+        }
+        currentCrate->setPosition(GameConstants::SPAWN_POS[column].x, temp);
+        break;
+      case Crate::CrateState::IDLE:
+        break;
+      default:
+        break;
+      }
     }
   }
 }

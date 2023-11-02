@@ -7,9 +7,14 @@
 #include <memory>
 
 class Crate {
+public:
+  enum CrateState { NONE, SPAWNING, FALLING, IDLE };
+
 private:
   bool infected;
-  bool settled;
+
+  CrateState state;
+  sf::Clock clock;
 
   sf::Sprite crateSprite;
 
@@ -20,10 +25,14 @@ protected:
 
 public:
   void drawCrate(sf::RenderWindow &window);
-  void setSettled(bool _settled);
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);
+  void setSize(sf::Vector2f size);
   sf::Vector2f getPos();
+  CrateState getState();
+  void setState(CrateState _state);
+  void restartClock();
+  sf::Time getElapsedTime();
 
   virtual ~Crate() = default;
   virtual bool explodable() = 0;

@@ -13,6 +13,9 @@ sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(176, 176);
 sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
 float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
 
+float GameConstants::CRATE_GROWTH_SPEED = 0.6;
+float GameConstants::CRATE_FALLING_ACCELERATION = 0.0013;
+
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;
 
@@ -23,25 +26,29 @@ sf::Color GameConstants::HEADER_COLOR = sf::Color(120, 120, 120);
 int GameConstants::PLATFORM_HEIGHT = 1236;
 int GameConstants::SPAWN_HEIGHT = 410;
 
+std::vector<int> GameConstants::COLUMN_X = {164,  392,  620,  848,
+                                            1076, 1304, 1532, 1760};
+std::vector<int> GameConstants::ROW_Y = {1236, 1108, 980, 852, 724, 596};
+
 std::vector<sf::Vector2f> GameConstants::PLATFORM_POS = {
-    sf::Vector2f(164, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(392, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(620, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(848, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(1076, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(1304, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(1532, GameConstants::PLATFORM_HEIGHT),
-    sf::Vector2f(1760, GameConstants::PLATFORM_HEIGHT)};
+    sf::Vector2f(GameConstants::COLUMN_X[0], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[1], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[2], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[3], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[4], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[5], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[6], GameConstants::PLATFORM_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::PLATFORM_HEIGHT)};
 
 std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
-    sf::Vector2f(164, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(392, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(620, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(848, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(1076, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(1304, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(1532, GameConstants::SPAWN_HEIGHT),
-    sf::Vector2f(1760, GameConstants::SPAWN_HEIGHT)};
+    sf::Vector2f(GameConstants::COLUMN_X[0], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[1], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[2], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[3], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[4], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[5], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[6], GameConstants::SPAWN_HEIGHT),
+    sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
 
 sf::Texture GameConstants::Textures::PLATFORM_TEXTURE;
 sf::Texture GameConstants::Textures::SPAWN_TEXTURE;

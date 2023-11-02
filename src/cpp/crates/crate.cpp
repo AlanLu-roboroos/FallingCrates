@@ -7,6 +7,7 @@ void Crate::init() {
       GameConstants::CRATE_SIZE.x / crateSprite.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / crateSprite.getLocalBounds().height);
   crateSprite.setOrigin(sf::Vector2f(8, 8));
+  state = Crate::NONE;
 }
 
 void Crate::drawCrate(sf::RenderWindow &window) { window.draw(crateSprite); }
@@ -14,6 +15,16 @@ void Crate::drawCrate(sf::RenderWindow &window) { window.draw(crateSprite); }
 void Crate::setPosition(sf::Vector2f pos) { crateSprite.setPosition(pos); }
 void Crate::setPosition(int x, int y) { setPosition(sf::Vector2f(x, y)); }
 
-void Crate::setSettled(bool _settled) { settled = _settled; }
+void Crate::setSize(sf::Vector2f size) {
+  crateSprite.setScale(size.x / crateSprite.getLocalBounds().width,
+                       size.y / crateSprite.getLocalBounds().height);
+}
+
+void Crate::setState(Crate::CrateState _state) { state = _state; }
 
 sf::Vector2f Crate::getPos() { return crateSprite.getPosition(); }
+
+Crate::CrateState Crate::getState() { return state; }
+
+void Crate::restartClock() { clock.restart(); }
+sf::Time Crate::getElapsedTime() { return clock.getElapsedTime(); }

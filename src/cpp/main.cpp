@@ -11,7 +11,7 @@ int main() {
   sf::RenderWindow window(
       sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
       "Falling Crates");
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(256);
 
   if (!GameConstants::Textures::loadTextures()) {
     std::cout << "IMAGES NOT LOADED" << std::endl;

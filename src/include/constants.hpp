@@ -34,6 +34,9 @@ public:
   static sf::Vector2f GRABBER_START_POS;
   static float GRABBER_HORIZONTAL_SPEED;
 
+  static float CRATE_GROWTH_SPEED;
+  static float CRATE_FALLING_ACCELERATION;
+
   static int BORDER_HEIGHT;
   static int BORDER_WIDTH;
 
@@ -43,6 +46,9 @@ public:
 
   static int PLATFORM_HEIGHT;
   static int SPAWN_HEIGHT;
+  static std::vector<int> COLUMN_X;
+  static std::vector<int> ROW_Y;
+
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
 
