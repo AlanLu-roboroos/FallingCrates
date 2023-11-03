@@ -12,6 +12,7 @@ sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(176, 176);
 
 sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
 float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
+float GameConstants::GRABBER_VERTICAL_SPEED = 8;
 
 float GameConstants::CRATE_GROWTH_SPEED = 0.6;
 float GameConstants::CRATE_FALLING_ACCELERATION = 0.0013;

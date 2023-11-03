@@ -32,6 +32,8 @@ public:
   void destroyCrate(int line, int row);
   void update();
   void drawCrates(sf::RenderWindow &window);
+  float getTopCrateHeight(int line);
+  float getNextCrateHeight(int line);
 
   static Crate *makeCrate(Crate *crate);
 };

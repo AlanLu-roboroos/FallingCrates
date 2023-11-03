@@ -112,6 +112,18 @@ void Crates::drawCrates(sf::RenderWindow &window) {
   }
 }
 
+float Crates::getTopCrateHeight(int line) {
+  if (crates[line].size() == 0)
+    return 0;
+  return crates[line].back()->getPos().y;
+}
+
+float Crates::getNextCrateHeight(int line) {
+  if (!linePlacable(line))
+    return 0;
+  return GameConstants::ROW_Y[crates[line].size()];
+}
+
 Crate *Crates::makeCrate(Crate *crate) {
   Crate *temp(crate);
   return temp;

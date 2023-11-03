@@ -90,9 +90,9 @@ void Grabber::move(sf::Vector2f delta) {
 void Grabber::move(int x, int y) { move(sf::Vector2f(x, y)); }
 
 void Grabber::openGripper() {
-  grabLeft.setOrigin(sf::Vector2f(27, 14));
-  grabRight.setOrigin(sf::Vector2f(-11, 14));
-  grabHori.setScale((GameConstants::CRATE_SIZE.x + 6 * grabHori.getScale().x) /
+  grabLeft.setOrigin(sf::Vector2f(26, 14));
+  grabRight.setOrigin(sf::Vector2f(-10, 14));
+  grabHori.setScale((GameConstants::CRATE_SIZE.x + 4 * grabHori.getScale().x) /
                         grabVert.getLocalBounds().width,
                     (GameConstants::CRATE_SIZE.y) /
                         grabVert.getLocalBounds().height);
@@ -155,14 +155,22 @@ void Grabber::drawGrabber(sf::RenderWindow &window) {
 }
 
 void Grabber::update(Crates &_crates) {
+  std::cout << state << std::endl;
   switch (state) {
   case GrabberState::STARTING:
+    openGripper();
     setPosition(GameConstants::GRABBER_START_POS);
     state = GrabberState::EMPTY;
     break;
   case GrabberState::EMPTY:
+    setPosition(GameConstants::COLUMN_X[column],
+                GameConstants::GRABBER_START_POS.y);
+    openGripper();
     break;
   case GrabberState::FULL:
+    setPosition(GameConstants::COLUMN_X[column],
+                GameConstants::GRABBER_START_POS.y);
+    closeGripper();
     break;
   case GrabberState::SLIDINGLEFT:
     move(-(GameConstants::GRABBER_HORIZONTAL_SPEED *
@@ -187,12 +195,48 @@ void Grabber::update(Crates &_crates) {
     }
     break;
   case GrabberState::GRABBING:
+    openGripper();
+    move(0,
+         (clock.getElapsedTime().asMilliseconds() - lastTime.asMilliseconds()) *
+             GameConstants::GRABBER_VERTICAL_SPEED);
+    if (grabHori.getPosition().y > _crates.getTopCrateHeight(column)) {
+      setPosition(GameConstants::COLUMN_X[column],
+                  _crates.getTopCrateHeight(column));
+      state = GrabberState::LIFTINGCRATE;
+    }
     break;
   case GrabberState::PLACING:
+    closeGripper();
+    move(0,
+         (clock.getElapsedTime().asMilliseconds() - lastTime.asMilliseconds()) *
+             GameConstants::GRABBER_VERTICAL_SPEED);
+    if (grabHori.getPosition().y > _crates.getNextCrateHeight(column)) {
+      setPosition(GameConstants::COLUMN_X[column],
+                  _crates.getNextCrateHeight(column));
+      state = GrabberState::RETURNING;
+    }
     break;
   case GrabberState::LIFTINGCRATE:
+    closeGripper();
+    move(0, -(clock.getElapsedTime().asMilliseconds() -
+              lastTime.asMilliseconds()) *
+                GameConstants::GRABBER_VERTICAL_SPEED);
+    if (grabHori.getPosition().y < GameConstants::GRABBER_START_POS.y) {
+      setPosition(GameConstants::COLUMN_X[column],
+                  GameConstants::GRABBER_START_POS.y);
+      state = GrabberState::FULL;
+    }
     break;
   case GrabberState::RETURNING:
+    openGripper();
+    move(0, -(clock.getElapsedTime().asMilliseconds() -
+              lastTime.asMilliseconds()) *
+                GameConstants::GRABBER_VERTICAL_SPEED);
+    if (grabHori.getPosition().y < GameConstants::GRABBER_START_POS.y) {
+      setPosition(GameConstants::COLUMN_X[column],
+                  GameConstants::GRABBER_START_POS.y);
+      state = GrabberState::EMPTY;
+    }
     break;
   default:
     break;

@@ -30,7 +30,8 @@ private:
     GRABBING,     // When grabber is lowering to grab a crate
     PLACING,      // When grabber is lowering to place a crate
     LIFTINGCRATE, // When grabber is lifting with a crate
-    RETURNING     // Wheh grabber is lifting with no crate
+    RETURNING,    // Wheh grabber is lifting with no crate
+    NONE          // TESTING
   };
 
   GrabberState state;

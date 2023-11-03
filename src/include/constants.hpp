@@ -33,6 +33,7 @@ public:
 
   static sf::Vector2f GRABBER_START_POS;
   static float GRABBER_HORIZONTAL_SPEED;
+  static float GRABBER_VERTICAL_SPEED;
 
   static float CRATE_GROWTH_SPEED;
   static float CRATE_FALLING_ACCELERATION;
