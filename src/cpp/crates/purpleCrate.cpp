@@ -7,7 +7,7 @@ sf::Texture &PurpleCrate::getTexture() {
 }
 
 bool PurpleCrate::explodable() { return true; }
-bool PurpleCrate::moveable() { return true; }
+bool PurpleCrate::moveable() { return state != CrateState::SPAWNING; }
 
 Crate *PurpleCrate::nextCrate() {
   Crate *temp(new BlueCrate());

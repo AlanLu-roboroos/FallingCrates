@@ -55,7 +55,12 @@ bool Crates::placeCrate(int line, Crate *crate) {
   return true;
 }
 
-bool Crates::isLineGrabbable(int line) { return crates[line].size() > 0; }
+bool Crates::isLineGrabbable(int line) {
+  if (crates[line].size() > 0) {
+    return crates[line].back()->moveable();
+  }
+  return false;
+}
 
 Crate *Crates::popCrate(int line) {
   Crate *temp = crates[line].back();

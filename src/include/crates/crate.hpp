@@ -10,7 +10,7 @@ class Crate {
 public:
   enum CrateState { NONE, SPAWNING, FALLING, IDLE };
 
-private:
+protected:
   bool infected;
 
   CrateState state;
@@ -22,7 +22,6 @@ private:
 
   virtual sf::Texture &getTexture() = 0;
 
-protected:
   void init();
 
 public:
