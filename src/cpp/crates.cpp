@@ -1,6 +1,9 @@
 #include "crates.hpp"
 
-Crates::Crates() { crates = vector<crate_col>(8); }
+Crates::Crates() {
+  crates = vector<crate_col>(8);
+  grabbedCrate = nullptr;
+}
 
 Crates::~Crates() {
   for (auto column : crates) {
@@ -96,6 +99,8 @@ void Crates::update() {
         currentCrate->setPosition(GameConstants::SPAWN_POS[column].x, temp);
         break;
       case Crate::CrateState::IDLE:
+        currentCrate->setPosition(sf::Vector2f(GameConstants::COLUMN_X[column],
+                                               GameConstants::ROW_Y[row]));
         break;
       default:
         break;
@@ -110,6 +115,8 @@ void Crates::drawCrates(sf::RenderWindow &window) {
       crate->drawCrate(window);
     }
   }
+  if (grabbedCrate != nullptr)
+    grabbedCrate->drawCrate(window);
 }
 
 float Crates::getTopCrateHeight(int line) {
@@ -127,4 +134,28 @@ float Crates::getNextCrateHeight(int line) {
 Crate *Crates::makeCrate(Crate *crate) {
   Crate *temp(crate);
   return temp;
+}
+
+bool Crates::grabCrate(int line) {
+  if (crates[line].size() == 0)
+    return false;
+  grabbedCrate = crates[line].back();
+  crates[line].erase(crates[line].end() - 1);
+  return true;
+}
+
+bool Crates::placeCrate(int line) {
+  if (crates[line].size() == GameConstants::CRATES_PER_LINE)
+    return false;
+  grabbedCrate->setState(Crate::CrateState::IDLE);
+  crates[line].push_back(grabbedCrate);
+  grabbedCrate = nullptr;
+  return true;
+}
+
+bool Crates::setGrabbedCratePos(sf::Vector2f pos) {
+  if (grabbedCrate == nullptr)
+    return false;
+  grabbedCrate->setPosition(pos);
+  return true;
 }

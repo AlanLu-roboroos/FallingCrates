@@ -18,6 +18,7 @@ typedef vector<crate_col> crate_matrix;
 class Crates {
 private:
   crate_matrix crates;
+  Crate *grabbedCrate;
 
   sf::Vector2f getCratePos(int line, int row);
 
@@ -34,6 +35,10 @@ public:
   void drawCrates(sf::RenderWindow &window);
   float getTopCrateHeight(int line);
   float getNextCrateHeight(int line);
+
+  bool grabCrate(int line);
+  bool placeCrate(int line);
+  bool setGrabbedCratePos(sf::Vector2f pos);
 
   static Crate *makeCrate(Crate *crate);
 };

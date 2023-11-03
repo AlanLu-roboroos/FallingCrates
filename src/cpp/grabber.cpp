@@ -170,6 +170,7 @@ void Grabber::update(Crates &_crates) {
   case GrabberState::FULL:
     setPosition(GameConstants::COLUMN_X[column],
                 GameConstants::GRABBER_START_POS.y);
+    _crates.setGrabbedCratePos(getPosition());
     closeGripper();
     break;
   case GrabberState::SLIDINGLEFT:
@@ -182,6 +183,7 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = nextState;
     }
+    _crates.setGrabbedCratePos(getPosition());
     break;
   case GrabberState::SLIDINGRIGHT:
     move(
@@ -193,6 +195,7 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = nextState;
     }
+    _crates.setGrabbedCratePos(getPosition());
     break;
   case GrabberState::GRABBING:
     openGripper();
@@ -202,7 +205,10 @@ void Grabber::update(Crates &_crates) {
     if (grabHori.getPosition().y > _crates.getTopCrateHeight(column)) {
       setPosition(GameConstants::COLUMN_X[column],
                   _crates.getTopCrateHeight(column));
-      state = GrabberState::LIFTINGCRATE;
+      if (_crates.grabCrate(column))
+        state = GrabberState::LIFTINGCRATE;
+      else
+        state = GrabberState::RETURNING;
     }
     break;
   case GrabberState::PLACING:
@@ -213,8 +219,12 @@ void Grabber::update(Crates &_crates) {
     if (grabHori.getPosition().y > _crates.getNextCrateHeight(column)) {
       setPosition(GameConstants::COLUMN_X[column],
                   _crates.getNextCrateHeight(column));
-      state = GrabberState::RETURNING;
+      if (_crates.placeCrate(column))
+        state = GrabberState::RETURNING;
+      else
+        state = GrabberState::LIFTINGCRATE;
     }
+    _crates.setGrabbedCratePos(getPosition());
     break;
   case GrabberState::LIFTINGCRATE:
     closeGripper();
@@ -226,6 +236,7 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = GrabberState::FULL;
     }
+    _crates.setGrabbedCratePos(getPosition());
     break;
   case GrabberState::RETURNING:
     openGripper();

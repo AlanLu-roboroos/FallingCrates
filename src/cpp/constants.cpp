@@ -3,8 +3,8 @@
 int GameConstants::WINDOW_WIDTH = 1924;
 int GameConstants::WINDOW_HEIGHT = 1350;
 
-int CRATES_PER_LINE = 6;
-int CRATE_COLUMNS = 8;
+int GameConstants::CRATES_PER_LINE = 6;
+int GameConstants::CRATE_COLUMNS = 8;
 
 sf::Vector2f GameConstants::CRATE_SIZE = sf::Vector2f(128, 128);
 sf::Vector2f GameConstants::SPAWN_SIZE = sf::Vector2f(176, 176);
