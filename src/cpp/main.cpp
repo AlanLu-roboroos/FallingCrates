@@ -19,8 +19,8 @@ int main() {
   }
 
   Background background;
-  Grabber grabber;
   Crates crates;
+  Grabber grabber(&crates);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -41,14 +41,14 @@ int main() {
           int line = std::abs(
               (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
               (0.1185031185 * window.getSize().x));
-          grabber.goTo(line, crates);
+          grabber.queueGoTo(line);
         }
       }
     }
 
     window.clear(GameConstants::BACKGROUND_COLOR);
 
-    grabber.update(crates);
+    grabber.update();
     crates.update();
 
     background.drawBackground(window);

@@ -3,8 +3,10 @@
 #include "grabber.hpp"
 #include <iostream>
 
-Grabber::Grabber() {
+Grabber::Grabber(Crates *__crates) {
   column = 3.5;
+
+  _crates = __crates;
 
   state = GrabberState::STARTING;
   nextState = GrabberState::STARTING;
@@ -108,11 +110,11 @@ void Grabber::closeGripper() {
       (GameConstants::CRATE_SIZE.y) / grabVert.getLocalBounds().height);
 }
 
-void Grabber::goTo(int _column, Crates &_crates) {
+void Grabber::goTo(int _column) {
   switch (state) {
   case GrabberState::STARTING:
   case GrabberState::EMPTY:
-    if (_crates.isLineGrabbable(_column))
+    if (_crates->isLineGrabbable(_column))
       nextState = GrabberState::GRABBING;
     else
       nextState = GrabberState::EMPTY;
@@ -125,7 +127,7 @@ void Grabber::goTo(int _column, Crates &_crates) {
     column = _column;
     break;
   case GrabberState::FULL:
-    if (_crates.linePlacable(_column))
+    if (_crates->linePlacable(_column))
       nextState = GrabberState::PLACING;
     else
       nextState = GrabberState::FULL;
@@ -142,6 +144,8 @@ void Grabber::goTo(int _column, Crates &_crates) {
   }
 }
 
+void Grabber::queueGoTo(int line) { gotoQueue.push_back(line); }
+
 void Grabber::drawGrabber(sf::RenderWindow &window) {
   window.draw(grabHori);
   window.draw(grabLeft);
@@ -154,8 +158,12 @@ void Grabber::drawGrabber(sf::RenderWindow &window) {
   //     grabVert.getGlobalBounds().height << std::endl;
 }
 
-void Grabber::update(Crates &_crates) {
-  std::cout << state << std::endl;
+void Grabber::update() {
+  if (gotoQueue.size() != 0 &&
+      (state == GrabberState::EMPTY || state == GrabberState::FULL)) {
+    goTo(gotoQueue.front());
+    gotoQueue.erase(gotoQueue.begin());
+  }
   switch (state) {
   case GrabberState::STARTING:
     openGripper();
@@ -170,7 +178,7 @@ void Grabber::update(Crates &_crates) {
   case GrabberState::FULL:
     setPosition(GameConstants::COLUMN_X[column],
                 GameConstants::GRABBER_START_POS.y);
-    _crates.setGrabbedCratePos(getPosition());
+    _crates->setGrabbedCratePos(getPosition());
     closeGripper();
     break;
   case GrabberState::SLIDINGLEFT:
@@ -183,7 +191,7 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = nextState;
     }
-    _crates.setGrabbedCratePos(getPosition());
+    _crates->setGrabbedCratePos(getPosition());
     break;
   case GrabberState::SLIDINGRIGHT:
     move(
@@ -195,17 +203,17 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = nextState;
     }
-    _crates.setGrabbedCratePos(getPosition());
+    _crates->setGrabbedCratePos(getPosition());
     break;
   case GrabberState::GRABBING:
     openGripper();
     move(0,
          (clock.getElapsedTime().asMilliseconds() - lastTime.asMilliseconds()) *
              GameConstants::GRABBER_VERTICAL_SPEED);
-    if (grabHori.getPosition().y > _crates.getTopCrateHeight(column)) {
+    if (grabHori.getPosition().y > _crates->getTopCrateHeight(column)) {
       setPosition(GameConstants::COLUMN_X[column],
-                  _crates.getTopCrateHeight(column));
-      if (_crates.grabCrate(column))
+                  _crates->getTopCrateHeight(column));
+      if (_crates->grabCrate(column))
         state = GrabberState::LIFTINGCRATE;
       else
         state = GrabberState::RETURNING;
@@ -216,15 +224,18 @@ void Grabber::update(Crates &_crates) {
     move(0,
          (clock.getElapsedTime().asMilliseconds() - lastTime.asMilliseconds()) *
              GameConstants::GRABBER_VERTICAL_SPEED);
-    if (grabHori.getPosition().y > _crates.getNextCrateHeight(column)) {
+    if (grabHori.getPosition().y > _crates->getNextCrateHeight(column)) {
       setPosition(GameConstants::COLUMN_X[column],
-                  _crates.getNextCrateHeight(column));
-      if (_crates.placeCrate(column))
+                  _crates->getNextCrateHeight(column));
+      _crates->setGrabbedCratePos(
+          sf::Vector2f(GameConstants::COLUMN_X[column],
+                       _crates->getNextCrateHeight(column)));
+      if (_crates->placeCrate(column)) {
         state = GrabberState::RETURNING;
-      else
+      } else
         state = GrabberState::LIFTINGCRATE;
     }
-    _crates.setGrabbedCratePos(getPosition());
+    _crates->setGrabbedCratePos(getPosition());
     break;
   case GrabberState::LIFTINGCRATE:
     closeGripper();
@@ -236,7 +247,7 @@ void Grabber::update(Crates &_crates) {
                   GameConstants::GRABBER_START_POS.y);
       state = GrabberState::FULL;
     }
-    _crates.setGrabbedCratePos(getPosition());
+    _crates->setGrabbedCratePos(getPosition());
     break;
   case GrabberState::RETURNING:
     openGripper();

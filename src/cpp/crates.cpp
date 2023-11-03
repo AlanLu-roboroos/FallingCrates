@@ -83,6 +83,7 @@ void Crates::update() {
           temp = GameConstants::CRATE_SIZE.x;
           currentCrate->restartClock();
           currentCrate->setState(Crate::CrateState::FALLING);
+          currentCrate->setInitHeight(GameConstants::SPAWN_HEIGHT);
         }
         currentCrate->setSize(sf::Vector2f(temp, temp));
         break;
@@ -90,7 +91,7 @@ void Crates::update() {
         temp =
             GameConstants::CRATE_FALLING_ACCELERATION *
                 std::pow(currentCrate->getElapsedTime().asMilliseconds(), 2) +
-            GameConstants::SPAWN_HEIGHT;
+            currentCrate->getInitHeight();
         if (temp > GameConstants::ROW_Y[row]) {
           temp = GameConstants::ROW_Y[row];
           currentCrate->restartClock();
@@ -126,9 +127,9 @@ float Crates::getTopCrateHeight(int line) {
 }
 
 float Crates::getNextCrateHeight(int line) {
-  if (!linePlacable(line))
-    return 0;
-  return GameConstants::ROW_Y[crates[line].size()];
+  if (crates[line].size() == 0)
+    return GameConstants::ROW_Y[0];
+  return crates[line].back()->getPos().y - GameConstants::CRATE_SIZE.y;
 }
 
 Crate *Crates::makeCrate(Crate *crate) {
@@ -147,7 +148,9 @@ bool Crates::grabCrate(int line) {
 bool Crates::placeCrate(int line) {
   if (crates[line].size() == GameConstants::CRATES_PER_LINE)
     return false;
-  grabbedCrate->setState(Crate::CrateState::IDLE);
+  grabbedCrate->setState(Crate::CrateState::FALLING);
+  grabbedCrate->restartClock();
+  grabbedCrate->setInitHeight(grabbedCrate->getPos().y);
   crates[line].push_back(grabbedCrate);
   grabbedCrate = nullptr;
   return true;

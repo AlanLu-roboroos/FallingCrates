@@ -37,6 +37,9 @@ private:
   GrabberState state;
   GrabberState nextState;
 
+  Crates *_crates;
+  std::vector<int> gotoQueue;
+
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);
   void move(sf::Vector2f delta);
@@ -46,9 +49,10 @@ private:
   void closeGripper();
 
 public:
-  Grabber();
-  void update(Crates &_crates);
-  void goTo(int column, Crates &_crates);
+  Grabber(Crates *_crates);
+  void update();
+  void goTo(int column);
+  void queueGoTo(int column);
   void drawGrabber(sf::RenderWindow &window);
   int getColumn();
   bool isActive();

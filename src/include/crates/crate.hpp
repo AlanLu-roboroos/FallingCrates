@@ -16,6 +16,8 @@ private:
   CrateState state;
   sf::Clock clock;
 
+  float initHeight;
+
   sf::Sprite crateSprite;
 
   virtual sf::Texture &getTexture() = 0;
@@ -33,6 +35,9 @@ public:
   void setState(CrateState _state);
   void restartClock();
   sf::Time getElapsedTime();
+
+  void setInitHeight(int height);
+  float getInitHeight();
 
   virtual ~Crate() = default;
   virtual bool explodable() = 0;

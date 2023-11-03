@@ -28,3 +28,6 @@ Crate::CrateState Crate::getState() { return state; }
 
 void Crate::restartClock() { clock.restart(); }
 sf::Time Crate::getElapsedTime() { return clock.getElapsedTime(); }
+
+void Crate::setInitHeight(int height) { initHeight = height; }
+float Crate::getInitHeight() { return initHeight; }
