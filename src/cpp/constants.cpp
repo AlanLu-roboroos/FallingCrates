@@ -66,6 +66,18 @@ sf::Texture GameConstants::Textures::CRATE_RED_TEXTURE;
 sf::Texture GameConstants::Textures::CRATE_PINK_TEXTURE;
 sf::Texture GameConstants::Textures::CRATE_GOLD_TEXTURE;
 
+sf::Texture GameConstants::Textures::CRATE_BOMB_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_BOMB_FLASHING_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_MEGA_BOMB_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_MEGA_BOMB_FLASHING_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_HYPER_BOMB_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_HYPER_BOMB_FLASHING_TEXTURE;
+
+sf::Texture GameConstants::Textures::CRATE_HEAVY_TEXTURE;
+sf::Texture GameConstants::Textures::CRATE_UNBREAKABLE_TEXTURE;
+
+sf::Texture GameConstants::Textures::CRATE_MULTICOLOR_TEXTURE;
+
 bool GameConstants::Textures::loadTextures() {
   bool loaded = true;
   loaded &= PLATFORM_TEXTURE.loadFromFile("src/res/objects/platform.png");
@@ -84,6 +96,17 @@ bool GameConstants::Textures::loadTextures() {
   loaded &= CRATE_RED_TEXTURE.loadFromFile("src/res/crates/red.png");
   loaded &= CRATE_PINK_TEXTURE.loadFromFile("src/res/crates/pink.png");
   loaded &= CRATE_GOLD_TEXTURE.loadFromFile("src/res/crates/gold.png");
+
+  loaded &= CRATE_BOMB_TEXTURE.loadFromFile("src/res/crates/bomb.png");
+  loaded &=
+      CRATE_BOMB_FLASHING_TEXTURE.loadFromFile("src/res/crates/bomb-flash.png");
+  loaded &= CRATE_MEGA_BOMB_TEXTURE.loadFromFile("src/res/crates/megabomb.png");
+  loaded &= CRATE_MEGA_BOMB_FLASHING_TEXTURE.loadFromFile(
+      "src/res/crates/megabomb-flash.png");
+  loaded &=
+      CRATE_HYPER_BOMB_TEXTURE.loadFromFile("src/res/crates/hyperbomb.png");
+  loaded &= CRATE_HYPER_BOMB_FLASHING_TEXTURE.loadFromFile(
+      "src/res/crates/hyperbomb-flash.png");
 
   return loaded;
 }

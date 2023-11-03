@@ -28,12 +28,15 @@ private:
   Crate *grabbedCrate;
 
   sf::Vector2f getCratePos(int line, int row);
+  Crate *getCrateFromEnum(GameConstants::CrateType type);
 
 public:
   Crates();
   ~Crates();
   bool linePlacable(int line);
   bool spawnCrate(int grabberLine, bool isActive);
+  bool spawnCrate(int grabberLine, bool isActive,
+                  GameConstants::CrateType type);
   bool placeCrate(int line, Crate *crate);
   bool isLineGrabbable(int line);
   Crate *popCrate(int line);

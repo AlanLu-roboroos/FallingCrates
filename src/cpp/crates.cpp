@@ -19,7 +19,8 @@ sf::Vector2f Crates::getCratePos(int line, int row) {
 
 bool Crates::linePlacable(int line) { return crates[line].size() < 6; }
 
-bool Crates::spawnCrate(int grabberLine, bool isActive) {
+bool Crates::spawnCrate(int grabberLine, bool isActive,
+                        GameConstants::CrateType type) {
   vector<int> spawnableLines;
   for (int i = 0; i < crates.size(); i++) {
     if (linePlacable(i) && (!isActive || i != grabberLine)) {
@@ -40,11 +41,16 @@ bool Crates::spawnCrate(int grabberLine, bool isActive) {
               std::back_inserter(out), nelems,
               std::mt19937{std::random_device{}()});
   Crate *tempCrate;
-  tempCrate = new PurpleCrate();
+  tempCrate = getCrateFromEnum(type);
   tempCrate->setState(Crate::CrateState::SPAWNING);
   crates[out[0]].push_back(tempCrate);
 
   return true;
+}
+
+bool Crates::spawnCrate(int grabberLine, bool isActive) {
+  return spawnCrate(grabberLine, isActive,
+                    GameConstants::CrateType::PURPLE_CRATE);
 }
 
 bool Crates::placeCrate(int line, Crate *crate) {
@@ -132,45 +138,14 @@ void Crates::update() {
       }
     }
     for (auto item : toMerge) {
-      Crate *tempCrate;
-      bool success = true;
-      switch (item.second) {
-      case GameConstants::CrateType::PURPLE_CRATE:
-        tempCrate = new PurpleCrate();
-        break;
-      case GameConstants::CrateType::BLUE_CRATE:
-        tempCrate = new BlueCrate();
-        break;
-      case GameConstants::CrateType::GREEN_CRATE:
-        tempCrate = new GreenCrate();
-        break;
-      case GameConstants::CrateType::YELLOW_CRATE:
-        tempCrate = new YellowCrate();
-        break;
-      case GameConstants::CrateType::ORANGE_CRATE:
-        tempCrate = new OrangeCrate();
-        break;
-      case GameConstants::CrateType::RED_CRATE:
-        tempCrate = new RedCrate();
-        break;
-      case GameConstants::CrateType::PINK_CRATE:
-        tempCrate = new PinkCrate();
-        break;
-      case GameConstants::CrateType::GOLD_CRATE:
-        tempCrate = new GoldCrate();
-        break;
-      default:
-        success = false;
-      }
-      if (success) {
-        tempCrate->setState(Crate::CrateState::FALLING);
-        tempCrate->restartClock();
-        tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
-        destroyCrate(column, item.first + 1);
-        destroyCrate(column, item.first);
-        destroyCrate(column, item.first - 1);
-        currentColumn.insert(currentColumn.begin() + item.first - 1, tempCrate);
-      }
+      Crate *tempCrate = getCrateFromEnum(item.second);
+      tempCrate->setState(Crate::CrateState::FALLING);
+      tempCrate->restartClock();
+      tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
+      destroyCrate(column, item.first + 1);
+      destroyCrate(column, item.first);
+      destroyCrate(column, item.first - 1);
+      currentColumn.insert(currentColumn.begin() + item.first - 1, tempCrate);
     }
   }
 }
@@ -226,4 +201,37 @@ bool Crates::setGrabbedCratePos(sf::Vector2f pos) {
     return false;
   grabbedCrate->setPosition(pos);
   return true;
+}
+
+Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
+  Crate *tempCrate;
+  switch (type) {
+  case GameConstants::CrateType::PURPLE_CRATE:
+    tempCrate = new PurpleCrate();
+    break;
+  case GameConstants::CrateType::BLUE_CRATE:
+    tempCrate = new BlueCrate();
+    break;
+  case GameConstants::CrateType::GREEN_CRATE:
+    tempCrate = new GreenCrate();
+    break;
+  case GameConstants::CrateType::YELLOW_CRATE:
+    tempCrate = new YellowCrate();
+    break;
+  case GameConstants::CrateType::ORANGE_CRATE:
+    tempCrate = new OrangeCrate();
+    break;
+  case GameConstants::CrateType::RED_CRATE:
+    tempCrate = new RedCrate();
+    break;
+  case GameConstants::CrateType::PINK_CRATE:
+    tempCrate = new PinkCrate();
+    break;
+  case GameConstants::CrateType::GOLD_CRATE:
+    tempCrate = new GoldCrate();
+    break;
+  default:
+    break;
+  }
+  return tempCrate;
 }

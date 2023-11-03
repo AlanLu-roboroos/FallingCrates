@@ -89,6 +89,19 @@ public:
     static sf::Texture CRATE_RED_TEXTURE;
     static sf::Texture CRATE_PINK_TEXTURE;
     static sf::Texture CRATE_GOLD_TEXTURE;
+
+    static sf::Texture CRATE_BOMB_TEXTURE;
+    static sf::Texture CRATE_BOMB_FLASHING_TEXTURE;
+    static sf::Texture CRATE_MEGA_BOMB_TEXTURE;
+    static sf::Texture CRATE_MEGA_BOMB_FLASHING_TEXTURE;
+    static sf::Texture CRATE_HYPER_BOMB_TEXTURE;
+    static sf::Texture CRATE_HYPER_BOMB_FLASHING_TEXTURE;
+
+    static sf::Texture CRATE_HEAVY_TEXTURE;
+    static sf::Texture CRATE_UNBREAKABLE_TEXTURE;
+
+    static sf::Texture CRATE_MULTICOLOR_TEXTURE;
+
     static bool loadTextures();
   };
 };
