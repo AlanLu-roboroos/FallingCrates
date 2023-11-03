@@ -2,8 +2,15 @@
 #define CRATES_H
 
 #include "constants.hpp"
+#include "crates/blueCrate.hpp"
 #include "crates/crate.hpp"
+#include "crates/goldCrate.hpp"
+#include "crates/greenCrate.hpp"
+#include "crates/orangeCrate.hpp"
+#include "crates/pinkCrate.hpp"
 #include "crates/purpleCrate.hpp"
+#include "crates/redCrate.hpp"
+#include "crates/yellowCrate.hpp"
 #include <algorithm>
 #include <cmath>
 #include <iostream>

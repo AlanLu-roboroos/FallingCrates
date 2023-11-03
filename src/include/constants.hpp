@@ -67,7 +67,8 @@ public:
     HYPERBOMB_CRATE,
     HEACY_CRATE,
     UNBREAKABLE_CRATE,
-    MULTICOLOR_CRATE
+    MULTICOLOR_CRATE,
+    NONE
   };
 
   class Textures {

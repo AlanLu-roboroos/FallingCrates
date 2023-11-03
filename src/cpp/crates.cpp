@@ -40,10 +40,7 @@ bool Crates::spawnCrate(int grabberLine, bool isActive) {
               std::back_inserter(out), nelems,
               std::mt19937{std::random_device{}()});
   Crate *tempCrate;
-  if (out[0] == 0)
-    tempCrate = new BlueCrate();
-  else
-    tempCrate = new PurpleCrate();
+  tempCrate = new PurpleCrate();
   tempCrate->setState(Crate::CrateState::SPAWNING);
   crates[out[0]].push_back(tempCrate);
 
@@ -143,6 +140,24 @@ void Crates::update() {
         break;
       case GameConstants::CrateType::BLUE_CRATE:
         tempCrate = new BlueCrate();
+        break;
+      case GameConstants::CrateType::GREEN_CRATE:
+        tempCrate = new GreenCrate();
+        break;
+      case GameConstants::CrateType::YELLOW_CRATE:
+        tempCrate = new YellowCrate();
+        break;
+      case GameConstants::CrateType::ORANGE_CRATE:
+        tempCrate = new OrangeCrate();
+        break;
+      case GameConstants::CrateType::RED_CRATE:
+        tempCrate = new RedCrate();
+        break;
+      case GameConstants::CrateType::PINK_CRATE:
+        tempCrate = new PinkCrate();
+        break;
+      case GameConstants::CrateType::GOLD_CRATE:
+        tempCrate = new GoldCrate();
         break;
       default:
         success = false;

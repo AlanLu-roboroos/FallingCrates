@@ -13,5 +13,5 @@ bool BlueCrate::explodable() { return true; }
 bool BlueCrate::moveable() { return state != CrateState::SPAWNING; }
 
 GameConstants::CrateType BlueCrate::nextCrate() {
-  return GameConstants::CrateType::PURPLE_CRATE;
+  return GameConstants::CrateType::GREEN_CRATE;
 }

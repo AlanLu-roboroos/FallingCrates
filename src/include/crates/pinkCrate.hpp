@@ -1,12 +1,12 @@
-#ifndef PURPLECRATE_H
-#define PURPLECRATE_H
+#ifndef PINKCRATE_H
+#define PINKCRATE_H
 
 #include "crates/crate.hpp"
 #include <memory>
 
-class PurpleCrate : public Crate {
+class PinkCrate : public Crate {
 public:
-  PurpleCrate();
+  PinkCrate();
 
   virtual sf::Texture &getTexture();
   virtual bool explodable();
