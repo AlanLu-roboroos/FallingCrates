@@ -31,3 +31,5 @@ sf::Time Crate::getElapsedTime() { return clock.getElapsedTime(); }
 
 void Crate::setInitHeight(int height) { initHeight = height; }
 float Crate::getInitHeight() { return initHeight; }
+
+GameConstants::CrateType Crate::getCrateType() { return crateType; }

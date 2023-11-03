@@ -1,6 +1,9 @@
 #include "crates/purpleCrate.hpp"
 
-PurpleCrate::PurpleCrate() { init(); }
+PurpleCrate::PurpleCrate() {
+  init();
+  crateType = GameConstants::CrateType::PURPLE_CRATE;
+}
 
 sf::Texture &PurpleCrate::getTexture() {
   return GameConstants::Textures::CRATE_PURPLE_TEXTURE;
@@ -9,7 +12,6 @@ sf::Texture &PurpleCrate::getTexture() {
 bool PurpleCrate::explodable() { return true; }
 bool PurpleCrate::moveable() { return state != CrateState::SPAWNING; }
 
-Crate *PurpleCrate::nextCrate() {
-  Crate *temp(new BlueCrate());
-  return temp;
+GameConstants::CrateType PurpleCrate::nextCrate() {
+  return GameConstants::CrateType::BLUE_CRATE;
 }

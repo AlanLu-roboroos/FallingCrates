@@ -53,6 +53,23 @@ public:
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
 
+  enum CrateType {
+    PURPLE_CRATE,
+    BLUE_CRATE,
+    GREEN_CRATE,
+    YELLOW_CRATE,
+    ORANGE_CRATE,
+    RED_CRATE,
+    PINK_CRATE,
+    GOLD_CRATE,
+    BOMB_CRATE,
+    MEGABOMB_CRATE,
+    HYPERBOMB_CRATE,
+    HEACY_CRATE,
+    UNBREAKABLE_CRATE,
+    MULTICOLOR_CRATE
+  };
+
   class Textures {
   public:
     static sf::Texture PLATFORM_TEXTURE;

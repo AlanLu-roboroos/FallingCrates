@@ -11,7 +11,7 @@ public:
   virtual sf::Texture &getTexture();
   virtual bool explodable();
   virtual bool moveable();
-  virtual Crate *nextCrate();
+  virtual GameConstants::CrateType nextCrate();
 };
 
 #endif

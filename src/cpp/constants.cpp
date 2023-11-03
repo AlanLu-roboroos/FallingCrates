@@ -15,7 +15,7 @@ float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
 float GameConstants::GRABBER_VERTICAL_SPEED = 8;
 
 float GameConstants::CRATE_GROWTH_SPEED = 0.6;
-float GameConstants::CRATE_FALLING_ACCELERATION = 0.0013;
+float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
 
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;
@@ -24,12 +24,12 @@ sf::Color GameConstants::BACKGROUND_COLOR = sf::Color(180, 180, 180);
 sf::Color GameConstants::BORDER_COLOR = sf::Color(50, 50, 50);
 sf::Color GameConstants::HEADER_COLOR = sf::Color(120, 120, 120);
 
-int GameConstants::PLATFORM_HEIGHT = 1236;
-int GameConstants::SPAWN_HEIGHT = 410;
+int GameConstants::PLATFORM_HEIGHT = 1262;
+int GameConstants::SPAWN_HEIGHT = 436;
 
 std::vector<int> GameConstants::COLUMN_X = {164,  392,  620,  848,
                                             1076, 1304, 1532, 1760};
-std::vector<int> GameConstants::ROW_Y = {1236, 1108, 980, 852, 724, 596};
+std::vector<int> GameConstants::ROW_Y = {1262, 1134, 1006, 878, 750, 622};
 
 std::vector<sf::Vector2f> GameConstants::PLATFORM_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[0], GameConstants::PLATFORM_HEIGHT),

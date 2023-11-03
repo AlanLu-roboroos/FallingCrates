@@ -15,6 +15,7 @@ protected:
 
   CrateState state;
   sf::Clock clock;
+  GameConstants::CrateType crateType;
 
   float initHeight;
 
@@ -38,10 +39,12 @@ public:
   void setInitHeight(int height);
   float getInitHeight();
 
+  GameConstants::CrateType getCrateType();
+
   virtual ~Crate() = default;
   virtual bool explodable() = 0;
   virtual bool moveable() = 0;
-  virtual Crate *nextCrate() = 0;
+  virtual GameConstants::CrateType nextCrate() = 0;
 };
 
 #endif

@@ -39,7 +39,11 @@ bool Crates::spawnCrate(int grabberLine, bool isActive) {
   std::sample(spawnableLines.begin(), spawnableLines.end(),
               std::back_inserter(out), nelems,
               std::mt19937{std::random_device{}()});
-  Crate *tempCrate = new PurpleCrate();
+  Crate *tempCrate;
+  if (out[0] == 0)
+    tempCrate = new BlueCrate();
+  else
+    tempCrate = new PurpleCrate();
   tempCrate->setState(Crate::CrateState::SPAWNING);
   crates[out[0]].push_back(tempCrate);
 
@@ -110,6 +114,47 @@ void Crates::update() {
         break;
       default:
         break;
+      }
+    }
+    // Add merge code here
+    crate_col &currentColumn = crates[column];
+    vector<std::pair<int, GameConstants::CrateType>> toMerge;
+    if (currentColumn.size() >= 3) {
+      for (int i = 1; i < currentColumn.size() - 1; i++) {
+        if (currentColumn[i - 1]->getState() == Crate::CrateState::IDLE &&
+            currentColumn[i]->getState() == Crate::CrateState::IDLE &&
+            currentColumn[i + 1]->getState() == Crate::CrateState::IDLE) {
+          if (currentColumn[i]->getCrateType() ==
+                  currentColumn[i - 1]->getCrateType() &&
+              currentColumn[i]->getCrateType() ==
+                  currentColumn[i + 1]->getCrateType()) {
+
+            toMerge.push_back(std::make_pair(i, currentColumn[i]->nextCrate()));
+          }
+        }
+      }
+    }
+    for (auto item : toMerge) {
+      Crate *tempCrate;
+      bool success = true;
+      switch (item.second) {
+      case GameConstants::CrateType::PURPLE_CRATE:
+        tempCrate = new PurpleCrate();
+        break;
+      case GameConstants::CrateType::BLUE_CRATE:
+        tempCrate = new BlueCrate();
+        break;
+      default:
+        success = false;
+      }
+      if (success) {
+        tempCrate->setState(Crate::CrateState::FALLING);
+        tempCrate->restartClock();
+        tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
+        destroyCrate(column, item.first + 1);
+        destroyCrate(column, item.first);
+        destroyCrate(column, item.first - 1);
+        currentColumn.insert(currentColumn.begin() + item.first - 1, tempCrate);
       }
     }
   }
