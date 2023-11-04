@@ -42,6 +42,8 @@ bool Crates::spawnCrate(int grabberLine, bool isActive,
               std::mt19937{std::random_device{}()});
   Crate *tempCrate;
   tempCrate = getCrateFromEnum(type);
+  if (tempCrate == nullptr)
+    return false;
   tempCrate->setState(Crate::CrateState::SPAWNING);
   crates[out[0]].push_back(tempCrate);
 
@@ -150,6 +152,8 @@ void Crates::mergeCrates() {
     }
     for (auto item : toMerge) {
       Crate *tempCrate = getCrateFromEnum(item.second);
+      if (tempCrate == nullptr)
+        continue;
       tempCrate->setState(Crate::CrateState::FALLING);
       tempCrate->restartClock();
       tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
@@ -169,42 +173,19 @@ void Crates::explodeCrate() {
         if (currentCrate->isExploded()) {
           switch (currentCrate->getCrateType()) {
           case GameConstants::CrateType::BOMB_CRATE:
-            if (crates[column].size() > row + 1) {
-              delete crates[column][row + 1];
-              crates[column].erase(crates[column].begin() + row + 1);
-            }
-            delete crates[column][row];
-            crates[column].erase(crates[column].begin() + row);
-            if (row > 0) {
-              delete crates[column][row - 1];
-              crates[column].erase(crates[column].begin() + row - 1);
-            }
+            explodeCrateRange(column, row + 1, row - 1);
             break;
           case GameConstants::CrateType::MEGA_BOMB_CRATE:
-            if (column != 0) {
-              for (int c_row = row + 1; c_row >= row - 1; c_row--) {
-                if (crates[column - 1].size() > c_row) {
-                  delete crates[column - 1][c_row];
-                  crates[column - 1].erase(crates[column - 1].begin() + c_row);
-                }
-              }
-            }
-            for (int c_row = row + 2; c_row >= row - 2; c_row--) {
-              if (crates[column].size() > c_row) {
-                delete crates[column][c_row];
-                crates[column].erase(crates[column].begin() + c_row);
-              }
-            }
-            if (column != GameConstants::CRATE_COLUMNS - 1) {
-              for (int c_row = row + 1; c_row >= row - 1; c_row--) {
-                if (crates[column + 1].size() > c_row) {
-                  delete crates[column + 1][c_row];
-                  crates[column + 1].erase(crates[column + 1].begin() + c_row);
-                }
-              }
-            }
+            explodeCrateRange(column - 1, row + 1, row - 1);
+            explodeCrateRange(column, row + 2, row - 2);
+            explodeCrateRange(column + 1, row + 1, row - 1);
             break;
           case GameConstants::CrateType::HYPER_BOMB_CRATE:
+            explodeCrateRange(column - 2, row + 1, row - 1);
+            explodeCrateRange(column - 1, row + 2, row - 2);
+            explodeCrateRange(column, row + 3, row - 3);
+            explodeCrateRange(column + 1, row + 2, row - 2);
+            explodeCrateRange(column + 2, row + 1, row - 1);
             break;
           default:
             break;
@@ -214,6 +195,31 @@ void Crates::explodeCrate() {
       }
     }
   }
+}
+
+bool Crates::explodeCrateRange(int line, int _start, int _end) {
+  if (line >= 0 && line < GameConstants::CRATE_COLUMNS) {
+    int start, end;
+    start = std::max(_start, _end);
+    end = std::min(_start, _end);
+    for (int row = start; row < crates[line].size(); row++) {
+      if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
+        crates[line][row]->restartClock();
+        crates[line][row]->setState(Crate::CrateState::FALLING);
+        crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
+      }
+    }
+    for (int row = start; row >= end; row--) {
+      if (crates[line].size() > row) {
+        if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
+          delete crates[line][row];
+          crates[line].erase(crates[line].begin() + row);
+        }
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 void Crates::drawCrates(sf::RenderWindow &window) {
@@ -302,8 +308,11 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
   case GameConstants::CrateType::MEGA_BOMB_CRATE:
     tempCrate = new MegaBombCrate();
     break;
-  default:
+  case GameConstants::CrateType::HYPER_BOMB_CRATE:
+    tempCrate = new HyperBombCrate();
     break;
+  default:
+    tempCrate = nullptr;
   }
   return tempCrate;
 }

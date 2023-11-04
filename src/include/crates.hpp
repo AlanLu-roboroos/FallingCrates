@@ -7,6 +7,7 @@
 #include "crates/crate.hpp"
 #include "crates/goldCrate.hpp"
 #include "crates/greenCrate.hpp"
+#include "crates/hyperBombCrate.hpp"
 #include "crates/megaBombCrate.hpp"
 #include "crates/orangeCrate.hpp"
 #include "crates/pinkCrate.hpp"
@@ -35,6 +36,7 @@ private:
   void updateCrates();
   void mergeCrates();
   void explodeCrate();
+  bool explodeCrateRange(int line, int start, int end);
 
 public:
   Crates();

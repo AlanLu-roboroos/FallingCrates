@@ -160,7 +160,8 @@ void Grabber::drawGrabber(sf::RenderWindow &window) {
 
 void Grabber::update() {
   if (gotoQueue.size() != 0 &&
-      (state == GrabberState::EMPTY || state == GrabberState::FULL)) {
+      (state == GrabberState::EMPTY || state == GrabberState::FULL ||
+       state == GrabberState::STARTING)) {
     goTo(gotoQueue.front());
     gotoQueue.erase(gotoQueue.begin());
   }
@@ -168,7 +169,6 @@ void Grabber::update() {
   case GrabberState::STARTING:
     openGripper();
     setPosition(GameConstants::GRABBER_START_POS);
-    state = GrabberState::EMPTY;
     break;
   case GrabberState::EMPTY:
     setPosition(GameConstants::COLUMN_X[column],

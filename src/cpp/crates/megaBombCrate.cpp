@@ -22,5 +22,5 @@ void MegaBombCrate::drawCrate(sf::RenderWindow &window) {
 }
 
 GameConstants::CrateType MegaBombCrate::nextCrate() {
-  return GameConstants::CrateType::GREEN_CRATE;
+  return GameConstants::CrateType::HYPER_BOMB_CRATE;
 }
