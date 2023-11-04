@@ -32,5 +32,5 @@ bool BombCrate::explodable() { return true; }
 bool BombCrate::moveable() { return state != CrateState::SPAWNING; }
 
 GameConstants::CrateType BombCrate::nextCrate() {
-  return GameConstants::CrateType::GREEN_CRATE;
+  return GameConstants::CrateType::MEGA_BOMB_CRATE;
 }

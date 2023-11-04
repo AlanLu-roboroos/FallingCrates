@@ -167,13 +167,47 @@ void Crates::explodeCrate() {
       Crate *currentCrate = crates[column][row];
       if (isBomb(currentCrate->getCrateType())) {
         if (currentCrate->isExploded()) {
-          delete currentCrate;
-          if (crates[column].size() > row + 1) {
-            crates[column].erase(crates[column].begin() + row + 1);
-          }
-          crates[column].erase(crates[column].begin() + row);
-          if (row > 0) {
-            crates[column].erase(crates[column].begin() + row - 1);
+          switch (currentCrate->getCrateType()) {
+          case GameConstants::CrateType::BOMB_CRATE:
+            if (crates[column].size() > row + 1) {
+              delete crates[column][row + 1];
+              crates[column].erase(crates[column].begin() + row + 1);
+            }
+            delete crates[column][row];
+            crates[column].erase(crates[column].begin() + row);
+            if (row > 0) {
+              delete crates[column][row - 1];
+              crates[column].erase(crates[column].begin() + row - 1);
+            }
+            break;
+          case GameConstants::CrateType::MEGA_BOMB_CRATE:
+            if (column != 0) {
+              for (int c_row = row + 1; c_row >= row - 1; c_row--) {
+                if (crates[column - 1].size() > c_row) {
+                  delete crates[column - 1][c_row];
+                  crates[column - 1].erase(crates[column - 1].begin() + c_row);
+                }
+              }
+            }
+            for (int c_row = row + 2; c_row >= row - 2; c_row--) {
+              if (crates[column].size() > c_row) {
+                delete crates[column][c_row];
+                crates[column].erase(crates[column].begin() + c_row);
+              }
+            }
+            if (column != GameConstants::CRATE_COLUMNS - 1) {
+              for (int c_row = row + 1; c_row >= row - 1; c_row--) {
+                if (crates[column + 1].size() > c_row) {
+                  delete crates[column + 1][c_row];
+                  crates[column + 1].erase(crates[column + 1].begin() + c_row);
+                }
+              }
+            }
+            break;
+          case GameConstants::CrateType::HYPER_BOMB_CRATE:
+            break;
+          default:
+            break;
           }
           return;
         }
@@ -264,6 +298,10 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
     break;
   case GameConstants::CrateType::BOMB_CRATE:
     tempCrate = new BombCrate();
+    break;
+  case GameConstants::CrateType::MEGA_BOMB_CRATE:
+    tempCrate = new MegaBombCrate();
+    break;
   default:
     break;
   }
@@ -273,8 +311,8 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
 bool Crates::isBomb(GameConstants::CrateType type) {
   switch (type) {
   case GameConstants::CrateType::BOMB_CRATE:
-  case GameConstants::CrateType::MEGABOMB_CRATE:
-  case GameConstants::CrateType::HYPERBOMB_CRATE:
+  case GameConstants::CrateType::MEGA_BOMB_CRATE:
+  case GameConstants::CrateType::HYPER_BOMB_CRATE:
     return true;
   default:
     return false;
