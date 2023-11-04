@@ -17,6 +17,9 @@ float GameConstants::GRABBER_VERTICAL_SPEED = 8;
 float GameConstants::CRATE_GROWTH_SPEED = 0.6;
 float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
 
+float GameConstants::BOMB_FLASHING_TIME = 200;
+float GameConstants::BOMB_EXPLODE_TIME = 10000;
+
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;
 

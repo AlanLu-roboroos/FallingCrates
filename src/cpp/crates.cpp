@@ -81,6 +81,12 @@ void Crates::destroyCrate(int line, int row) {
 }
 
 void Crates::update() {
+  updateCrates();
+  mergeCrates();
+  explodeCrate();
+}
+
+void Crates::updateCrates() {
   for (int column = 0; column < crates.size(); column++) {
     for (int row = 0; row < crates[column].size(); row++) {
       Crate *currentCrate = crates[column][row];
@@ -119,6 +125,11 @@ void Crates::update() {
         break;
       }
     }
+  }
+}
+
+void Crates::mergeCrates() {
+  for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
     // Add merge code here
     crate_col &currentColumn = crates[column];
     vector<std::pair<int, GameConstants::CrateType>> toMerge;
@@ -146,6 +157,27 @@ void Crates::update() {
       destroyCrate(column, item.first);
       destroyCrate(column, item.first - 1);
       currentColumn.insert(currentColumn.begin() + item.first - 1, tempCrate);
+    }
+  }
+}
+
+void Crates::explodeCrate() {
+  for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
+    for (int row = 0; row < crates[column].size(); row++) {
+      Crate *currentCrate = crates[column][row];
+      if (isBomb(currentCrate->getCrateType())) {
+        if (currentCrate->isExploded()) {
+          delete currentCrate;
+          if (crates[column].size() > row + 1) {
+            crates[column].erase(crates[column].begin() + row + 1);
+          }
+          crates[column].erase(crates[column].begin() + row);
+          if (row > 0) {
+            crates[column].erase(crates[column].begin() + row - 1);
+          }
+          return;
+        }
+      }
     }
   }
 }
@@ -230,8 +262,21 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
   case GameConstants::CrateType::GOLD_CRATE:
     tempCrate = new GoldCrate();
     break;
+  case GameConstants::CrateType::BOMB_CRATE:
+    tempCrate = new BombCrate();
   default:
     break;
   }
   return tempCrate;
+}
+
+bool Crates::isBomb(GameConstants::CrateType type) {
+  switch (type) {
+  case GameConstants::CrateType::BOMB_CRATE:
+  case GameConstants::CrateType::MEGABOMB_CRATE:
+  case GameConstants::CrateType::HYPERBOMB_CRATE:
+    return true;
+  default:
+    return false;
+  }
 }

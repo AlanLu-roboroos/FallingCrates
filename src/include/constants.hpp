@@ -38,6 +38,9 @@ public:
   static float CRATE_GROWTH_SPEED;
   static float CRATE_FALLING_ACCELERATION;
 
+  static float BOMB_FLASHING_TIME;
+  static float BOMB_EXPLODE_TIME;
+
   static int BORDER_HEIGHT;
   static int BORDER_WIDTH;
 

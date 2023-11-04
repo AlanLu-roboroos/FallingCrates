@@ -30,8 +30,13 @@ int main() {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
-        } else if (event.key.code == sf::Keyboard::A) {
+        } else if (event.key.code == sf::Keyboard::P) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
+            std::cout << "Full" << std::endl;
+          }
+        } else if (event.key.code == sf::Keyboard::B) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                 GameConstants::CrateType::BOMB_CRATE)) {
             std::cout << "Full" << std::endl;
           }
         }

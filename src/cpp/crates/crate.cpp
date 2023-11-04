@@ -10,6 +10,8 @@ void Crate::init() {
   state = Crate::NONE;
 }
 
+bool Crate::isExploded() { return false; }
+
 void Crate::drawCrate(sf::RenderWindow &window) { window.draw(crateSprite); }
 
 void Crate::setPosition(sf::Vector2f pos) { crateSprite.setPosition(pos); }

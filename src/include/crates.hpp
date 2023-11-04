@@ -3,6 +3,7 @@
 
 #include "constants.hpp"
 #include "crates/blueCrate.hpp"
+#include "crates/bombCrate.hpp"
 #include "crates/crate.hpp"
 #include "crates/goldCrate.hpp"
 #include "crates/greenCrate.hpp"
@@ -29,6 +30,10 @@ private:
 
   sf::Vector2f getCratePos(int line, int row);
   Crate *getCrateFromEnum(GameConstants::CrateType type);
+  bool isBomb(GameConstants::CrateType type);
+  void updateCrates();
+  void mergeCrates();
+  void explodeCrate();
 
 public:
   Crates();
