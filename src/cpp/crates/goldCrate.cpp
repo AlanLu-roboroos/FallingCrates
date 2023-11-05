@@ -6,7 +6,7 @@ GoldCrate::GoldCrate() {
 }
 
 sf::Texture &GoldCrate::getTexture() {
-  return GameConstants::Textures::CRATE_GOLD_TEXTURE;
+  return GameConstants::Resources::CRATE_GOLD_TEXTURE;
 }
 
 bool GoldCrate::explodable() { return true; }

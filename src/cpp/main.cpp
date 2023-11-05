@@ -5,6 +5,7 @@
 #include "crates.hpp"
 #include "crates/purpleCrate.hpp"
 #include "grabber.hpp"
+#include "scorer.hpp"
 #include <iostream>
 
 int main() {
@@ -13,7 +14,7 @@ int main() {
       "Falling Crates");
   window.setFramerateLimit(360);
 
-  if (!GameConstants::Textures::loadTextures()) {
+  if (!GameConstants::Resources::loadResources()) {
     std::cout << "IMAGES NOT LOADED" << std::endl;
     return 1;
   }
@@ -21,6 +22,7 @@ int main() {
   Background background;
   Crates crates;
   Grabber grabber(&crates);
+  Scorer scorer;
 
   while (window.isOpen()) {
     sf::Event event;
@@ -30,7 +32,9 @@ int main() {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
-        } else if (event.key.code == sf::Keyboard::P) {
+        }
+        // TEMPORARY CODE
+        else if (event.key.code == sf::Keyboard::P) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
             std::cout << "Full" << std::endl;
           }
@@ -39,7 +43,15 @@ int main() {
                                  GameConstants::CrateType::BOMB_CRATE)) {
             std::cout << "Full" << std::endl;
           }
+        } else if (event.key.code == sf::Keyboard::B) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                 GameConstants::CrateType::BOMB_CRATE)) {
+            std::cout << "Full" << std::endl;
+          }
+        } else if (event.key.code == sf::Keyboard::A) {
+          scorer.addScore(100, sf::Vector2f(164, 436));
         }
+        // END TEMPORARY CODE
       }
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
@@ -59,6 +71,7 @@ int main() {
     background.drawBackground(window);
     grabber.drawGrabber(window);
     crates.drawCrates(window);
+    scorer.drawScore(window);
 
     window.display();
   }

@@ -15,28 +15,28 @@ Grabber::Grabber(Crates *__crates) {
   lastTime = clock.getElapsedTime();
 
   grabHori = sf::Sprite();
-  grabHori.setTexture(GameConstants::Textures::GRABBER_HORI);
+  grabHori.setTexture(GameConstants::Resources::GRABBER_HORI);
   grabHori.setScale(
       GameConstants::CRATE_SIZE.x / grabHori.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / grabHori.getLocalBounds().height);
   grabHori.setOrigin(sf::Vector2f(8, 12));
 
   grabLeft = sf::Sprite();
-  grabLeft.setTexture(GameConstants::Textures::GRABBER_LEFT);
+  grabLeft.setTexture(GameConstants::Resources::GRABBER_LEFT);
   grabLeft.setScale(
       GameConstants::CRATE_SIZE.x / grabLeft.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / grabLeft.getLocalBounds().height);
   grabLeft.setOrigin(sf::Vector2f(24, 14));
 
   grabRight = sf::Sprite();
-  grabRight.setTexture(GameConstants::Textures::GRABBER_RIGHT);
+  grabRight.setTexture(GameConstants::Resources::GRABBER_RIGHT);
   grabRight.setScale(
       GameConstants::CRATE_SIZE.x / grabRight.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / grabRight.getLocalBounds().height);
   grabRight.setOrigin(sf::Vector2f(-8, 14));
 
   grabVert = sf::Sprite();
-  grabVert.setTexture(GameConstants::Textures::GRABBER_VERT);
+  grabVert.setTexture(GameConstants::Resources::GRABBER_VERT);
   grabVert.setScale(
       GameConstants::CRATE_SIZE.x / grabVert.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / grabVert.getLocalBounds().height);

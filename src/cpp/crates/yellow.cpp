@@ -6,7 +6,7 @@ YellowCrate::YellowCrate() {
 }
 
 sf::Texture &YellowCrate::getTexture() {
-  return GameConstants::Textures::CRATE_YELLOW_TEXTURE;
+  return GameConstants::Resources::CRATE_YELLOW_TEXTURE;
 }
 
 bool YellowCrate::explodable() { return true; }

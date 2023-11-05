@@ -6,7 +6,7 @@ OrangeCrate::OrangeCrate() {
 }
 
 sf::Texture &OrangeCrate::getTexture() {
-  return GameConstants::Textures::CRATE_ORANGE_TEXTURE;
+  return GameConstants::Resources::CRATE_ORANGE_TEXTURE;
 }
 
 bool OrangeCrate::explodable() { return true; }

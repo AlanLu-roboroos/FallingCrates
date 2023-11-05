@@ -6,7 +6,7 @@ RedCrate::RedCrate() {
 }
 
 sf::Texture &RedCrate::getTexture() {
-  return GameConstants::Textures::CRATE_RED_TEXTURE;
+  return GameConstants::Resources::CRATE_RED_TEXTURE;
 }
 
 bool RedCrate::explodable() { return true; }

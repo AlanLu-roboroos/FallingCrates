@@ -3,7 +3,7 @@
 Background::Background() {
   for (int i = 0; i < 8; i++) {
     platform_sprites[i] = sf::Sprite();
-    platform_sprites[i].setTexture(GameConstants::Textures::PLATFORM_TEXTURE);
+    platform_sprites[i].setTexture(GameConstants::Resources::PLATFORM_TEXTURE);
     platform_sprites[i].setScale(
         GameConstants::PLATFORM_SIZE.x /
             platform_sprites[i].getLocalBounds().width,
@@ -13,7 +13,7 @@ Background::Background() {
     platform_sprites[i].setPosition(GameConstants::PLATFORM_POS[i]);
 
     spawn_sprites[i] = sf::Sprite();
-    spawn_sprites[i].setTexture(GameConstants::Textures::SPAWN_TEXTURE);
+    spawn_sprites[i].setTexture(GameConstants::Resources::SPAWN_TEXTURE);
     spawn_sprites[i].setScale(
         GameConstants::SPAWN_SIZE.x / spawn_sprites[i].getLocalBounds().width,
         GameConstants::SPAWN_SIZE.y / spawn_sprites[i].getLocalBounds().height);

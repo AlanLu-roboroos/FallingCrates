@@ -6,7 +6,7 @@ BlueCrate::BlueCrate() {
 }
 
 sf::Texture &BlueCrate::getTexture() {
-  return GameConstants::Textures::CRATE_BLUE_TEXTURE;
+  return GameConstants::Resources::CRATE_BLUE_TEXTURE;
 }
 
 bool BlueCrate::explodable() { return true; }

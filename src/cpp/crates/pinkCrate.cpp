@@ -6,7 +6,7 @@ PinkCrate::PinkCrate() {
 }
 
 sf::Texture &PinkCrate::getTexture() {
-  return GameConstants::Textures::CRATE_PINK_TEXTURE;
+  return GameConstants::Resources::CRATE_PINK_TEXTURE;
 }
 
 bool PinkCrate::explodable() { return true; }

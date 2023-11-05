@@ -54,34 +54,36 @@ std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[6], GameConstants::SPAWN_HEIGHT),
     sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
 
-sf::Texture GameConstants::Textures::PLATFORM_TEXTURE;
-sf::Texture GameConstants::Textures::SPAWN_TEXTURE;
-sf::Texture GameConstants::Textures::GRABBER_HORI;
-sf::Texture GameConstants::Textures::GRABBER_LEFT;
-sf::Texture GameConstants::Textures::GRABBER_RIGHT;
-sf::Texture GameConstants::Textures::GRABBER_VERT;
-sf::Texture GameConstants::Textures::CRATE_PURPLE_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_BLUE_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_GREEN_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_YELLOW_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_ORANGE_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_RED_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_PINK_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_GOLD_TEXTURE;
+sf::Texture GameConstants::Resources::PLATFORM_TEXTURE;
+sf::Texture GameConstants::Resources::SPAWN_TEXTURE;
+sf::Texture GameConstants::Resources::GRABBER_HORI;
+sf::Texture GameConstants::Resources::GRABBER_LEFT;
+sf::Texture GameConstants::Resources::GRABBER_RIGHT;
+sf::Texture GameConstants::Resources::GRABBER_VERT;
+sf::Texture GameConstants::Resources::CRATE_PURPLE_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_BLUE_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_GREEN_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_YELLOW_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_ORANGE_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_RED_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_PINK_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_GOLD_TEXTURE;
 
-sf::Texture GameConstants::Textures::CRATE_BOMB_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_BOMB_FLASHING_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_MEGA_BOMB_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_MEGA_BOMB_FLASHING_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_HYPER_BOMB_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_HYPER_BOMB_FLASHING_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_BOMB_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_BOMB_FLASHING_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_MEGA_BOMB_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_MEGA_BOMB_FLASHING_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_HYPER_BOMB_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_HYPER_BOMB_FLASHING_TEXTURE;
 
-sf::Texture GameConstants::Textures::CRATE_HEAVY_TEXTURE;
-sf::Texture GameConstants::Textures::CRATE_UNBREAKABLE_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_HEAVY_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_UNBREAKABLE_TEXTURE;
 
-sf::Texture GameConstants::Textures::CRATE_MULTICOLOR_TEXTURE;
+sf::Texture GameConstants::Resources::CRATE_MULTICOLOR_TEXTURE;
 
-bool GameConstants::Textures::loadTextures() {
+sf::Font GameConstants::Resources::SCORE_FONT;
+
+bool GameConstants::Resources::loadResources() {
   bool loaded = true;
   loaded &= PLATFORM_TEXTURE.loadFromFile("src/res/objects/platform.png");
   loaded &= SPAWN_TEXTURE.loadFromFile("src/res/objects/spawn.png");
@@ -110,6 +112,8 @@ bool GameConstants::Textures::loadTextures() {
       CRATE_HYPER_BOMB_TEXTURE.loadFromFile("src/res/crates/hyperbomb.png");
   loaded &= CRATE_HYPER_BOMB_FLASHING_TEXTURE.loadFromFile(
       "src/res/crates/hyperbomb-flash.png");
+
+  loaded &= SCORE_FONT.loadFromFile("src/res/font.otf");
 
   return loaded;
 }

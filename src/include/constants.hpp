@@ -74,7 +74,7 @@ public:
     NONE
   };
 
-  class Textures {
+  class Resources {
   public:
     static sf::Texture PLATFORM_TEXTURE;
     static sf::Texture SPAWN_TEXTURE;
@@ -105,7 +105,9 @@ public:
 
     static sf::Texture CRATE_MULTICOLOR_TEXTURE;
 
-    static bool loadTextures();
+    static sf::Font SCORE_FONT;
+
+    static bool loadResources();
   };
 };
 

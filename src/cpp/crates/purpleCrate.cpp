@@ -6,7 +6,7 @@ PurpleCrate::PurpleCrate() {
 }
 
 sf::Texture &PurpleCrate::getTexture() {
-  return GameConstants::Textures::CRATE_PURPLE_TEXTURE;
+  return GameConstants::Resources::CRATE_PURPLE_TEXTURE;
 }
 
 bool PurpleCrate::explodable() { return true; }

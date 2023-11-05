@@ -6,7 +6,7 @@ HyperBombCrate::HyperBombCrate() {
 }
 
 sf::Texture &HyperBombCrate::getTexture() {
-  return GameConstants::Textures::CRATE_HYPER_BOMB_TEXTURE;
+  return GameConstants::Resources::CRATE_HYPER_BOMB_TEXTURE;
 }
 
 void HyperBombCrate::drawCrate(sf::RenderWindow &window) {
@@ -14,9 +14,9 @@ void HyperBombCrate::drawCrate(sf::RenderWindow &window) {
           static_cast<int>(GameConstants::BOMB_FLASHING_TIME * 2) >
       GameConstants::BOMB_FLASHING_TIME) {
     crateSprite.setTexture(
-        GameConstants::Textures::CRATE_HYPER_BOMB_FLASHING_TEXTURE);
+        GameConstants::Resources::CRATE_HYPER_BOMB_FLASHING_TEXTURE);
   } else {
-    crateSprite.setTexture(GameConstants::Textures::CRATE_HYPER_BOMB_TEXTURE);
+    crateSprite.setTexture(GameConstants::Resources::CRATE_HYPER_BOMB_TEXTURE);
   }
   window.draw(crateSprite);
 }

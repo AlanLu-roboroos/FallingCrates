@@ -6,7 +6,7 @@ MegaBombCrate::MegaBombCrate() {
 }
 
 sf::Texture &MegaBombCrate::getTexture() {
-  return GameConstants::Textures::CRATE_MEGA_BOMB_TEXTURE;
+  return GameConstants::Resources::CRATE_MEGA_BOMB_TEXTURE;
 }
 
 void MegaBombCrate::drawCrate(sf::RenderWindow &window) {
@@ -14,9 +14,9 @@ void MegaBombCrate::drawCrate(sf::RenderWindow &window) {
           static_cast<int>(GameConstants::BOMB_FLASHING_TIME * 2) >
       GameConstants::BOMB_FLASHING_TIME) {
     crateSprite.setTexture(
-        GameConstants::Textures::CRATE_MEGA_BOMB_FLASHING_TEXTURE);
+        GameConstants::Resources::CRATE_MEGA_BOMB_FLASHING_TEXTURE);
   } else {
-    crateSprite.setTexture(GameConstants::Textures::CRATE_MEGA_BOMB_TEXTURE);
+    crateSprite.setTexture(GameConstants::Resources::CRATE_MEGA_BOMB_TEXTURE);
   }
   window.draw(crateSprite);
 }

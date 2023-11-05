@@ -6,7 +6,7 @@ GreenCrate::GreenCrate() {
 }
 
 sf::Texture &GreenCrate::getTexture() {
-  return GameConstants::Textures::CRATE_GREEN_TEXTURE;
+  return GameConstants::Resources::CRATE_GREEN_TEXTURE;
 }
 
 bool GreenCrate::explodable() { return true; }
