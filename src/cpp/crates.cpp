@@ -1,8 +1,9 @@
 #include "crates.hpp"
 
-Crates::Crates() {
+Crates::Crates(Scorer *_scorer) {
   crates = vector<crate_col>(8);
   grabbedCrate = nullptr;
+  scorer = _scorer;
 }
 
 Crates::~Crates() {
@@ -157,6 +158,7 @@ void Crates::mergeCrates() {
       tempCrate->setState(Crate::CrateState::FALLING);
       tempCrate->restartClock();
       tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
+      scorer->addMergeScore(crates[column][item.first]);
       destroyCrate(column, item.first + 1);
       destroyCrate(column, item.first);
       destroyCrate(column, item.first - 1);

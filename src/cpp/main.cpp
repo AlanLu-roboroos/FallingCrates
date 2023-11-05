@@ -19,10 +19,10 @@ int main() {
     return 1;
   }
 
-  Background background;
-  Crates crates;
-  Grabber grabber(&crates);
   Scorer scorer;
+  Background background;
+  Crates crates(&scorer);
+  Grabber grabber(&crates);
 
   while (window.isOpen()) {
     sf::Event event;

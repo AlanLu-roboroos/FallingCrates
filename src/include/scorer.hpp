@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "constants.hpp"
+#include "crates/crate.hpp"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -25,6 +26,7 @@ private:
 public:
   Scorer();
   void addScore(int score_add, sf::Vector2f pos);
+  void addMergeScore(Crate *crate);
   void drawScore(sf::RenderWindow &window);
 };
 

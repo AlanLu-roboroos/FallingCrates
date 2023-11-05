@@ -14,6 +14,7 @@
 #include "crates/purpleCrate.hpp"
 #include "crates/redCrate.hpp"
 #include "crates/yellowCrate.hpp"
+#include "scorer.hpp"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -30,6 +31,8 @@ private:
   crate_matrix crates;
   Crate *grabbedCrate;
 
+  Scorer *scorer;
+
   sf::Vector2f getCratePos(int line, int row);
   Crate *getCrateFromEnum(GameConstants::CrateType type);
   bool isBomb(GameConstants::CrateType type);
@@ -39,7 +42,7 @@ private:
   bool explodeCrateRange(int line, int start, int end);
 
 public:
-  Crates();
+  Crates(Scorer *_scorer);
   ~Crates();
   bool linePlacable(int line);
   bool spawnCrate(int grabberLine, bool isActive);

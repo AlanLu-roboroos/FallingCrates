@@ -71,3 +71,8 @@ void Scorer::addScore(int score_add, sf::Vector2f pos) {
   scoreMarkers.push_back(
       std::make_pair(tempText, clock.getElapsedTime().asMilliseconds()));
 }
+
+void Scorer::addMergeScore(Crate *crate) {
+  addScore(GameConstants::CRATE_MERGE_SCORE[crate->getCrateType()],
+           crate->getPos());
+}

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -73,6 +74,8 @@ public:
     MULTICOLOR_CRATE,
     NONE
   };
+
+  static std::map<CrateType, int> CRATE_MERGE_SCORE;
 
   class Resources {
   public:
