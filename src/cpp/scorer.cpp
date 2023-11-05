@@ -76,3 +76,8 @@ void Scorer::addMergeScore(Crate *crate) {
   addScore(GameConstants::CRATE_MERGE_SCORE[crate->getCrateType()],
            crate->getPos());
 }
+
+void Scorer::addExplodeScore(Crate *crate) {
+  addScore(GameConstants::CRATE_EXPLODE_SCORE[crate->getCrateType()],
+           crate->getPos());
+}

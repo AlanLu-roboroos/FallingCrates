@@ -36,7 +36,8 @@ public:
   static float GRABBER_HORIZONTAL_SPEED;
   static float GRABBER_VERTICAL_SPEED;
 
-  static float CRATE_GROWTH_SPEED;
+  static float CRATE_GROWTH_TIME;
+  static float CRATE_FADE_TIME;
   static float CRATE_FALLING_ACCELERATION;
 
   static float BOMB_FLASHING_TIME;
@@ -76,6 +77,7 @@ public:
   };
 
   static std::map<CrateType, int> CRATE_MERGE_SCORE;
+  static std::map<CrateType, int> CRATE_EXPLODE_SCORE;
 
   class Resources {
   public:

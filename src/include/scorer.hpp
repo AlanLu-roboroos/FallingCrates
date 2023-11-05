@@ -27,6 +27,7 @@ public:
   Scorer();
   void addScore(int score_add, sf::Vector2f pos);
   void addMergeScore(Crate *crate);
+  void addExplodeScore(Crate *crate);
   void drawScore(sf::RenderWindow &window);
 };
 

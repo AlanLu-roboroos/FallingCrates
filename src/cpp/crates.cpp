@@ -91,22 +91,33 @@ void Crates::update() {
 
 void Crates::updateCrates() {
   for (int column = 0; column < crates.size(); column++) {
-    for (int row = 0; row < crates[column].size(); row++) {
+    for (int row = crates[column].size() - 1; row >= 0; row--) {
       Crate *currentCrate = crates[column][row];
       float temp;
 
       switch (currentCrate->getState()) {
       case Crate::CrateState::SPAWNING:
         currentCrate->setPosition(GameConstants::SPAWN_POS[column]);
-        temp = GameConstants::CRATE_GROWTH_SPEED *
-               currentCrate->getElapsedTime().asMilliseconds();
-        if (temp > GameConstants::CRATE_SIZE.x) {
+        temp =
+            (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_GROWTH_TIME) *
+            currentCrate->getElapsedTime().asMilliseconds();
+        if (currentCrate->getElapsedTime().asMilliseconds() >
+            GameConstants::CRATE_GROWTH_TIME) {
           temp = GameConstants::CRATE_SIZE.x;
           currentCrate->restartClock();
           currentCrate->setState(Crate::CrateState::FALLING);
           currentCrate->setInitHeight(GameConstants::SPAWN_HEIGHT);
         }
         currentCrate->setSize(sf::Vector2f(temp, temp));
+        break;
+      case Crate::CrateState::IDLE:
+        if (currentCrate->getPos().y != GameConstants::ROW_Y[row]) {
+          currentCrate->setState(Crate::CrateState::FALLING);
+          currentCrate->restartClock();
+          currentCrate->setInitHeight(currentCrate->getPos().y);
+        } else
+          currentCrate->setPosition(sf::Vector2f(
+              GameConstants::COLUMN_X[column], GameConstants::ROW_Y[row]));
         break;
       case Crate::CrateState::FALLING:
         temp =
@@ -120,9 +131,40 @@ void Crates::updateCrates() {
         }
         currentCrate->setPosition(GameConstants::SPAWN_POS[column].x, temp);
         break;
-      case Crate::CrateState::IDLE:
+      case Crate::CrateState::FADINGOUT:
         currentCrate->setPosition(sf::Vector2f(GameConstants::COLUMN_X[column],
                                                GameConstants::ROW_Y[row]));
+        if (currentCrate->getElapsedTime().asMilliseconds() >
+            GameConstants::CRATE_FADE_TIME) {
+          destroyCrate(column, row);
+        }
+        temp = GameConstants::CRATE_SIZE.x -
+               (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
+                   currentCrate->getElapsedTime().asMilliseconds();
+        currentCrate->setSize(sf::Vector2f(temp, temp));
+        currentCrate->setAlpha(
+            255 - (255 / GameConstants::CRATE_FADE_TIME) *
+                      currentCrate->getElapsedTime().asMilliseconds());
+        break;
+      case Crate::CrateState::FADINGIN:
+        currentCrate->setPosition(sf::Vector2f(GameConstants::COLUMN_X[column],
+                                               GameConstants::ROW_Y[row]));
+        if (currentCrate->getElapsedTime().asMilliseconds() >
+            GameConstants::CRATE_FADE_TIME) {
+          currentCrate->setState(Crate::CrateState::FALLING);
+          currentCrate->restartClock();
+          currentCrate->setInitHeight(GameConstants::ROW_Y[row]);
+          currentCrate->setAlpha(255);
+          currentCrate->setSize(GameConstants::CRATE_SIZE);
+        } else {
+          temp =
+              (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
+              currentCrate->getElapsedTime().asMilliseconds();
+          currentCrate->setSize(sf::Vector2f(temp, temp));
+          currentCrate->setAlpha(
+              (255 / GameConstants::CRATE_FADE_TIME) *
+              currentCrate->getElapsedTime().asMilliseconds());
+        }
         break;
       default:
         break;
@@ -133,7 +175,6 @@ void Crates::updateCrates() {
 
 void Crates::mergeCrates() {
   for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
-    // Add merge code here
     crate_col &currentColumn = crates[column];
     vector<std::pair<int, GameConstants::CrateType>> toMerge;
     if (currentColumn.size() >= 3) {
@@ -146,7 +187,21 @@ void Crates::mergeCrates() {
               currentColumn[i]->getCrateType() ==
                   currentColumn[i + 1]->getCrateType()) {
 
-            toMerge.push_back(std::make_pair(i, currentColumn[i]->nextCrate()));
+            scorer->addMergeScore(currentColumn[i]);
+            currentColumn[i - 1]->setState(Crate::CrateState::FADINGOUT);
+            currentColumn[i]->setState(Crate::CrateState::FADINGOUT);
+            currentColumn[i + 1]->setState(Crate::CrateState::FADINGOUT);
+            currentColumn[i - 1]->restartClock();
+            currentColumn[i]->restartClock();
+            currentColumn[i + 1]->restartClock();
+            // currentColumn[i]->setMerged();
+            // toMerge.push_back(std::make_pair(i,
+            // currentColumn[i]->nextCrate()));
+            Crate *tempCrate = getCrateFromEnum(currentColumn[i]->nextCrate());
+            tempCrate->setState(Crate::CrateState::FADINGIN);
+            tempCrate->restartClock();
+            tempCrate->setInitHeight(GameConstants::ROW_Y[i]);
+            currentColumn.insert(currentColumn.begin() + i, tempCrate);
           }
         }
       }
@@ -204,7 +259,7 @@ bool Crates::explodeCrateRange(int line, int _start, int _end) {
     int start, end;
     start = std::max(_start, _end);
     end = std::min(_start, _end);
-    for (int row = start; row < crates[line].size(); row++) {
+    for (int row = start + 1; row < crates[line].size(); row++) {
       if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
         crates[line][row]->restartClock();
         crates[line][row]->setState(Crate::CrateState::FALLING);
@@ -214,8 +269,9 @@ bool Crates::explodeCrateRange(int line, int _start, int _end) {
     for (int row = start; row >= end; row--) {
       if (crates[line].size() > row) {
         if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
-          delete crates[line][row];
-          crates[line].erase(crates[line].begin() + row);
+          crates[line][row]->setState(Crate::CrateState::FADINGOUT);
+          crates[line][row]->restartClock();
+          scorer->addExplodeScore(crates[line][row]);
         }
       }
     }

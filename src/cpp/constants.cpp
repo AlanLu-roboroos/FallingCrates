@@ -14,7 +14,8 @@ sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
 float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
 float GameConstants::GRABBER_VERTICAL_SPEED = 8;
 
-float GameConstants::CRATE_GROWTH_SPEED = 0.6;
+float GameConstants::CRATE_GROWTH_TIME = 150;
+float GameConstants::CRATE_FADE_TIME = 150;
 float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
 
 float GameConstants::BOMB_FLASHING_TIME = 200;
@@ -55,6 +56,12 @@ std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_MERGE_SCORE{
+    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},       {GREEN_CRATE, 270},
+    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},   {RED_CRATE, 7290},
+    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},    {BOMB_CRATE, 90},
+    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}};
+
+std::map<GameConstants::CrateType, int> GameConstants::CRATE_EXPLODE_SCORE{
     {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},       {GREEN_CRATE, 270},
     {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},   {RED_CRATE, 7290},
     {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},    {BOMB_CRATE, 90},

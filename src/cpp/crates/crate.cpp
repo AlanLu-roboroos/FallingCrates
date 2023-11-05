@@ -22,6 +22,10 @@ void Crate::setSize(sf::Vector2f size) {
                        size.y / crateSprite.getLocalBounds().height);
 }
 
+void Crate::setAlpha(int alpha) {
+  crateSprite.setColor(sf::Color(255, 255, 255, alpha));
+}
+
 void Crate::setState(Crate::CrateState _state) { state = _state; }
 
 sf::Vector2f Crate::getPos() { return crateSprite.getPosition(); }

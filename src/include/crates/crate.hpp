@@ -8,7 +8,7 @@
 
 class Crate {
 public:
-  enum CrateState { NONE, SPAWNING, FALLING, IDLE };
+  enum CrateState { NONE, SPAWNING, FALLING, IDLE, FADINGOUT, FADINGIN };
 
 protected:
   bool infected;
@@ -30,6 +30,7 @@ public:
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);
   void setSize(sf::Vector2f size);
+  void setAlpha(int alpha);
   sf::Vector2f getPos();
   CrateState getState();
   void setState(CrateState _state);
