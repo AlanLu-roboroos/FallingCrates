@@ -55,10 +55,13 @@ int main() {
       }
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-          int line = std::abs(
-              (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
-              (0.1185031185 * window.getSize().x));
-          grabber.queueGoTo(line);
+          try {
+            int line = std::abs(
+                (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
+                (0.1185031185 * window.getSize().x));
+            grabber.queueGoTo(line);
+          } catch (...) {
+          }
         }
       }
     }
