@@ -125,7 +125,11 @@ void Crates::updateCrates() {
             GameConstants::CRATE_FALLING_ACCELERATION *
                 std::pow(currentCrate->getElapsedTime().asMilliseconds(), 2) +
             currentCrate->getInitHeight();
-        if (temp > GameConstants::ROW_Y[row]) {
+        if (row > 0) {
+          temp = std::min(temp, crates[column][row - 1]->getPos().y -
+                                    GameConstants::CRATE_SIZE.y);
+        }
+        if (temp >= GameConstants::ROW_Y[row]) {
           temp = GameConstants::ROW_Y[row];
           currentCrate->restartClock();
           currentCrate->setState(Crate::CrateState::IDLE);

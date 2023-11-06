@@ -19,7 +19,7 @@ float GameConstants::CRATE_FADE_TIME = 150;
 float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
 
 float GameConstants::BOMB_FLASHING_TIME = 200;
-float GameConstants::BOMB_EXPLODE_TIME = 10000;
+float GameConstants::BOMB_EXPLODE_TIME = 5000;
 
 int GameConstants::BORDER_HEIGHT = 146;
 int GameConstants::BORDER_WIDTH = 10;
