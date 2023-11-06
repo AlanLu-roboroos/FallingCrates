@@ -47,6 +47,8 @@ int main() {
           }
         } else if (event.key.code == sf::Keyboard::A) {
           scorer.addScore(100, sf::Vector2f(164, 436));
+        } else if (event.key.code == sf::Keyboard::R) {
+          crates.clear();
         }
         // END TEMPORARY CODE
       }

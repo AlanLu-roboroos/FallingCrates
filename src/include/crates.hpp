@@ -61,6 +61,8 @@ public:
   bool placeCrate(int line);
   bool setGrabbedCratePos(sf::Vector2f pos);
 
+  void clear();
+
   static Crate *makeCrate(Crate *crate);
 };
 

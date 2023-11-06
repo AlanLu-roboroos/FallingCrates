@@ -76,6 +76,13 @@ void Crates::destroyCrate(int line, int row) {
   delete crates[line][row];
   crates[line].erase(crates[line].begin() + row);
 }
+void Crates::clear() {
+  for (int column = 0; column < crates.size(); column++) {
+    for (int i = crates[column].size() - 1; i >= 0; i--) {
+      destroyCrate(column, i);
+    }
+  }
+}
 
 void Crates::update() {
   updateCrates();
