@@ -36,17 +36,14 @@ int main() {
         // TEMPORARY CODE
         else if (event.key.code == sf::Keyboard::P) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
-            std::cout << "Full" << std::endl;
           }
         } else if (event.key.code == sf::Keyboard::B) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                  GameConstants::CrateType::BOMB_CRATE)) {
-            std::cout << "Full" << std::endl;
           }
         } else if (event.key.code == sf::Keyboard::B) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                  GameConstants::CrateType::BOMB_CRATE)) {
-            std::cout << "Full" << std::endl;
           }
         } else if (event.key.code == sf::Keyboard::A) {
           scorer.addScore(100, sf::Vector2f(164, 436));

@@ -176,7 +176,6 @@ void Crates::updateCrates() {
       currentCrate.first->setAlpha(
           (255 / GameConstants::CRATE_FADE_TIME) *
           currentCrate.first->getElapsedTime().asMilliseconds());
-      cout << temp << endl;
     }
   }
 }

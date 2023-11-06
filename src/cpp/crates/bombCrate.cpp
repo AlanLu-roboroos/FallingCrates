@@ -11,8 +11,15 @@ sf::Texture &BombCrate::getTexture() {
 
 void BombCrate::drawCrate(sf::RenderWindow &window) {
   if (static_cast<int>(bombClock.getElapsedTime().asMilliseconds()) %
-          static_cast<int>(GameConstants::BOMB_FLASHING_TIME * 2) >
-      GameConstants::BOMB_FLASHING_TIME) {
+          static_cast<int>((GameConstants::BOMB_FLASHING_TIME -
+                            ((GameConstants::BOMB_FLASHING_TIME - 150) /
+                             GameConstants::BOMB_EXPLODE_TIME) *
+                                getElapsedTime().asMilliseconds()) *
+                           2) >
+      GameConstants::BOMB_FLASHING_TIME -
+          ((GameConstants::BOMB_FLASHING_TIME - 150) /
+           GameConstants::BOMB_EXPLODE_TIME) *
+              getElapsedTime().asMilliseconds()) {
     crateSprite.setTexture(
         GameConstants::Resources::CRATE_BOMB_FLASHING_TEXTURE);
   } else {
