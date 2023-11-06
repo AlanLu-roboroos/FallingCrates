@@ -72,12 +72,6 @@ bool Crates::isLineGrabbable(int line) {
   return false;
 }
 
-Crate *Crates::popCrate(int line) {
-  Crate *temp = crates[line].back();
-  crates[line].pop_back();
-  return temp;
-}
-
 void Crates::destroyCrate(int line, int row) {
   delete crates[line][row];
   crates[line].erase(crates[line].begin() + row);
@@ -132,11 +126,21 @@ void Crates::updateCrates() {
         currentCrate->setPosition(GameConstants::SPAWN_POS[column].x, temp);
         break;
       case Crate::CrateState::FADINGOUT:
-        currentCrate->setPosition(sf::Vector2f(GameConstants::COLUMN_X[column],
-                                               GameConstants::ROW_Y[row]));
         if (currentCrate->getElapsedTime().asMilliseconds() >
             GameConstants::CRATE_FADE_TIME) {
           destroyCrate(column, row);
+          for (int i = fadingInCrates.size() - 1; i >= 0; i--) {
+            if (column == fadingInCrates[i].second.x &&
+                row == fadingInCrates[i].second.y) {
+              crates[column].insert(crates[column].begin() + row,
+                                    fadingInCrates[i].first);
+              fadingInCrates[i].first->setState(Crate::CrateState::FALLING);
+              fadingInCrates[i].first->restartClock();
+              fadingInCrates[i].first->setInitHeight(
+                  GameConstants::ROW_Y[fadingInCrates[i].second.y]);
+              fadingInCrates.erase(fadingInCrates.begin() + i);
+            }
+          }
         }
         temp = GameConstants::CRATE_SIZE.x -
                (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
@@ -146,29 +150,33 @@ void Crates::updateCrates() {
             255 - (255 / GameConstants::CRATE_FADE_TIME) *
                       currentCrate->getElapsedTime().asMilliseconds());
         break;
-      case Crate::CrateState::FADINGIN:
-        currentCrate->setPosition(sf::Vector2f(GameConstants::COLUMN_X[column],
-                                               GameConstants::ROW_Y[row]));
-        if (currentCrate->getElapsedTime().asMilliseconds() >
-            GameConstants::CRATE_FADE_TIME) {
-          currentCrate->setState(Crate::CrateState::FALLING);
-          currentCrate->restartClock();
-          currentCrate->setInitHeight(GameConstants::ROW_Y[row]);
-          currentCrate->setAlpha(255);
-          currentCrate->setSize(GameConstants::CRATE_SIZE);
-        } else {
-          temp =
-              (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
-              currentCrate->getElapsedTime().asMilliseconds();
-          currentCrate->setSize(sf::Vector2f(temp, temp));
-          currentCrate->setAlpha(
-              (255 / GameConstants::CRATE_FADE_TIME) *
-              currentCrate->getElapsedTime().asMilliseconds());
-        }
-        break;
       default:
         break;
       }
+    }
+  }
+
+  float temp;
+  for (auto currentCrate : fadingInCrates) {
+    currentCrate.first->setPosition(
+        sf::Vector2f(GameConstants::COLUMN_X[currentCrate.second.x],
+                     GameConstants::ROW_Y[currentCrate.second.y]));
+    if (currentCrate.first->getElapsedTime().asMilliseconds() >
+        GameConstants::CRATE_FADE_TIME) {
+      currentCrate.first->setState(Crate::CrateState::FALLING);
+      currentCrate.first->restartClock();
+      currentCrate.first->setInitHeight(
+          GameConstants::ROW_Y[currentCrate.second.y]);
+      currentCrate.first->setAlpha(255);
+      currentCrate.first->setSize(GameConstants::CRATE_SIZE);
+    } else {
+      temp = (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
+             currentCrate.first->getElapsedTime().asMilliseconds();
+      currentCrate.first->setSize(sf::Vector2f(temp, temp));
+      currentCrate.first->setAlpha(
+          (255 / GameConstants::CRATE_FADE_TIME) *
+          currentCrate.first->getElapsedTime().asMilliseconds());
+      cout << temp << endl;
     }
   }
 }
@@ -201,7 +209,9 @@ void Crates::mergeCrates() {
             tempCrate->setState(Crate::CrateState::FADINGIN);
             tempCrate->restartClock();
             tempCrate->setInitHeight(GameConstants::ROW_Y[i]);
-            currentColumn.insert(currentColumn.begin() + i, tempCrate);
+            // currentColumn.insert(currentColumn.begin() + i, tempCrate);
+            fadingInCrates.push_back(
+                make_pair(tempCrate, sf::Vector2f(column, i)));
           }
         }
       }
@@ -285,6 +295,9 @@ void Crates::drawCrates(sf::RenderWindow &window) {
     for (Crate *crate : column) {
       crate->drawCrate(window);
     }
+  }
+  for (auto crate : fadingInCrates) {
+    crate.first->drawCrate(window);
   }
   if (grabbedCrate != nullptr)
     grabbedCrate->drawCrate(window);

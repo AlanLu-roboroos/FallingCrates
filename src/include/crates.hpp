@@ -30,6 +30,7 @@ class Crates {
 private:
   crate_matrix crates;
   Crate *grabbedCrate;
+  vector<pair<Crate *, sf::Vector2f>> fadingInCrates;
 
   Scorer *scorer;
 
@@ -50,7 +51,6 @@ public:
                   GameConstants::CrateType type);
   bool placeCrate(int line, Crate *crate);
   bool isLineGrabbable(int line);
-  Crate *popCrate(int line);
   void destroyCrate(int line, int row);
   void update();
   void drawCrates(sf::RenderWindow &window);

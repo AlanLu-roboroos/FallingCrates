@@ -4,7 +4,6 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "constants.hpp"
-#include <memory>
 
 class Crate {
 public:

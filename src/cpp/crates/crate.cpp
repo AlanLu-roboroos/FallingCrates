@@ -6,6 +6,7 @@ void Crate::init() {
   crateSprite.setScale(
       GameConstants::CRATE_SIZE.x / crateSprite.getLocalBounds().width,
       GameConstants::CRATE_SIZE.y / crateSprite.getLocalBounds().height);
+  crateSprite.setPosition(sf::Vector2f(-1000, -1000));
   crateSprite.setOrigin(sf::Vector2f(8, 8));
   state = Crate::NONE;
 }
