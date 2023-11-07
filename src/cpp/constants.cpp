@@ -126,6 +126,10 @@ bool GameConstants::Resources::loadResources() {
   loaded &= CRATE_HYPER_BOMB_FLASHING_TEXTURE.loadFromFile(
       "src/res/crates/hyperbomb-flash.png");
 
+  loaded &=
+      CRATE_UNBREAKABLE_TEXTURE.loadFromFile("src/res/crates/unbreakable.png");
+  loaded &= CRATE_HEAVY_TEXTURE.loadFromFile("src/res/crates/heavy.png");
+
   loaded &= SCORE_FONT.loadFromFile("src/res/font.otf");
 
   return loaded;

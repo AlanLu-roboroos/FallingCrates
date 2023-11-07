@@ -216,12 +216,14 @@ void Crates::mergeCrates() {
             // toMerge.push_back(std::make_pair(i,
             // currentColumn[i]->nextCrate()));
             Crate *tempCrate = getCrateFromEnum(currentColumn[i]->nextCrate());
-            tempCrate->setState(Crate::CrateState::FADINGIN);
-            tempCrate->restartClock();
-            tempCrate->setInitHeight(GameConstants::ROW_Y[i]);
-            // currentColumn.insert(currentColumn.begin() + i, tempCrate);
-            fadingInCrates.push_back(
-                make_pair(tempCrate, sf::Vector2f(column, i)));
+            if (tempCrate != nullptr) {
+              tempCrate->setState(Crate::CrateState::FADINGIN);
+              tempCrate->restartClock();
+              tempCrate->setInitHeight(GameConstants::ROW_Y[i]);
+              // currentColumn.insert(currentColumn.begin() + i, tempCrate);
+              fadingInCrates.push_back(
+                  make_pair(tempCrate, sf::Vector2f(column, i)));
+            }
           }
         }
       }
@@ -289,9 +291,15 @@ bool Crates::explodeCrateRange(int line, int _start, int _end) {
     for (int row = start; row >= end; row--) {
       if (crates[line].size() > row) {
         if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
-          crates[line][row]->setState(Crate::CrateState::FADINGOUT);
-          crates[line][row]->restartClock();
-          scorer->addExplodeScore(crates[line][row]);
+          if (crates[line][row]->explodable()) {
+            crates[line][row]->setState(Crate::CrateState::FADINGOUT);
+            crates[line][row]->restartClock();
+            scorer->addExplodeScore(crates[line][row]);
+          } else {
+            crates[line][row]->setState(Crate::CrateState::FALLING);
+            crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
+            crates[line][row]->restartClock();
+          }
         }
       }
     }
@@ -391,6 +399,12 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
     break;
   case GameConstants::CrateType::HYPER_BOMB_CRATE:
     tempCrate = new HyperBombCrate();
+    break;
+  case GameConstants::CrateType::UNBREAKABLE_CRATE:
+    tempCrate = new UnbreakableCrate();
+    break;
+  case GameConstants::CrateType::HEAVY_CRATE:
+    tempCrate = new HeavyCrate();
     break;
   default:
     tempCrate = nullptr;

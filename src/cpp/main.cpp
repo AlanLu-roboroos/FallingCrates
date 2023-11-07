@@ -41,6 +41,14 @@ int main() {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                  GameConstants::CrateType::BOMB_CRATE)) {
           }
+        } else if (event.key.code == sf::Keyboard::U) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                 GameConstants::CrateType::UNBREAKABLE_CRATE)) {
+          }
+        } else if (event.key.code == sf::Keyboard::H) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                 GameConstants::CrateType::HEAVY_CRATE)) {
+          }
         } else if (event.key.code == sf::Keyboard::B) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                  GameConstants::CrateType::BOMB_CRATE)) {
