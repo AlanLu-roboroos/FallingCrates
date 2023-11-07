@@ -6,6 +6,7 @@
 #include "crates/purpleCrate.hpp"
 #include "grabber.hpp"
 #include "scorer.hpp"
+#include "spawner.hpp"
 #include <iostream>
 
 int main() {
@@ -23,6 +24,7 @@ int main() {
   Background background;
   Crates crates(&scorer);
   Grabber grabber(&crates);
+  Spawner spawner;
 
   while (window.isOpen()) {
     sf::Event event;
@@ -75,6 +77,10 @@ int main() {
 
     window.clear(GameConstants::BACKGROUND_COLOR);
 
+    GameConstants::CrateType crate = spawner.update();
+    if (crate != GameConstants::CrateType::NONE) {
+      crates.spawnCrate(grabber.getColumn(), grabber.isActive(), crate);
+    }
     grabber.update();
     crates.update();
 
