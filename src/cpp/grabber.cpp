@@ -1,7 +1,4 @@
-#include "SFML/Graphics.hpp"
-#include "constants.hpp"
 #include "grabber.hpp"
-#include <iostream>
 
 Grabber::Grabber(Crates *__crates) {
   column = 3.5;
@@ -11,7 +8,7 @@ Grabber::Grabber(Crates *__crates) {
   state = GrabberState::STARTING;
   nextState = GrabberState::STARTING;
 
-  clock = sf::Clock();
+  clock = Clock();
   lastTime = clock.getElapsedTime();
 
   grabHori = sf::Sprite();

@@ -3,6 +3,8 @@
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
+#include "clock.hpp"
+#include "constants.hpp"
 #include "crates.hpp"
 
 class Grabber {
@@ -15,7 +17,7 @@ private:
   sf::Sprite grabRight;
   sf::Sprite grabVert;
 
-  sf::Clock clock;
+  Clock clock;
   sf::Time lastTime;
 
   // sf::CircleShape _centreDot;

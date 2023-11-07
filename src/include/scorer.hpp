@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
+#include "clock.hpp"
 #include "constants.hpp"
 #include "crates/crate.hpp"
 #include <algorithm>
@@ -19,7 +20,7 @@ private:
   sf::Text score;
   sf::Text highScore;
 
-  sf::Clock clock;
+  Clock clock;
 
   std::vector<std::pair<sf::Text, int>> scoreMarkers;
 

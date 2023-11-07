@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
+#include "clock.hpp"
 #include "constants.hpp"
 
 class Crate {
@@ -13,7 +14,7 @@ protected:
   bool infected;
 
   CrateState state;
-  sf::Clock clock;
+  Clock clock;
   GameConstants::CrateType crateType;
 
   float initHeight;

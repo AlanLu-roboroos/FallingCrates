@@ -1,12 +1,13 @@
 #ifndef BOMBCRATE_H
 #define BOMBCRATE_H
 
+#include "clock.hpp"
 #include "crates/crate.hpp"
 #include <cmath>
 
 class BombCrate : public Crate {
 protected:
-  sf::Clock bombClock;
+  Clock bombClock;
 
 public:
   BombCrate();
