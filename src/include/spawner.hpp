@@ -7,8 +7,8 @@
 
 class Spawner {
 private:
-  Clock clock;
-  float lastTime;
+  Clock m_clock;
+  float m_lastTime;
 
 public:
   Spawner();

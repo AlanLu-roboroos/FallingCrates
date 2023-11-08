@@ -5,8 +5,8 @@
 
 class Clock {
 private:
-  sf::Clock clock;
-  float factor;
+  sf::Clock m_clock;
+  float m_factor;
 
 public:
   Clock();

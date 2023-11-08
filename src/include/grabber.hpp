@@ -9,16 +9,15 @@
 
 class Grabber {
 private:
-  float column;
-  float x, y;
+  float m_column;
 
-  sf::Sprite grabHori;
-  sf::Sprite grabLeft;
-  sf::Sprite grabRight;
-  sf::Sprite grabVert;
+  sf::Sprite m_grabHori;
+  sf::Sprite m_grabLeft;
+  sf::Sprite m_grabRight;
+  sf::Sprite m_grabVert;
 
-  Clock clock;
-  sf::Time lastTime;
+  Clock m_clock;
+  sf::Time m_lastTime;
 
   // sf::CircleShape _centreDot;
   // sf::RectangleShape _vertBoundingBox;
@@ -36,11 +35,11 @@ private:
     NONE          // TESTING
   };
 
-  GrabberState state;
-  GrabberState nextState;
+  GrabberState m_state;
+  GrabberState m_nextState;
 
-  Crates *_crates;
-  std::vector<int> gotoQueue;
+  Crates *m_crates;
+  std::vector<int> m_gotoQueue;
 
   void setPosition(sf::Vector2f pos);
   void setPosition(int x, int y);

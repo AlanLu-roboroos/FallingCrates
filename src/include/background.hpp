@@ -8,11 +8,11 @@
 
 class Background {
 private:
-  sf::Sprite platform_sprites[8];
-  sf::Sprite spawn_sprites[8];
+  sf::Sprite m_platform_sprites[8];
+  sf::Sprite m_spawn_sprites[8];
 
-  sf::RectangleShape borderLine;
-  sf::RectangleShape header;
+  sf::RectangleShape m_borderLine;
+  sf::RectangleShape m_header;
 
 public:
   Background();

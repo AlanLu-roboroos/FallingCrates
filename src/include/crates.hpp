@@ -30,11 +30,11 @@ typedef vector<crate_col> crate_matrix;
 
 class Crates {
 private:
-  crate_matrix crates;
-  Crate *grabbedCrate;
-  vector<pair<Crate *, sf::Vector2f>> fadingInCrates;
+  crate_matrix m_crates;
+  Crate *m_grabbedCrate;
+  vector<pair<Crate *, sf::Vector2f>> m_fadingInCrates;
 
-  Scorer *scorer;
+  Scorer *m_scorer;
 
   sf::Vector2f getCratePos(int line, int row);
   Crate *getCrateFromEnum(GameConstants::CrateType type);

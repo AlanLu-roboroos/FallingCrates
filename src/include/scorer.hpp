@@ -14,15 +14,15 @@
 
 class Scorer {
 private:
-  int scoreNum;
-  int highScoreNum;
+  int m_scoreNum;
+  int m_highScoreNum;
 
-  sf::Text score;
-  sf::Text highScore;
+  sf::Text m_score;
+  sf::Text m_highScore;
 
-  Clock clock;
+  Clock m_clock;
 
-  std::vector<std::pair<sf::Text, int>> scoreMarkers;
+  std::vector<std::pair<sf::Text, int>> m_scoreMarkers;
 
 public:
   Scorer();

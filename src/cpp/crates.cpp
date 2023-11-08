@@ -1,13 +1,13 @@
 #include "crates.hpp"
 
 Crates::Crates(Scorer *_scorer) {
-  crates = vector<crate_col>(8);
-  grabbedCrate = nullptr;
-  scorer = _scorer;
+  m_crates = vector<crate_col>(8);
+  m_grabbedCrate = nullptr;
+  m_scorer = _scorer;
 }
 
 Crates::~Crates() {
-  for (auto column : crates) {
+  for (auto column : m_crates) {
     for (auto crate : column) {
       delete crate;
     }
@@ -18,16 +18,16 @@ sf::Vector2f Crates::getCratePos(int line, int row) {
   return sf::Vector2f(line * 228 + 164, 1236 - row * 128);
 }
 
-bool Crates::linePlacable(int line) { return crates[line].size() < 6; }
+bool Crates::linePlacable(int line) { return m_crates[line].size() < 6; }
 
 bool Crates::spawnCrate(int grabberLine, bool isActive,
                         GameConstants::CrateType type) {
   vector<int> spawnableLines;
-  for (int i = 0; i < crates.size(); i++) {
+  for (int i = 0; i < m_crates.size(); i++) {
     if (linePlacable(i) && (!isActive || i != grabberLine)) {
-      if (crates[i].size() == 0) {
+      if (m_crates[i].size() == 0) {
         spawnableLines.push_back(i);
-      } else if (crates[i].back()->getPos().y >
+      } else if (m_crates[i].back()->getPos().y >
                  GameConstants::SPAWN_HEIGHT + GameConstants::CRATE_SIZE.y) {
         spawnableLines.push_back(i);
       }
@@ -46,7 +46,7 @@ bool Crates::spawnCrate(int grabberLine, bool isActive,
   if (tempCrate == nullptr)
     return false;
   tempCrate->setState(Crate::CrateState::SPAWNING);
-  crates[out[0]].push_back(tempCrate);
+  m_crates[out[0]].push_back(tempCrate);
 
   return true;
 }
@@ -61,24 +61,24 @@ bool Crates::placeCrate(int line, Crate *crate) {
     delete crate;
     return false;
   }
-  crates[line].push_back(crate);
+  m_crates[line].push_back(crate);
   return true;
 }
 
 bool Crates::isLineGrabbable(int line) {
-  if (crates[line].size() > 0) {
-    return crates[line].back()->moveable();
+  if (m_crates[line].size() > 0) {
+    return m_crates[line].back()->moveable();
   }
   return false;
 }
 
 void Crates::destroyCrate(int line, int row) {
-  delete crates[line][row];
-  crates[line].erase(crates[line].begin() + row);
+  delete m_crates[line][row];
+  m_crates[line].erase(m_crates[line].begin() + row);
 }
 void Crates::clear() {
-  for (int column = 0; column < crates.size(); column++) {
-    for (int i = crates[column].size() - 1; i >= 0; i--) {
+  for (int column = 0; column < m_crates.size(); column++) {
+    for (int i = m_crates[column].size() - 1; i >= 0; i--) {
       destroyCrate(column, i);
     }
   }
@@ -126,7 +126,7 @@ void Crates::updateCrates() {
                 std::pow(currentCrate->getElapsedTime().asMilliseconds(), 2) +
             currentCrate->getInitHeight();
         if (row > 0) {
-          temp = std::min(temp, crates[column][row - 1]->getPos().y -
+          temp = std::min(temp, m_crates[column][row - 1]->getPos().y -
                                     GameConstants::CRATE_SIZE.y);
         }
         if (temp >= GameConstants::ROW_Y[row]) {
@@ -168,32 +168,38 @@ void Crates::updateCrates() {
   }
 
   float temp;
-  for (auto currentCrate : fadingInCrates) {
-    currentCrate.first->setPosition(
-        sf::Vector2f(GameConstants::COLUMN_X[currentCrate.second.x],
-                     GameConstants::ROW_Y[currentCrate.second.y]));
-    if (currentCrate.first->getElapsedTime().asMilliseconds() >
+  for (int i = m_fadingInCrates.size() - 1; i >= 0; i--) {
+    m_fadingInCrates[i].first->setPosition(
+        sf::Vector2f(GameConstants::COLUMN_X[m_fadingInCrates[i].second.x],
+                     GameConstants::ROW_Y[m_fadingInCrates[i].second.y]));
+    if (m_fadingInCrates[i].first->getElapsedTime().asMilliseconds() >
         GameConstants::CRATE_FADE_TIME) {
-      currentCrate.first->setState(Crate::CrateState::FALLING);
-      currentCrate.first->restartClock();
-      currentCrate.first->setInitHeight(
-          GameConstants::ROW_Y[currentCrate.second.y]);
-      currentCrate.first->setAlpha(255);
-      currentCrate.first->setSize(GameConstants::CRATE_SIZE);
+      std::cout << m_fadingInCrates[i].second.y << std::endl;
+      m_fadingInCrates[i].first->setState(Crate::CrateState::FALLING);
+      m_fadingInCrates[i].first->restartClock();
+      m_fadingInCrates[i].first->setInitHeight(
+          GameConstants::ROW_Y[m_fadingInCrates[i].second.y]);
+      m_fadingInCrates[i].first->setAlpha(255);
+      m_fadingInCrates[i].first->setSize(GameConstants::CRATE_SIZE);
+      m_crates[m_fadingInCrates[i].second.x].insert(
+          m_crates[m_fadingInCrates[i].second.x].begin() +
+              m_fadingInCrates[i].second.y - 1,
+          m_fadingInCrates[i].first);
+      m_fadingInCrates.erase(m_fadingInCrates.begin() + i);
     } else {
       temp = (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
-             currentCrate.first->getElapsedTime().asMilliseconds();
-      currentCrate.first->setSize(sf::Vector2f(temp, temp));
-      currentCrate.first->setAlpha(
+             m_fadingInCrates[i].first->getElapsedTime().asMilliseconds();
+      m_fadingInCrates[i].first->setSize(sf::Vector2f(temp, temp));
+      m_fadingInCrates[i].first->setAlpha(
           (255 / GameConstants::CRATE_FADE_TIME) *
-          currentCrate.first->getElapsedTime().asMilliseconds());
+          m_fadingInCrates[i].first->getElapsedTime().asMilliseconds());
     }
   }
 }
 
 void Crates::mergeCrates() {
   for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
-    crate_col &currentColumn = crates[column];
+    crate_col &currentColumn = m_crates[column];
     vector<std::pair<int, GameConstants::CrateType>> toMerge;
     if (currentColumn.size() >= 3) {
       for (int i = 1; i < currentColumn.size() - 1; i++) {
@@ -205,7 +211,7 @@ void Crates::mergeCrates() {
               currentColumn[i]->getCrateType() ==
                   currentColumn[i + 1]->getCrateType()) {
 
-            scorer->addMergeScore(currentColumn[i]);
+            m_scorer->addMergeScore(currentColumn[i]);
             currentColumn[i - 1]->setState(Crate::CrateState::FADINGOUT);
             currentColumn[i]->setState(Crate::CrateState::FADINGOUT);
             currentColumn[i + 1]->setState(Crate::CrateState::FADINGOUT);
@@ -221,7 +227,7 @@ void Crates::mergeCrates() {
               tempCrate->restartClock();
               tempCrate->setInitHeight(GameConstants::ROW_Y[i]);
               // currentColumn.insert(currentColumn.begin() + i, tempCrate);
-              fadingInCrates.push_back(
+              m_fadingInCrates.push_back(
                   make_pair(tempCrate, sf::Vector2f(column, i)));
             }
           }
@@ -235,7 +241,7 @@ void Crates::mergeCrates() {
       tempCrate->setState(Crate::CrateState::FALLING);
       tempCrate->restartClock();
       tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
-      scorer->addMergeScore(crates[column][item.first]);
+      m_scorer->addMergeScore(m_crates[column][item.first]);
       destroyCrate(column, item.first + 1);
       destroyCrate(column, item.first);
       destroyCrate(column, item.first - 1);
@@ -246,8 +252,8 @@ void Crates::mergeCrates() {
 
 void Crates::explodeCrate() {
   for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
-    for (int row = 0; row < crates[column].size(); row++) {
-      Crate *currentCrate = crates[column][row];
+    for (int row = 0; row < m_crates[column].size(); row++) {
+      Crate *currentCrate = m_crates[column][row];
       if (isBomb(currentCrate->getCrateType())) {
         if (currentCrate->isExploded()) {
           switch (currentCrate->getCrateType()) {
@@ -281,24 +287,24 @@ bool Crates::explodeCrateRange(int line, int _start, int _end) {
     int start, end;
     start = std::max(_start, _end);
     end = std::min(_start, _end);
-    for (int row = start + 1; row < crates[line].size(); row++) {
-      if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
-        crates[line][row]->restartClock();
-        crates[line][row]->setState(Crate::CrateState::FALLING);
-        crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
+    for (int row = start + 1; row < m_crates[line].size(); row++) {
+      if (m_crates[line][row]->getState() == Crate::CrateState::IDLE) {
+        m_crates[line][row]->restartClock();
+        m_crates[line][row]->setState(Crate::CrateState::FALLING);
+        m_crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
       }
     }
     for (int row = start; row >= end; row--) {
-      if (crates[line].size() > row) {
-        if (crates[line][row]->getState() == Crate::CrateState::IDLE) {
-          if (crates[line][row]->explodable()) {
-            crates[line][row]->setState(Crate::CrateState::FADINGOUT);
-            crates[line][row]->restartClock();
-            scorer->addExplodeScore(crates[line][row]);
+      if (m_crates[line].size() > row) {
+        if (m_crates[line][row]->getState() == Crate::CrateState::IDLE) {
+          if (m_crates[line][row]->explodable()) {
+            m_crates[line][row]->setState(Crate::CrateState::FADINGOUT);
+            m_crates[line][row]->restartClock();
+            m_scorer->addExplodeScore(m_crates[line][row]);
           } else {
-            crates[line][row]->setState(Crate::CrateState::FALLING);
-            crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
-            crates[line][row]->restartClock();
+            m_crates[line][row]->setState(Crate::CrateState::FALLING);
+            m_crates[line][row]->setInitHeight(GameConstants::ROW_Y[row]);
+            m_crates[line][row]->restartClock();
           }
         }
       }
@@ -309,28 +315,28 @@ bool Crates::explodeCrateRange(int line, int _start, int _end) {
 }
 
 void Crates::drawCrates(sf::RenderWindow &window) {
-  for (std::vector<Crate *> column : crates) {
+  for (std::vector<Crate *> column : m_crates) {
     for (Crate *crate : column) {
       crate->drawCrate(window);
     }
   }
-  for (auto crate : fadingInCrates) {
+  for (auto crate : m_fadingInCrates) {
     crate.first->drawCrate(window);
   }
-  if (grabbedCrate != nullptr)
-    grabbedCrate->drawCrate(window);
+  if (m_grabbedCrate != nullptr)
+    m_grabbedCrate->drawCrate(window);
 }
 
 float Crates::getTopCrateHeight(int line) {
-  if (crates[line].size() == 0)
+  if (m_crates[line].size() == 0)
     return 0;
-  return crates[line].back()->getPos().y;
+  return m_crates[line].back()->getPos().y;
 }
 
 float Crates::getNextCrateHeight(int line) {
-  if (crates[line].size() == 0)
+  if (m_crates[line].size() == 0)
     return GameConstants::ROW_Y[0];
-  return crates[line].back()->getPos().y - GameConstants::CRATE_SIZE.y;
+  return m_crates[line].back()->getPos().y - GameConstants::CRATE_SIZE.y;
 }
 
 Crate *Crates::makeCrate(Crate *crate) {
@@ -339,28 +345,28 @@ Crate *Crates::makeCrate(Crate *crate) {
 }
 
 bool Crates::grabCrate(int line) {
-  if (crates[line].size() == 0)
+  if (m_crates[line].size() == 0)
     return false;
-  grabbedCrate = crates[line].back();
-  crates[line].erase(crates[line].end() - 1);
+  m_grabbedCrate = m_crates[line].back();
+  m_crates[line].erase(m_crates[line].end() - 1);
   return true;
 }
 
 bool Crates::placeCrate(int line) {
-  if (crates[line].size() == GameConstants::CRATES_PER_LINE)
+  if (m_crates[line].size() == GameConstants::CRATES_PER_LINE)
     return false;
-  grabbedCrate->setState(Crate::CrateState::FALLING);
-  grabbedCrate->restartClock();
-  grabbedCrate->setInitHeight(grabbedCrate->getPos().y);
-  crates[line].push_back(grabbedCrate);
-  grabbedCrate = nullptr;
+  m_grabbedCrate->setState(Crate::CrateState::FALLING);
+  m_grabbedCrate->restartClock();
+  m_grabbedCrate->setInitHeight(m_grabbedCrate->getPos().y);
+  m_crates[line].push_back(m_grabbedCrate);
+  m_grabbedCrate = nullptr;
   return true;
 }
 
 bool Crates::setGrabbedCratePos(sf::Vector2f pos) {
-  if (grabbedCrate == nullptr)
+  if (m_grabbedCrate == nullptr)
     return false;
-  grabbedCrate->setPosition(pos);
+  m_grabbedCrate->setPosition(pos);
   return true;
 }
 
