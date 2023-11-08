@@ -10,6 +10,7 @@
 #include "crates/heavyCrate.hpp"
 #include "crates/hyperBombCrate.hpp"
 #include "crates/megaBombCrate.hpp"
+#include "crates/multiColorCrate.hpp"
 #include "crates/orangeCrate.hpp"
 #include "crates/pinkCrate.hpp"
 #include "crates/purpleCrate.hpp"
@@ -22,6 +23,7 @@
 #include <iostream>
 #include <memory>
 #include <random>
+#include <set>
 #include <vector>
 using namespace std;
 
@@ -43,6 +45,7 @@ private:
   void mergeCrates();
   void explodeCrate();
   bool explodeCrateRange(int line, int start, int end);
+  int getRowIgnoringFadingIn(int column, int row);
 
 public:
   Crates(Scorer *_scorer);

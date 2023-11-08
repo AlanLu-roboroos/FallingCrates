@@ -56,16 +56,16 @@ std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_MERGE_SCORE{
-    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},       {GREEN_CRATE, 270},
-    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},   {RED_CRATE, 7290},
-    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},    {BOMB_CRATE, 90},
-    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}};
+    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},        {GREEN_CRATE, 270},
+    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},    {RED_CRATE, 7290},
+    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},     {BOMB_CRATE, 90},
+    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}, {MULTICOLOR_CRATE, 810}};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_EXPLODE_SCORE{
-    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},       {GREEN_CRATE, 270},
-    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},   {RED_CRATE, 7290},
-    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},    {BOMB_CRATE, 90},
-    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}};
+    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},        {GREEN_CRATE, 270},
+    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},    {RED_CRATE, 7290},
+    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},     {BOMB_CRATE, 90},
+    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}, {MULTICOLOR_CRATE, 810}};
 
 sf::Texture GameConstants::Resources::PLATFORM_TEXTURE;
 sf::Texture GameConstants::Resources::SPAWN_TEXTURE;
@@ -129,6 +129,9 @@ bool GameConstants::Resources::loadResources() {
   loaded &=
       CRATE_UNBREAKABLE_TEXTURE.loadFromFile("src/res/crates/unbreakable.png");
   loaded &= CRATE_HEAVY_TEXTURE.loadFromFile("src/res/crates/heavy.png");
+
+  loaded &=
+      CRATE_MULTICOLOR_TEXTURE.loadFromFile("src/res/crates/multicolor.png");
 
   loaded &= SCORE_FONT.loadFromFile("src/res/font.otf");
 

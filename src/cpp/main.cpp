@@ -55,8 +55,10 @@ int main() {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                  GameConstants::CrateType::BOMB_CRATE)) {
           }
-        } else if (event.key.code == sf::Keyboard::A) {
-          scorer.addScore(100, sf::Vector2f(164, 436));
+        } else if (event.key.code == sf::Keyboard::M) {
+          if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                 GameConstants::CrateType::MULTICOLOR_CRATE)) {
+          }
         } else if (event.key.code == sf::Keyboard::R) {
           crates.clear();
         }
