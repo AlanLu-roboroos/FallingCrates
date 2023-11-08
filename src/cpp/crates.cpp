@@ -81,6 +81,18 @@ void Crates::destroyCrate(int line, int row) {
     }
   }
 }
+
+void Crates::clearLine(int line) {
+  for (int i = 0; i < m_crates[line].size(); i++) {
+    delete m_crates[line][i];
+  }
+  m_crates[line].clear();
+}
+
+void Crates::freezeLine(int line) { frozenLines.insert(line); }
+
+void Crates::unfreezeLine() { frozenLines.erase(frozenLines.begin()); }
+
 void Crates::clear() {
   for (int column = 0; column < m_crates.size(); column++) {
     for (int i = m_crates[column].size() - 1; i >= 0; i--) {
@@ -107,6 +119,9 @@ void Crates::update() {
 
 void Crates::updateCrates() {
   for (int column = 0; column < m_crates.size(); column++) {
+    if (frozenLines.find(column) != frozenLines.end()) {
+      continue;
+    }
     for (int i = m_crates[column].size() - 1; i >= 0; i--) {
       Crate *currentCrate = m_crates[column][i];
       float temp;
@@ -137,7 +152,6 @@ void Crates::updateCrates() {
               GameConstants::COLUMN_X[column], GameConstants::ROW_Y[row]));
         break;
       case Crate::CrateState::FALLING:
-        std::cout << row << std::endl;
         temp =
             GameConstants::CRATE_FALLING_ACCELERATION *
                 std::pow(currentCrate->getElapsedTime().asMilliseconds(), 2) +
@@ -183,7 +197,6 @@ void Crates::updateCrates() {
                                                GameConstants::ROW_Y[row]));
         if (currentCrate->getElapsedTime().asMilliseconds() >
             GameConstants::CRATE_FADE_TIME) {
-          std::cout << row << std::endl;
           currentCrate->setState(Crate::CrateState::FALLING);
           currentCrate->restartClock();
           currentCrate->setInitHeight(GameConstants::ROW_Y[row]);

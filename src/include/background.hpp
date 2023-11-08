@@ -14,6 +14,8 @@ private:
   sf::RectangleShape m_borderLine;
   sf::RectangleShape m_header;
 
+  std::vector<sf::RectangleShape> m_items;
+
 public:
   Background();
   void drawBackground(sf::RenderWindow &window);

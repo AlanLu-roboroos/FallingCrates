@@ -1,9 +1,8 @@
 #include "clock.hpp"
 
-Clock::Clock() {
-  m_clock = sf::Clock();
-  m_factor = 1;
-}
+float Clock::m_factor = 1;
+
+Clock::Clock() { m_clock = sf::Clock(); }
 
 sf::Time Clock::getElapsedTime() {
   return sf::microseconds(m_clock.getElapsedTime().asMicroseconds() * m_factor);
@@ -14,5 +13,3 @@ float Clock::getMilliSeconds() {
 }
 
 void Clock::restart() { m_clock.restart(); }
-
-void Clock::setTimeSpeed(float _factor) { m_factor = _factor; }

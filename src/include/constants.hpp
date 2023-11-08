@@ -31,6 +31,8 @@ public:
   static sf::Vector2f CRATE_SIZE;
   static sf::Vector2f SPAWN_SIZE;
   static sf::Vector2f PLATFORM_SIZE;
+  static sf::Vector2f ITEM_SIZE;
+  static sf::Vector2f ITEMS_BACKGROUND_SIZE;
 
   static sf::Vector2f GRABBER_START_POS;
   static float GRABBER_HORIZONTAL_SPEED;
@@ -49,6 +51,7 @@ public:
   static sf::Color BACKGROUND_COLOR;
   static sf::Color BORDER_COLOR;
   static sf::Color HEADER_COLOR;
+  static sf::Color ITEM_BACKGROUND_COLOR;
 
   static int PLATFORM_HEIGHT;
   static int SPAWN_HEIGHT;
@@ -57,6 +60,7 @@ public:
 
   static std::vector<sf::Vector2f> PLATFORM_POS;
   static std::vector<sf::Vector2f> SPAWN_POS;
+  static std::vector<sf::Vector2f> ITEMS_POS;
 
   enum CrateType {
     PURPLE_CRATE,
@@ -109,6 +113,10 @@ public:
     static sf::Texture CRATE_UNBREAKABLE_TEXTURE;
 
     static sf::Texture CRATE_MULTICOLOR_TEXTURE;
+
+    static sf::Texture ITEM0_TEXTURE;
+    static sf::Texture ITEM1_TEXTURE;
+    static sf::Texture ITEM2_TEXTURE;
 
     static sf::Font SCORE_FONT;
 

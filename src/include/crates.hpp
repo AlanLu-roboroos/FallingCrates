@@ -38,6 +38,8 @@ private:
 
   Scorer *m_scorer;
 
+  set<int> frozenLines;
+
   sf::Vector2f getCratePos(int line, int row);
   Crate *getCrateFromEnum(GameConstants::CrateType type);
   bool isBomb(GameConstants::CrateType type);
@@ -67,6 +69,10 @@ public:
   bool setGrabbedCratePos(sf::Vector2f pos);
 
   void clear();
+
+  void clearLine(int line);
+  void freezeLine(int line);
+  void unfreezeLine();
 
   static Crate *makeCrate(Crate *crate);
 };

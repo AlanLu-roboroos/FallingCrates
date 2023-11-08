@@ -5,6 +5,7 @@
 #include "crates.hpp"
 #include "crates/purpleCrate.hpp"
 #include "grabber.hpp"
+#include "items.hpp"
 #include "scorer.hpp"
 #include "spawner.hpp"
 #include <iostream>
@@ -24,6 +25,7 @@ int main() {
   Background background;
   Crates crates(&scorer);
   Grabber grabber(&crates);
+  Items items(&crates);
   Spawner spawner;
 
   while (window.isOpen()) {
@@ -66,13 +68,18 @@ int main() {
       }
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-          try {
-            int line = std::abs(
-                (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
-                (0.1185031185 * window.getSize().x));
-            grabber.queueGoTo(line);
-          } catch (...) {
+          if (event.mouseButton.y > GameConstants::BORDER_HEIGHT &&
+              !items.isSelected()) {
+            try {
+              int line = std::abs(
+                  (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
+                  (0.1185031185 * window.getSize().x));
+              grabber.queueGoTo(line);
+            } catch (...) {
+            }
           }
+          items.activate(event.mouseButton.x, event.mouseButton.y,
+                         window.getSize().x);
         }
       }
     }
@@ -85,11 +92,13 @@ int main() {
     }
     grabber.update();
     crates.update();
+    items.update();
 
     background.drawBackground(window);
     grabber.drawGrabber(window);
     crates.drawCrates(window);
     scorer.drawScore(window);
+    items.drawItems(window);
 
     window.display();
   }

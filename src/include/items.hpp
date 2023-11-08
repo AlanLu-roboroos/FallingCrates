@@ -2,18 +2,33 @@
 #define ITEMS_HPP
 
 #include "SFML/Graphics.hpp"
-#include "items/item.hpp"
+#include "clock.hpp"
+#include "constants.hpp"
+#include "crates.hpp"
+#include <iostream>
 #include <vector>
 
-typedef std::pair<Item *, int> item;
-
 class Items {
+  enum ItemTypes { LINE_CLEAR, COLUMN_FREEZE, TIME_SLOW, NONE };
+
 private:
-  std::vector<item> m_items;
+  std::vector<ItemTypes> m_itemTypeOrder;
+  std::vector<int> m_items;
+  std::vector<Clock> m_clocks;
+  std::vector<sf::Sprite> m_sprites;
+  std::vector<bool> m_activated;
+  ItemTypes selected;
+
+  sf::RectangleShape m_timeFreezeBackdrop;
+
+  Crates *m_crates;
 
 public:
-  Items();
-  void drawItems();
+  Items(Crates *_crates);
+  void drawItems(sf::RenderWindow &window);
+  void activate(int x, int y, int wx);
+  void update();
+  bool isSelected();
 };
 
 #endif

@@ -30,6 +30,16 @@ Background::Background() {
   m_header = sf::RectangleShape(
       sf::Vector2f(GameConstants::WINDOW_WIDTH, GameConstants::BORDER_HEIGHT));
   m_header.setFillColor(GameConstants::HEADER_COLOR);
+
+  for (int i = 0; i < 3; i++) {
+    sf::RectangleShape temp;
+    temp.setFillColor(GameConstants::ITEM_BACKGROUND_COLOR);
+    temp.setSize(GameConstants::ITEMS_BACKGROUND_SIZE);
+    temp.setOrigin(sf::Vector2f(temp.getLocalBounds().width / 2,
+                                temp.getLocalBounds().height / 2));
+    temp.setPosition(GameConstants::ITEMS_POS[i]);
+    m_items.push_back(temp);
+  }
 }
 
 void Background::drawBackground(sf::RenderWindow &window) {
@@ -39,4 +49,6 @@ void Background::drawBackground(sf::RenderWindow &window) {
     window.draw(spawn);
   window.draw(m_header);
   window.draw(m_borderLine);
+  for (auto item : m_items)
+    window.draw(item);
 }

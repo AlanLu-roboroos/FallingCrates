@@ -9,6 +9,8 @@ int GameConstants::CRATE_COLUMNS = 8;
 sf::Vector2f GameConstants::CRATE_SIZE = sf::Vector2f(128, 128);
 sf::Vector2f GameConstants::SPAWN_SIZE = sf::Vector2f(176, 176);
 sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(176, 176);
+sf::Vector2f GameConstants::ITEMS_BACKGROUND_SIZE = sf::Vector2f(100, 100);
+sf::Vector2f GameConstants::ITEM_SIZE = sf::Vector2f(90, 90);
 
 sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
 float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
@@ -27,6 +29,7 @@ int GameConstants::BORDER_WIDTH = 10;
 sf::Color GameConstants::BACKGROUND_COLOR = sf::Color(180, 180, 180);
 sf::Color GameConstants::BORDER_COLOR = sf::Color(50, 50, 50);
 sf::Color GameConstants::HEADER_COLOR = sf::Color(120, 120, 120);
+sf::Color GameConstants::ITEM_BACKGROUND_COLOR = sf::Color(80, 80, 80);
 
 int GameConstants::PLATFORM_HEIGHT = 1262;
 int GameConstants::SPAWN_HEIGHT = 436;
@@ -54,6 +57,9 @@ std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[5], GameConstants::SPAWN_HEIGHT),
     sf::Vector2f(GameConstants::COLUMN_X[6], GameConstants::SPAWN_HEIGHT),
     sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
+
+std::vector<sf::Vector2f> GameConstants::ITEMS_POS = {
+    sf::Vector2f(842, 80), sf::Vector2f(962, 80), sf::Vector2f(1082, 80)};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_MERGE_SCORE{
     {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},        {GREEN_CRATE, 270},
@@ -93,6 +99,9 @@ sf::Texture GameConstants::Resources::CRATE_HEAVY_TEXTURE;
 sf::Texture GameConstants::Resources::CRATE_UNBREAKABLE_TEXTURE;
 
 sf::Texture GameConstants::Resources::CRATE_MULTICOLOR_TEXTURE;
+sf::Texture GameConstants::Resources::ITEM0_TEXTURE;
+sf::Texture GameConstants::Resources::ITEM1_TEXTURE;
+sf::Texture GameConstants::Resources::ITEM2_TEXTURE;
 
 sf::Font GameConstants::Resources::SCORE_FONT;
 
@@ -132,6 +141,10 @@ bool GameConstants::Resources::loadResources() {
 
   loaded &=
       CRATE_MULTICOLOR_TEXTURE.loadFromFile("src/res/crates/multicolor.png");
+
+  loaded &= ITEM0_TEXTURE.loadFromFile("src/res/items/item0.png");
+  loaded &= ITEM1_TEXTURE.loadFromFile("src/res/items/item1.png");
+  loaded &= ITEM2_TEXTURE.loadFromFile("src/res/items/item2.png");
 
   loaded &= SCORE_FONT.loadFromFile("src/res/font.otf");
 
