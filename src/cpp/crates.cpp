@@ -75,6 +75,13 @@ bool Crates::isLineGrabbable(int line) {
 void Crates::destroyCrate(int line, int row) {
   delete m_crates[line][row];
   m_crates[line].erase(m_crates[line].begin() + row);
+  for (auto crate : m_fadingInCrates) {
+    if (crate.second.x == line && crate.second.y > row + 1) {
+      std::cout << crate.second.y << ": ";
+      crate.second.y--;
+      std::cout << crate.second.y << std::endl;
+    }
+  }
 }
 void Crates::clear() {
   for (int column = 0; column < m_crates.size(); column++) {
@@ -91,9 +98,9 @@ void Crates::update() {
 }
 
 void Crates::updateCrates() {
-  for (int column = 0; column < crates.size(); column++) {
-    for (int row = crates[column].size() - 1; row >= 0; row--) {
-      Crate *currentCrate = crates[column][row];
+  for (int column = 0; column < m_crates.size(); column++) {
+    for (int row = m_crates[column].size() - 1; row >= 0; row--) {
+      Crate *currentCrate = m_crates[column][row];
       float temp;
 
       switch (currentCrate->getState()) {
@@ -140,16 +147,16 @@ void Crates::updateCrates() {
         if (currentCrate->getElapsedTime().asMilliseconds() >
             GameConstants::CRATE_FADE_TIME) {
           destroyCrate(column, row);
-          for (int i = fadingInCrates.size() - 1; i >= 0; i--) {
-            if (column == fadingInCrates[i].second.x &&
-                row == fadingInCrates[i].second.y) {
-              crates[column].insert(crates[column].begin() + row,
-                                    fadingInCrates[i].first);
-              fadingInCrates[i].first->setState(Crate::CrateState::FALLING);
-              fadingInCrates[i].first->restartClock();
-              fadingInCrates[i].first->setInitHeight(
-                  GameConstants::ROW_Y[fadingInCrates[i].second.y]);
-              fadingInCrates.erase(fadingInCrates.begin() + i);
+          for (int i = m_fadingInCrates.size() - 1; i >= 0; i--) {
+            if (column == m_fadingInCrates[i].second.x &&
+                row == m_fadingInCrates[i].second.y) {
+              m_crates[column].insert(m_crates[column].begin() + row,
+                                      m_fadingInCrates[i].first);
+              m_fadingInCrates[i].first->setState(Crate::CrateState::FALLING);
+              m_fadingInCrates[i].first->restartClock();
+              m_fadingInCrates[i].first->setInitHeight(
+                  GameConstants::ROW_Y[m_fadingInCrates[i].second.y]);
+              m_fadingInCrates.erase(m_fadingInCrates.begin() + i);
             }
           }
         }
@@ -181,11 +188,11 @@ void Crates::updateCrates() {
           GameConstants::ROW_Y[m_fadingInCrates[i].second.y]);
       m_fadingInCrates[i].first->setAlpha(255);
       m_fadingInCrates[i].first->setSize(GameConstants::CRATE_SIZE);
-      m_crates[m_fadingInCrates[i].second.x].insert(
-          m_crates[m_fadingInCrates[i].second.x].begin() +
-              m_fadingInCrates[i].second.y - 1,
-          m_fadingInCrates[i].first);
-      m_fadingInCrates.erase(m_fadingInCrates.begin() + i);
+      // m_crates[m_fadingInCrates[i].second.x].insert(
+      //     m_crates[m_fadingInCrates[i].second.x].begin() +
+      //         m_fadingInCrates[i].second.y - 1,
+      //     m_fadingInCrates[i].first);
+      // m_fadingInCrates.erase(m_fadingInCrates.begin() + i);
     } else {
       temp = (GameConstants::CRATE_SIZE.x / GameConstants::CRATE_FADE_TIME) *
              m_fadingInCrates[i].first->getElapsedTime().asMilliseconds();
