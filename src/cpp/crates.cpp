@@ -258,7 +258,9 @@ void Crates::mergeCrates() {
               crate = currentColumn[i + j];
             }
           }
-          if (crates.size() == 1) {
+          if (crates.size() <= 1) {
+            if (crates.size() == 0)
+              crate = currentColumn[i];
 
             m_scorer->addMergeScore(currentColumn[i]);
             currentColumn[i - 1]->setState(Crate::CrateState::FADINGOUT);
