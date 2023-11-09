@@ -12,3 +12,5 @@ GameConstants::CrateType Spawner::update() {
   }
   return GameConstants::CrateType::NONE;
 }
+
+void Spawner::setClockFactor(float _factor) { m_clock.setFactor(_factor); }

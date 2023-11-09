@@ -57,6 +57,7 @@ public:
   void drawGrabber(sf::RenderWindow &window);
   int getColumn();
   bool isActive();
+  void setClockFactor(float _factor);
 };
 
 #endif

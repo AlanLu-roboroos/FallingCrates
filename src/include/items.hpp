@@ -5,6 +5,8 @@
 #include "clock.hpp"
 #include "constants.hpp"
 #include "crates.hpp"
+#include "grabber.hpp"
+#include "spawner.hpp"
 #include <iostream>
 #include <vector>
 
@@ -23,9 +25,11 @@ private:
   sf::RectangleShape m_timeFreezeBackdrop;
 
   Crates *m_crates;
+  Grabber *m_grabber;
+  Spawner *m_spawner;
 
 public:
-  Items(Crates *_crates);
+  Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner);
   void drawItems(sf::RenderWindow &window);
   void activate(int x, int y, int wx);
   void update();

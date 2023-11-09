@@ -13,6 +13,7 @@ private:
 public:
   Spawner();
   GameConstants::CrateType update();
+  void setClockFactor(float _factor);
 };
 
 #endif

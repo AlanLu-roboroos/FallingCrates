@@ -346,6 +346,14 @@ void Crates::explodeCrate() {
   }
 }
 
+void Crates::setClockFactor(float _factor) {
+  for (auto i : m_crates) {
+    for (auto j : i) {
+      j->setClockFactor(_factor);
+    }
+  }
+}
+
 bool Crates::explodeCrateRange(int line, int _start, int _end) {
   if (line >= 0 && line < GameConstants::CRATE_COLUMNS) {
     int start, end;

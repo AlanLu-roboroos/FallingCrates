@@ -275,3 +275,5 @@ bool Grabber::isActive() {
     return false;
   }
 }
+
+void Grabber::setClockFactor(float _factor) { m_clock.setFactor(_factor); }

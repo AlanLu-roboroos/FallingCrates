@@ -1,6 +1,6 @@
 #include "items.hpp"
 
-Items::Items(Crates *_crates) {
+Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
   m_items = {2, 2, 2};
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM0_TEXTURE));
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM1_TEXTURE));
@@ -20,6 +20,8 @@ Items::Items(Crates *_crates) {
   m_activated = {false, false, false};
   selected = ItemTypes::NONE;
   m_crates = _crates;
+  m_grabber = _grabber;
+  m_spawner = _spawner;
 
   m_timeFreezeBackdrop.setSize(
       sf::Vector2f(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT));
@@ -55,14 +57,11 @@ void Items::drawItems(sf::RenderWindow &window) {
 
 void Items::activate(int x, int y, int wx) {
   int line = std::abs((x - (0.025987526 * wx)) / (0.1185031185 * wx));
-  std::cout << line << std::endl;
   for (int i = 0; i < m_items.size(); i++) {
     if (selected == m_itemTypeOrder[i]) {
       if (m_items[i] > 0 && y < GameConstants::BORDER_HEIGHT) {
         selected = ItemTypes::NONE;
-        std::cout << "UNSELECT" << std::endl;
       } else {
-        std::cout << "CLLICK" << std::endl;
         m_items[i]--;
         m_clocks[i].restart();
         m_activated[i] = true;
@@ -71,7 +70,9 @@ void Items::activate(int x, int y, int wx) {
           m_crates->freezeLine(line);
           break;
         case ItemTypes::TIME_SLOW:
-          Clock::m_factor = 0.5;
+          m_crates->setClockFactor(0.5);
+          m_spawner->setClockFactor(0.5);
+          m_grabber->setClockFactor(0.5);
           break;
         case ItemTypes::LINE_CLEAR:
           m_crates->clearLine(line);
@@ -96,7 +97,9 @@ void Items::update() {
     if (m_activated[i] && m_clocks[i].getMilliSeconds() > 10000) {
       m_activated[i] = false;
       if (m_itemTypeOrder[i] == TIME_SLOW) {
-        Clock::m_factor = 1;
+        m_crates->setClockFactor(1);
+        m_spawner->setClockFactor(1);
+        m_grabber->setClockFactor(1);
       } else if (m_itemTypeOrder[i] == COLUMN_FREEZE) {
         m_crates->unfreezeLine();
       }

@@ -36,6 +36,7 @@ public:
   void setState(CrateState _state);
   void restartClock();
   sf::Time getElapsedTime();
+  void setClockFactor(float _factor);
 
   void setInitHeight(int height);
   float getInitHeight();

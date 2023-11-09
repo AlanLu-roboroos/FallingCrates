@@ -68,6 +68,8 @@ public:
   bool placeCrate(int line);
   bool setGrabbedCratePos(sf::Vector2f pos);
 
+  void setClockFactor(float _factor);
+
   void clear();
 
   void clearLine(int line);

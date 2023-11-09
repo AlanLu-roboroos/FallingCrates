@@ -25,8 +25,8 @@ int main() {
   Background background;
   Crates crates(&scorer);
   Grabber grabber(&crates);
-  Items items(&crates);
   Spawner spawner;
+  Items items(&crates, &grabber, &spawner);
 
   while (window.isOpen()) {
     sf::Event event;
