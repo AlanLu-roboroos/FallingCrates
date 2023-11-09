@@ -256,7 +256,6 @@ void Crates::updateCrates() {
 void Crates::mergeCrates() {
   for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
     crate_col &currentColumn = m_crates[column];
-    vector<std::pair<int, GameConstants::CrateType>> toMerge;
     if (currentColumn.size() >= 3) {
       for (int i = 1; i < currentColumn.size() - 1; i++) {
         if (currentColumn[i - 1]->getState() == Crate::CrateState::IDLE &&
@@ -297,19 +296,6 @@ void Crates::mergeCrates() {
           }
         }
       }
-    }
-    for (auto item : toMerge) {
-      Crate *tempCrate = getCrateFromEnum(item.second);
-      if (tempCrate == nullptr)
-        continue;
-      tempCrate->setState(Crate::CrateState::FALLING);
-      tempCrate->restartClock();
-      tempCrate->setInitHeight(GameConstants::ROW_Y[item.first]);
-      m_scorer->addMergeScore(m_crates[column][item.first]);
-      destroyCrate(column, item.first + 1);
-      destroyCrate(column, item.first);
-      destroyCrate(column, item.first - 1);
-      currentColumn.insert(currentColumn.begin() + item.first - 1, tempCrate);
     }
   }
 }
