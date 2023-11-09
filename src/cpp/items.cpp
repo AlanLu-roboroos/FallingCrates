@@ -1,7 +1,7 @@
 #include "items.hpp"
 
 Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
-  m_items = {2, 2, 2};
+  m_items = {0, 0, 0};
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM0_TEXTURE));
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM1_TEXTURE));
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM2_TEXTURE));
