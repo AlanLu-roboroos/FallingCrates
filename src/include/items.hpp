@@ -18,6 +18,7 @@ private:
   std::vector<sf::Sprite> m_sprites;
   std::vector<bool> m_activated;
   ItemTypes selected;
+  sf::Vector2f m_mousePos;
 
   sf::RectangleShape m_timeFreezeBackdrop;
 
@@ -29,6 +30,7 @@ public:
   void activate(int x, int y, int wx);
   void update();
   bool isSelected();
+  void updateMousePos(sf::Vector2f pos);
 };
 
 #endif

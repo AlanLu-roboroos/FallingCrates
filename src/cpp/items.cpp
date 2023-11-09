@@ -35,6 +35,22 @@ void Items::drawItems(sf::RenderWindow &window) {
   if (m_activated[1]) {
     window.draw(m_timeFreezeBackdrop);
   }
+  switch (selected) {
+  case LINE_CLEAR:
+    m_sprites[2].setPosition(m_mousePos);
+    break;
+  case TIME_SLOW:
+    m_sprites[1].setPosition(m_mousePos);
+    break;
+  case COLUMN_FREEZE:
+    m_sprites[0].setPosition(m_mousePos);
+    break;
+  default:
+    for (int i = 0; i < m_sprites.size(); i++) {
+      m_sprites[i].setPosition(GameConstants::ITEMS_POS[i]);
+    }
+    break;
+  }
 }
 
 void Items::activate(int x, int y, int wx) {
@@ -42,8 +58,7 @@ void Items::activate(int x, int y, int wx) {
   std::cout << line << std::endl;
   for (int i = 0; i < m_items.size(); i++) {
     if (selected == m_itemTypeOrder[i]) {
-      if (m_items[i] > 0 &&
-          m_sprites[i].getGlobalBounds().contains(sf::Vector2f(x, y))) {
+      if (m_items[i] > 0 && y < GameConstants::BORDER_HEIGHT) {
         selected = ItemTypes::NONE;
         std::cout << "UNSELECT" << std::endl;
       } else {
@@ -90,3 +105,5 @@ void Items::update() {
 }
 
 bool Items::isSelected() { return selected != ItemTypes::NONE; }
+
+void Items::updateMousePos(sf::Vector2f pos) { m_mousePos = pos; }

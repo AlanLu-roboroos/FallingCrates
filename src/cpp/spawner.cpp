@@ -6,7 +6,7 @@ Spawner::Spawner() {
 }
 
 GameConstants::CrateType Spawner::update() {
-  if (m_clock.getElapsedTime().asMilliseconds() - m_lastTime > 2000) {
+  if (m_clock.getMilliSeconds() - m_lastTime > 2000) {
     m_lastTime = m_clock.getElapsedTime().asMilliseconds();
     return GameConstants::CrateType::PURPLE_CRATE;
   }

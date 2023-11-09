@@ -82,6 +82,10 @@ int main() {
                          window.getSize().x);
         }
       }
+      if (event.type == sf::Event::MouseMoved) {
+        items.updateMousePos(
+            sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+      }
     }
 
     window.clear(GameConstants::BACKGROUND_COLOR);
