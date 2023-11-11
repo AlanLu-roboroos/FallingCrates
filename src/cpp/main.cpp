@@ -10,13 +10,13 @@
 #include "spawner.hpp"
 #include <iostream>
 
-int main() {
+int main(int argc, char **args) {
   sf::RenderWindow window(
       sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
-      "Falling Crates");
+      "Falling Crates", sf::Style::Titlebar | sf::Style::Close);
   window.setFramerateLimit(360);
 
-  if (!GameConstants::Resources::loadResources()) {
+  if (!GameConstants::Resources::loadResources(args[0])) {
     std::cout << "IMAGES NOT LOADED" << std::endl;
     return 1;
   }

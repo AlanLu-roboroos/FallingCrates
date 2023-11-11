@@ -68,10 +68,10 @@ std::map<GameConstants::CrateType, int> GameConstants::CRATE_MERGE_SCORE{
     {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}, {MULTICOLOR_CRATE, 810}};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_EXPLODE_SCORE{
-    {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},        {GREEN_CRATE, 270},
-    {YELLOW_CRATE, 810},    {ORANGE_CRATE, 2430},    {RED_CRATE, 7290},
-    {PINK_CRATE, 21870},    {GOLD_CRATE, 65610},     {BOMB_CRATE, 90},
-    {MEGA_BOMB_CRATE, 270}, {HYPER_BOMB_CRATE, 810}, {MULTICOLOR_CRATE, 810}};
+    {PURPLE_CRATE, 5},     {BLUE_CRATE, 15},        {GREEN_CRATE, 45},
+    {YELLOW_CRATE, 135},   {ORANGE_CRATE, 405},     {RED_CRATE, 1458},
+    {PINK_CRATE, 3645},    {GOLD_CRATE, 10935},     {BOMB_CRATE, 15},
+    {MEGA_BOMB_CRATE, 45}, {HYPER_BOMB_CRATE, 135}, {MULTICOLOR_CRATE, 135}};
 
 sf::Texture GameConstants::Resources::PLATFORM_TEXTURE;
 sf::Texture GameConstants::Resources::SPAWN_TEXTURE;
@@ -105,48 +105,50 @@ sf::Texture GameConstants::Resources::ITEM2_TEXTURE;
 
 sf::Font GameConstants::Resources::SCORE_FONT;
 
-bool GameConstants::Resources::loadResources() {
+bool GameConstants::Resources::loadResources(std::string path) {
+  path = path.substr(0, path.size() - 4);
   bool loaded = true;
-  loaded &= PLATFORM_TEXTURE.loadFromFile("src/res/objects/platform.png");
-  loaded &= SPAWN_TEXTURE.loadFromFile("src/res/objects/spawn.png");
+  loaded &= PLATFORM_TEXTURE.loadFromFile(path + "res/objects/platform.png");
+  loaded &= SPAWN_TEXTURE.loadFromFile(path + "res/objects/spawn.png");
 
-  loaded &= GRABBER_HORI.loadFromFile("src/res/grabber/grabberHori.png");
-  loaded &= GRABBER_LEFT.loadFromFile("src/res/grabber/grabberLeft.png");
-  loaded &= GRABBER_RIGHT.loadFromFile("src/res/grabber/grabberRigh.png");
-  loaded &= GRABBER_VERT.loadFromFile("src/res/grabber/grabberVert.png");
+  loaded &= GRABBER_HORI.loadFromFile(path + "res/grabber/grabberHori.png");
+  loaded &= GRABBER_LEFT.loadFromFile(path + "res/grabber/grabberLeft.png");
+  loaded &= GRABBER_RIGHT.loadFromFile(path + "res/grabber/grabberRigh.png");
+  loaded &= GRABBER_VERT.loadFromFile(path + "res/grabber/grabberVert.png");
 
-  loaded &= CRATE_PURPLE_TEXTURE.loadFromFile("src/res/crates/purple.png");
-  loaded &= CRATE_BLUE_TEXTURE.loadFromFile("src/res/crates/blue.png");
-  loaded &= CRATE_GREEN_TEXTURE.loadFromFile("src/res/crates/green.png");
-  loaded &= CRATE_YELLOW_TEXTURE.loadFromFile("src/res/crates/yellow.png");
-  loaded &= CRATE_ORANGE_TEXTURE.loadFromFile("src/res/crates/orange.png");
-  loaded &= CRATE_RED_TEXTURE.loadFromFile("src/res/crates/red.png");
-  loaded &= CRATE_PINK_TEXTURE.loadFromFile("src/res/crates/pink.png");
-  loaded &= CRATE_GOLD_TEXTURE.loadFromFile("src/res/crates/gold.png");
+  loaded &= CRATE_PURPLE_TEXTURE.loadFromFile(path + "res/crates/purple.png");
+  loaded &= CRATE_BLUE_TEXTURE.loadFromFile(path + "res/crates/blue.png");
+  loaded &= CRATE_GREEN_TEXTURE.loadFromFile(path + "res/crates/green.png");
+  loaded &= CRATE_YELLOW_TEXTURE.loadFromFile(path + "res/crates/yellow.png");
+  loaded &= CRATE_ORANGE_TEXTURE.loadFromFile(path + "res/crates/orange.png");
+  loaded &= CRATE_RED_TEXTURE.loadFromFile(path + "res/crates/red.png");
+  loaded &= CRATE_PINK_TEXTURE.loadFromFile(path + "res/crates/pink.png");
+  loaded &= CRATE_GOLD_TEXTURE.loadFromFile(path + "res/crates/gold.png");
 
-  loaded &= CRATE_BOMB_TEXTURE.loadFromFile("src/res/crates/bomb.png");
+  loaded &= CRATE_BOMB_TEXTURE.loadFromFile(path + "res/crates/bomb.png");
+  loaded &= CRATE_BOMB_FLASHING_TEXTURE.loadFromFile(
+      path + "res/crates/bomb-flash.png");
   loaded &=
-      CRATE_BOMB_FLASHING_TEXTURE.loadFromFile("src/res/crates/bomb-flash.png");
-  loaded &= CRATE_MEGA_BOMB_TEXTURE.loadFromFile("src/res/crates/megabomb.png");
+      CRATE_MEGA_BOMB_TEXTURE.loadFromFile(path + "res/crates/megabomb.png");
   loaded &= CRATE_MEGA_BOMB_FLASHING_TEXTURE.loadFromFile(
-      "src/res/crates/megabomb-flash.png");
+      path + "res/crates/megabomb-flash.png");
   loaded &=
-      CRATE_HYPER_BOMB_TEXTURE.loadFromFile("src/res/crates/hyperbomb.png");
+      CRATE_HYPER_BOMB_TEXTURE.loadFromFile(path + "res/crates/hyperbomb.png");
   loaded &= CRATE_HYPER_BOMB_FLASHING_TEXTURE.loadFromFile(
-      "src/res/crates/hyperbomb-flash.png");
+      path + "res/crates/hyperbomb-flash.png");
+
+  loaded &= CRATE_UNBREAKABLE_TEXTURE.loadFromFile(
+      path + "res/crates/unbreakable.png");
+  loaded &= CRATE_HEAVY_TEXTURE.loadFromFile(path + "res/crates/heavy.png");
 
   loaded &=
-      CRATE_UNBREAKABLE_TEXTURE.loadFromFile("src/res/crates/unbreakable.png");
-  loaded &= CRATE_HEAVY_TEXTURE.loadFromFile("src/res/crates/heavy.png");
+      CRATE_MULTICOLOR_TEXTURE.loadFromFile(path + "res/crates/multicolor.png");
 
-  loaded &=
-      CRATE_MULTICOLOR_TEXTURE.loadFromFile("src/res/crates/multicolor.png");
+  loaded &= ITEM0_TEXTURE.loadFromFile(path + "res/items/item0.png");
+  loaded &= ITEM1_TEXTURE.loadFromFile(path + "res/items/item1.png");
+  loaded &= ITEM2_TEXTURE.loadFromFile(path + "res/items/item2.png");
 
-  loaded &= ITEM0_TEXTURE.loadFromFile("src/res/items/item0.png");
-  loaded &= ITEM1_TEXTURE.loadFromFile("src/res/items/item1.png");
-  loaded &= ITEM2_TEXTURE.loadFromFile("src/res/items/item2.png");
-
-  loaded &= SCORE_FONT.loadFromFile("src/res/font.otf");
+  loaded &= SCORE_FONT.loadFromFile(path + "res/font.otf");
 
   return loaded;
 }

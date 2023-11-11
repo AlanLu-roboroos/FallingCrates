@@ -120,7 +120,7 @@ public:
 
     static sf::Font SCORE_FONT;
 
-    static bool loadResources();
+    static bool loadResources(std::string path);
   };
 };
 
