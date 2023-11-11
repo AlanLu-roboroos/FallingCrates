@@ -13,7 +13,7 @@
 int main(int argc, char **args) {
   sf::RenderWindow window(
       sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
-      "Falling Crates", sf::Style::Titlebar | sf::Style::Close);
+      "Falling Crates");
   window.setFramerateLimit(360);
 
   if (!GameConstants::Resources::loadResources(args[0])) {
@@ -63,34 +63,38 @@ int main(int argc, char **args) {
           }
         } else if (event.key.code == sf::Keyboard::R) {
           crates.clear();
+          crates.resetSeenCrates();
         }
         // END TEMPORARY CODE
       }
-      if (event.type == sf::Event::MouseButtonPressed) {
-        if (event.mouseButton.button == sf::Mouse::Left) {
-          if (event.mouseButton.y > GameConstants::BORDER_HEIGHT &&
-              !items.isSelected()) {
-            try {
-              int line = std::abs(
-                  (event.mouseButton.x - (0.025987526 * window.getSize().x)) /
-                  (0.1185031185 * window.getSize().x));
+      try {
+        if (event.type == sf::Event::MouseButtonPressed) {
+          if (event.mouseButton.button == sf::Mouse::Left) {
+            if (event.mouseButton.y > GameConstants::BORDER_HEIGHT &&
+                !items.isSelected()) {
+              int line = std::max(
+                  std::min(std::abs((event.mouseButton.x -
+                                     (0.025987526 * window.getSize().x)) /
+                                    (0.1185031185 * window.getSize().x)),
+                           7.0),
+                  0.0);
               grabber.queueGoTo(line);
-            } catch (...) {
             }
+            items.activate(event.mouseButton.x, event.mouseButton.y,
+                           window.getSize().x);
           }
-          items.activate(event.mouseButton.x, event.mouseButton.y,
-                         window.getSize().x);
         }
-      }
-      if (event.type == sf::Event::MouseMoved) {
-        items.updateMousePos(
-            sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+        if (event.type == sf::Event::MouseMoved) {
+          items.updateMousePos(
+              sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+        }
+      } catch (...) {
       }
     }
 
     window.clear(GameConstants::BACKGROUND_COLOR);
 
-    GameConstants::CrateType crate = spawner.update();
+    GameConstants::CrateType crate = spawner.update(crates.getSeenCrates());
     if (crate != GameConstants::CrateType::NONE) {
       crates.spawnCrate(grabber.getColumn(), grabber.isActive(), crate);
     }

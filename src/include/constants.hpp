@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
@@ -77,6 +78,7 @@ public:
     HEAVY_CRATE,
     UNBREAKABLE_CRATE,
     MULTICOLOR_CRATE,
+    INFECTED_CRATE,
     NONE
   };
 

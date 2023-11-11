@@ -284,6 +284,10 @@ void Crates::mergeCrates() {
             // currentColumn[i]->setMerged();
             // toMerge.push_back(std::make_pair(i,
             // currentColumn[i]->nextCrate()));
+            m_seenCrates.insert(crate->nextCrate());
+
+            // NOTE: Change so spawner checks only when new crate found, no need
+            // for three finds every frame
             Crate *tempCrate = getCrateFromEnum(crate->nextCrate());
             if (tempCrate != nullptr) {
               tempCrate->setState(Crate::CrateState::FADINGIN);
@@ -496,3 +500,9 @@ bool Crates::isBomb(GameConstants::CrateType type) {
     return false;
   }
 }
+
+std::set<GameConstants::CrateType> Crates::getSeenCrates() {
+  return m_seenCrates;
+}
+
+void Crates::resetSeenCrates() { m_seenCrates.clear(); }

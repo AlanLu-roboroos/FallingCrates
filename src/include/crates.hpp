@@ -36,6 +36,8 @@ private:
   Crate *m_grabbedCrate;
   vector<pair<Crate *, sf::Vector2f>> m_fadingInCrates;
 
+  set<GameConstants::CrateType> m_seenCrates;
+
   Scorer *m_scorer;
 
   set<int> frozenLines;
@@ -75,6 +77,9 @@ public:
   void clearLine(int line);
   void freezeLine(int line);
   void unfreezeLine();
+
+  std::set<GameConstants::CrateType> getSeenCrates();
+  void resetSeenCrates();
 
   static Crate *makeCrate(Crate *crate);
 };
