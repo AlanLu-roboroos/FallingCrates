@@ -59,7 +59,7 @@ run:
 	@$(BUILD_DIR)/main
 
 .PHONY: release
-release: $(BUILD_DIR)/$(TARGET_EXEC)
+release: $(BUILD_DIR)/$(TARGET_EXEC) rclean
 	mkdir $(BUILD_DIR)/FallingCrates.app
 	mkdir $(BUILD_DIR)/FallingCrates.app/contents
 	mkdir $(BUILD_DIR)/FallingCrates.app/contents/MacOS
