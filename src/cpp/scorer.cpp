@@ -23,7 +23,7 @@ Scorer::Scorer() {
                             m_highScore.getLocalBounds().width,
                         m_highScore.getLocalBounds().top +
                             m_highScore.getLocalBounds().height / 2.0f);
-  m_score.setPosition(sf::Vector2f(100, 73));
+  m_score.setPosition(sf::Vector2f(300, 73));
   m_highScore.setPosition(sf::Vector2f(1924 - 100, 73));
 }
 

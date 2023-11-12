@@ -9,15 +9,15 @@
 
 class Menu {
 public:
-  enum MenuState { STARTING, PAUSING, HELPSCREEN, NONE };
-  enum ButtonType { START, PAUSE, RESUME, RESTART, HELP, RESET, QUIT };
+  enum MenuState { STARTING, PAUSING, NONE, QUITTING };
+  enum ButtonType { START, PAUSE, RESUME, RESTART, RESET, QUIT };
 
   struct Button {
     sf::RectangleShape border;
     sf::Text text;
     ButtonType type;
 
-    Button(std::string _text, sf::Vector2f pos, sf::Vector2f size,
+    Button(std::string _text, int fontSize, sf::Vector2f pos, sf::Vector2f size,
            ButtonType _type);
     bool update(sf::Vector2f mousePos, bool click);
     void drawButton(sf::RenderWindow &window);
@@ -31,10 +31,14 @@ private:
   std::vector<Button> startButtonList;
   std::vector<Button> pauseButtonList;
 
+  Button pauseButton = Button(
+      "PAUSE", 50, sf::Vector2f(120, GameConstants::BORDER_HEIGHT / 2.0f),
+      sf::Vector2f(200, 80), ButtonType::PAUSE);
+
 public:
   Menu();
   MenuState getState();
-  void update(sf::Vector2f mousePos, bool click);
+  bool update(sf::Vector2f mousePos, bool click);
   void displayMenu(sf::RenderWindow &window);
 };
 
