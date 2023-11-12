@@ -45,6 +45,7 @@ Grabber::Grabber(Crates *__crates) {
   // _vertBoundingBox.setFillColor(sf::Color(0, 255, 0, 100));
   // _vertBoundingBox.setSize(sf::Vector2f(grabVert.getGlobalBounds().width,
   // grabVert.getGlobalBounds().height));
+  setPosition(sf::Vector2f(-5000, -5000));
 }
 
 void Grabber::setPosition(sf::Vector2f pos) {
