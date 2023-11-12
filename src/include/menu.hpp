@@ -32,7 +32,7 @@ private:
   std::vector<Button> pauseButtonList;
 
   Button pauseButton = Button(
-      "PAUSE", 50, sf::Vector2f(120, GameConstants::BORDER_HEIGHT / 2.0f),
+      "PAUSE", 50, sf::Vector2f(140, GameConstants::BORDER_HEIGHT / 2.0f),
       sf::Vector2f(200, 80), ButtonType::PAUSE);
 
 public:
