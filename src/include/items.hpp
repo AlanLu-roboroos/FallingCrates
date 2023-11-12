@@ -35,6 +35,9 @@ public:
   void update();
   bool isSelected();
   void updateMousePos(sf::Vector2f pos);
+
+  void play();
+  void pause();
 };
 
 #endif

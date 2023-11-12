@@ -71,6 +71,8 @@ public:
   bool setGrabbedCratePos(sf::Vector2f pos);
 
   void setClockFactor(float _factor);
+  void play();
+  void pause();
 
   void clear();
 

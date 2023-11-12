@@ -81,3 +81,7 @@ void Scorer::addExplodeScore(Crate *crate) {
   addScore(GameConstants::CRATE_EXPLODE_SCORE[crate->getCrateType()],
            crate->getPos());
 }
+
+void Scorer::play() { m_clock.play(); }
+
+void Scorer::pause() { m_clock.pause(); }

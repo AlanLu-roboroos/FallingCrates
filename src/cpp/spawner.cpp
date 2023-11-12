@@ -107,6 +107,9 @@ GameConstants::CrateType Spawner::update(std::set<CrateType> seenCrates) {
 
 void Spawner::setClockFactor(float _factor) { m_clock.setFactor(_factor); }
 
+void Spawner::play() { m_clock.play(); }
+void Spawner::pause() { m_clock.pause(); }
+
 sf::Time Spawner::getSpawnTime() {
   sf::Time temp;
   temp = sf::milliseconds(

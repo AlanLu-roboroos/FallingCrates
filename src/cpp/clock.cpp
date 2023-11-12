@@ -2,16 +2,27 @@
 
 float Clock::m_factor = 1;
 
-Clock::Clock() { m_clock = sf::Clock(); }
+Clock::Clock() {
+  m_clock = sf::Clock();
+  lastPaused = false;
+  paused = false;
+}
 
 sf::Time Clock::getElapsedTime() {
-  return sf::microseconds(m_clock.getElapsedTime().asMicroseconds() * m_factor +
-                          m_time.asMicroseconds());
+  if (paused)
+    return m_time;
+  else
+    return sf::microseconds(m_clock.getElapsedTime().asMicroseconds() *
+                                m_factor +
+                            m_time.asMicroseconds());
 }
 
 float Clock::getMilliSeconds() {
-  return m_clock.getElapsedTime().asMilliseconds() * m_factor +
-         m_time.asMilliseconds();
+  if (paused)
+    return m_time.asMilliseconds();
+  else
+    return m_clock.getElapsedTime().asMilliseconds() * m_factor +
+           m_time.asMilliseconds();
 }
 
 void Clock::restart() {
@@ -21,6 +32,23 @@ void Clock::restart() {
 
 void Clock::setFactor(float _factor) {
   Clock::m_factor = _factor;
-  m_time = m_clock.getElapsedTime();
+  if (paused)
+    m_time += m_clock.getElapsedTime();
+  else
+    m_time = m_clock.getElapsedTime();
+  m_clock.restart();
+}
+
+void Clock::pause() {
+  if (paused)
+    return;
+  paused = true;
+  m_time += m_clock.getElapsedTime();
+}
+
+void Clock::play() {
+  if (!paused)
+    return;
+  paused = false;
   m_clock.restart();
 }

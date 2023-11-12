@@ -58,6 +58,8 @@ public:
   int getColumn();
   bool isActive();
   void setClockFactor(float _factor);
+  void play();
+  void pause();
 };
 
 #endif

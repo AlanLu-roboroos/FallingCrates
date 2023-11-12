@@ -41,3 +41,13 @@ bool BombCrate::moveable() { return state != CrateState::SPAWNING; }
 GameConstants::CrateType BombCrate::nextCrate() {
   return GameConstants::CrateType::MEGA_BOMB_CRATE;
 }
+
+void BombCrate::play() {
+  bombClock.play();
+  clock.play();
+}
+
+void BombCrate::pause() {
+  bombClock.pause();
+  clock.pause();
+}

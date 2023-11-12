@@ -278,3 +278,6 @@ bool Grabber::isActive() {
 }
 
 void Grabber::setClockFactor(float _factor) { m_clock.setFactor(_factor); }
+
+void Grabber::play() { m_clock.play(); }
+void Grabber::pause() { m_clock.pause(); }

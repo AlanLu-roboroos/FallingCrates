@@ -42,3 +42,6 @@ float Crate::getInitHeight() { return initHeight; }
 GameConstants::CrateType Crate::getCrateType() { return crateType; }
 
 void Crate::setClockFactor(float _factor) { clock.setFactor(_factor); }
+
+void Crate::play() { clock.play(); }
+void Crate::pause() { clock.pause(); }

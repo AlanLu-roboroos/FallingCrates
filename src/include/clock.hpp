@@ -7,6 +7,10 @@ class Clock {
 private:
   sf::Clock m_clock;
   sf::Time m_time;
+
+  bool lastPaused;
+  bool paused;
+
   static float m_factor;
 
 public:
@@ -15,6 +19,9 @@ public:
   float getMilliSeconds();
   void restart();
   void setFactor(float _factor);
+
+  void pause();
+  void play();
 };
 
 #endif

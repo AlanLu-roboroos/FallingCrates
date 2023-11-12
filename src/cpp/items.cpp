@@ -110,3 +110,14 @@ void Items::update() {
 bool Items::isSelected() { return selected != ItemTypes::NONE; }
 
 void Items::updateMousePos(sf::Vector2f pos) { m_mousePos = pos; }
+
+void Items::play() {
+  for (auto clock : m_clocks) {
+    clock.play();
+  }
+}
+void Items::pause() {
+  for (auto clock : m_clocks) {
+    clock.pause();
+  }
+}

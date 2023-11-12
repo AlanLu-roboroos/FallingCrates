@@ -18,6 +18,8 @@ public:
   virtual bool moveable();
   virtual GameConstants::CrateType nextCrate();
   virtual bool isExploded();
+  void play();
+  void pause();
 };
 
 #endif

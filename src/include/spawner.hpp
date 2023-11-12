@@ -41,6 +41,8 @@ public:
   Spawner();
   GameConstants::CrateType update(std::set<CrateType> seenCrates);
   void setClockFactor(float _factor);
+  void play();
+  void pause();
 };
 
 #endif

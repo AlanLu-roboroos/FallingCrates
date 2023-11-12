@@ -344,6 +344,21 @@ void Crates::setClockFactor(float _factor) {
   }
 }
 
+void Crates::play() {
+  for (auto i : m_crates) {
+    for (auto j : i) {
+      j->play();
+    }
+  }
+}
+void Crates::pause() {
+  for (auto i : m_crates) {
+    for (auto j : i) {
+      j->pause();
+    }
+  }
+}
+
 bool Crates::explodeCrateRange(int line, int _start, int _end) {
   if (line >= 0 && line < GameConstants::CRATE_COLUMNS) {
     int start, end;

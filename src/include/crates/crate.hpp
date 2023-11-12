@@ -37,6 +37,8 @@ public:
   void restartClock();
   sf::Time getElapsedTime();
   void setClockFactor(float _factor);
+  virtual void play();
+  virtual void pause();
 
   void setInitHeight(int height);
   float getInitHeight();

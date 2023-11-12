@@ -30,6 +30,8 @@ public:
   void addMergeScore(Crate *crate);
   void addExplodeScore(Crate *crate);
   void drawScore(sf::RenderWindow &window);
+  void play();
+  void pause();
 };
 
 #endif
