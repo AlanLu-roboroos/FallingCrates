@@ -48,11 +48,11 @@ $(BUILD_DIR)/res:
 
 .PHONY: clean
 clean:
-	rm -r $(BUILD_DIR)/*
+	rm -rf $(BUILD_DIR)/*
 
 .PHONY: rclean
 rclean:
-	rm -r $(BUILD_DIR)/FallingCrates.app
+	rm -rf $(BUILD_DIR)/FallingCrates.app
 
 .PHONY: run
 run:
