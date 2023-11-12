@@ -27,6 +27,8 @@ Scorer::Scorer() {
   m_highScore.setPosition(sf::Vector2f(1924 - 100, 73));
 }
 
+void Scorer::reset() { m_scoreNum = 0; }
+
 void Scorer::drawScore(sf::RenderWindow &window) {
   m_score.setString(std::to_string(m_scoreNum));
   m_highScore.setString(std::to_string(m_highScoreNum));

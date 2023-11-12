@@ -6,12 +6,50 @@ Crates::Crates(Scorer *_scorer) {
   m_scorer = _scorer;
 }
 
+void Crates::reset() {
+  clear();
+  delete m_grabbedCrate;
+  m_grabbedCrate = nullptr;
+}
+
 Crates::~Crates() {
   for (auto column : m_crates) {
     for (auto crate : column) {
       delete crate;
     }
   }
+  delete m_grabbedCrate;
+}
+
+bool Crates::isDead() {
+  if (m_grabbedCrate != nullptr && m_grabbedCrate->isExploded()) {
+    return true;
+  }
+  int full = 0;
+  for (auto column : m_crates) {
+    if (column.size() == GameConstants::ROW_Y.size()) {
+      int colFull = 0;
+      for (auto crate : column) {
+        if (crate->getState() == Crate::CrateState::IDLE) {
+          switch (crate->getCrateType()) {
+          case GameConstants::CrateType::BOMB_CRATE:
+          case GameConstants::CrateType::MEGA_BOMB_CRATE:
+          case GameConstants::CrateType::HYPER_BOMB_CRATE:
+            break;
+          default:
+            colFull++;
+          }
+        }
+      }
+      if (colFull == GameConstants::ROW_Y.size()) {
+        full++;
+      }
+    }
+  }
+  if (full == GameConstants::COLUMN_X.size()) {
+    return true;
+  }
+  return false;
 }
 
 sf::Vector2f Crates::getCratePos(int line, int row) {
@@ -350,6 +388,8 @@ void Crates::play() {
       j->play();
     }
   }
+  if (m_grabbedCrate != nullptr)
+    m_grabbedCrate->play();
 }
 void Crates::pause() {
   for (auto i : m_crates) {
@@ -357,6 +397,8 @@ void Crates::pause() {
       j->pause();
     }
   }
+  if (m_grabbedCrate != nullptr)
+    m_grabbedCrate->pause();
 }
 
 bool Crates::explodeCrateRange(int line, int _start, int _end) {

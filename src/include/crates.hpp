@@ -53,6 +53,7 @@ private:
 
 public:
   Crates(Scorer *_scorer);
+  void reset();
   ~Crates();
   bool linePlacable(int line);
   bool spawnCrate(int grabberLine, bool isActive);
@@ -79,6 +80,8 @@ public:
   void clearLine(int line);
   void freezeLine(int line);
   void unfreezeLine();
+
+  bool isDead();
 
   std::set<GameConstants::CrateType> getSeenCrates();
   void resetSeenCrates();

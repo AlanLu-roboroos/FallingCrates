@@ -48,6 +48,15 @@ Grabber::Grabber(Crates *__crates) {
   setPosition(sf::Vector2f(-5000, -5000));
 }
 
+void Grabber::reset() {
+  m_column = 3.5;
+  m_state = GrabberState::STARTING;
+  m_nextState = GrabberState::STARTING;
+  m_clock.restart();
+  m_lastTime = m_clock.getElapsedTime();
+  setPosition(sf::Vector2f(-5000, -5000));
+}
+
 void Grabber::setPosition(sf::Vector2f pos) {
   m_grabHori.setPosition(pos);
   m_grabLeft.setPosition(pos);

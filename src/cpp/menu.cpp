@@ -43,41 +43,94 @@ void Menu::Button::drawButton(sf::RenderWindow &window) {
 Menu::Menu() {
   m_state = MenuState::STARTING;
   startButtonList = {
-      Button("START", 80,
+      Button("START", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f - 140),
+             sf::Vector2f(400, 100), ButtonType::START),
+      Button("HELP", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f),
+             sf::Vector2f(400, 100), ButtonType::HELP),
+      Button("QUIT", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
+             sf::Vector2f(400, 100), ButtonType::QUIT)};
+  pauseButtonList = {
+      Button("RESUME", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f - 140),
+             sf::Vector2f(400, 100), ButtonType::RESUME),
+      Button("HELP", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f),
+             sf::Vector2f(400, 100), ButtonType::HELP),
+      Button("QUIT", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
+             sf::Vector2f(400, 100), ButtonType::QUIT)};
+  deathButtonList = {
+      Button("RESTART", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f - 70),
-             sf::Vector2f(400, 100), ButtonType::START),
-      Button("QUIT", 80,
+             sf::Vector2f(400, 100), ButtonType::RESTART),
+      Button("QUIT", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 70),
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 40),
              sf::Vector2f(400, 100), ButtonType::QUIT)};
 }
 
 Menu::MenuState Menu::getState() { return m_state; }
 
+void Menu::checkButtons(ButtonType type) {
+  switch (type) {
+  case ButtonType::RESUME:
+  case ButtonType::START:
+    m_state = MenuState::NONE;
+    break;
+  case ButtonType::QUIT:
+    m_state = MenuState::QUITTING;
+    break;
+  case ButtonType::HELP:
+    m_state = MenuState::HELPSCREEN;
+    break;
+  case ButtonType::RESTART:
+    m_state = STARTING;
+    break;
+  default:
+    break;
+  }
+}
+
 bool Menu::update(sf::Vector2f mousePos, bool click) {
   if (pauseButton.update(mousePos, click)) {
-    m_state = MenuState::STARTING;
+    m_state = MenuState::PAUSING;
   }
   switch (m_state) {
   case MenuState::STARTING:
     for (auto &button : startButtonList) {
       if (button.update(mousePos, click)) {
-        switch (button.type) {
-        case ButtonType::START:
-          m_state = MenuState::NONE;
-          break;
-        case ButtonType::QUIT:
-          m_state = MenuState::QUITTING;
-          break;
-        default:
-          break;
-        }
+        checkButtons(button.type);
         return true;
       }
     }
     break;
+  case MenuState::DEATHSCREEN:
+    for (auto &button : deathButtonList) {
+      if (button.update(mousePos, click)) {
+        checkButtons(button.type);
+        return true;
+      }
+    }
+    break;
+  case MenuState::HELPSCREEN:
+    break;
   case MenuState::PAUSING:
+    for (auto &button : pauseButtonList) {
+      if (button.update(mousePos, click)) {
+        checkButtons(button.type);
+        return true;
+      }
+    }
     break;
   case MenuState::NONE:
     break;
@@ -91,7 +144,7 @@ void Menu::displayMenu(sf::RenderWindow &window) {
   pauseButton.drawButton(window);
   switch (m_state) {
   case MenuState::STARTING:
-    backgroundRect.setSize(sf::Vector2f(600, 300));
+    backgroundRect.setSize(sf::Vector2f(600, 500));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
@@ -105,7 +158,37 @@ void Menu::displayMenu(sf::RenderWindow &window) {
       button.drawButton(window);
     }
     break;
+  case MenuState::DEATHSCREEN:
+    backgroundRect.setSize(sf::Vector2f(600, 300));
+    backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
+                                 backgroundRect.getLocalBounds().width / 2.0f,
+                             backgroundRect.getLocalBounds().top +
+                                 backgroundRect.getLocalBounds().height / 2.0f);
+    backgroundRect.setPosition(
+        sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                     GameConstants::WINDOW_HEIGHT / 2.0f));
+    backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
+    window.draw(backgroundRect);
+    for (auto button : deathButtonList) {
+      button.drawButton(window);
+    }
+    break;
+  case MenuState::HELPSCREEN:
+    break;
   case MenuState::PAUSING:
+    backgroundRect.setSize(sf::Vector2f(600, 500));
+    backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
+                                 backgroundRect.getLocalBounds().width / 2.0f,
+                             backgroundRect.getLocalBounds().top +
+                                 backgroundRect.getLocalBounds().height / 2.0f);
+    backgroundRect.setPosition(
+        sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                     GameConstants::WINDOW_HEIGHT / 2.0f));
+    backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
+    window.draw(backgroundRect);
+    for (auto button : pauseButtonList) {
+      button.drawButton(window);
+    }
     break;
   case MenuState::NONE:
     break;
@@ -113,3 +196,5 @@ void Menu::displayMenu(sf::RenderWindow &window) {
     break;
   }
 }
+
+void Menu::setDeathScreen() { m_state = MenuState::DEATHSCREEN; }

@@ -9,8 +9,8 @@
 
 class Menu {
 public:
-  enum MenuState { STARTING, PAUSING, NONE, QUITTING };
-  enum ButtonType { START, PAUSE, RESUME, RESTART, RESET, QUIT };
+  enum MenuState { STARTING, PAUSING, HELPSCREEN, NONE, QUITTING, DEATHSCREEN };
+  enum ButtonType { START, PAUSE, RESUME, HELP, RESTART, RESET, QUIT };
 
   struct Button {
     sf::RectangleShape border;
@@ -30,16 +30,20 @@ private:
 
   std::vector<Button> startButtonList;
   std::vector<Button> pauseButtonList;
+  std::vector<Button> deathButtonList;
 
   Button pauseButton = Button(
       "PAUSE", 50, sf::Vector2f(140, GameConstants::BORDER_HEIGHT / 2.0f),
       sf::Vector2f(200, 80), ButtonType::PAUSE);
+
+  void checkButtons(ButtonType type);
 
 public:
   Menu();
   MenuState getState();
   bool update(sf::Vector2f mousePos, bool click);
   void displayMenu(sf::RenderWindow &window);
+  void setDeathScreen();
 };
 
 #endif

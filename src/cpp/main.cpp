@@ -120,7 +120,14 @@ int main(int argc, char **args) {
       }
     }
 
-    if (menu.getState() == Menu::MenuState::NONE) {
+    if (menu.getState() == Menu::MenuState::STARTING) {
+      scorer.reset();
+      crates.reset();
+      grabber.reset();
+      spawner.reset();
+      items.reset();
+
+    } else if (menu.getState() == Menu::MenuState::NONE) {
       scorer.play();
       crates.play();
       grabber.play();
@@ -152,6 +159,15 @@ int main(int argc, char **args) {
     scorer.drawScore(window);
     items.drawItems(window);
     menu.displayMenu(window);
+
+    if (crates.isDead()) {
+      menu.setDeathScreen();
+      scorer.pause();
+      crates.pause();
+      grabber.pause();
+      spawner.pause();
+      items.pause();
+    }
 
     window.display();
   }

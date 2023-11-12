@@ -39,6 +39,7 @@ private:
 
 public:
   Spawner();
+  void reset();
   GameConstants::CrateType update(std::set<CrateType> seenCrates);
   void setClockFactor(float _factor);
   void play();

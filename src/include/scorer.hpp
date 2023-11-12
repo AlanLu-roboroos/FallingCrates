@@ -32,6 +32,8 @@ public:
   void drawScore(sf::RenderWindow &window);
   void play();
   void pause();
+
+  void reset();
 };
 
 #endif

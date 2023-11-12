@@ -28,6 +28,11 @@ Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
   m_timeFreezeBackdrop.setFillColor(sf::Color(0, 0, 100, 30));
 }
 
+void Items::reset() {
+  m_items = {0, 0, 0};
+  m_activated = {false, false, false};
+}
+
 void Items::drawItems(sf::RenderWindow &window) {
   for (int i = 0; i < m_items.size(); i++) {
     if (m_items[i] > 0) {

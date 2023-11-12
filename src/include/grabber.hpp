@@ -51,6 +51,7 @@ private:
 
 public:
   Grabber(Crates *_crates);
+  void reset();
   void update();
   void goTo(int column);
   void queueGoTo(int column);
