@@ -38,7 +38,7 @@ Spawner::Spawner() {
                          CrateType::INFECTED_CRATE};
 
   gen.seed(rd());
-  m_type.param({0.90, 0.09, 0.01});
+  m_type.param({0.90, 0.08, 0.02});
 }
 
 GameConstants::CrateType Spawner::update(std::set<CrateType> seenCrates) {
