@@ -47,15 +47,15 @@ Menu::Menu() {
   startButtonList = {
       Button("START", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f - 140),
+                          GameConstants::WINDOW_HEIGHT / 2.0f - 70),
              sf::Vector2f(400, 100), ButtonType::START),
       Button("HELP", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f),
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 70),
              sf::Vector2f(400, 100), ButtonType::HELP),
       Button("QUIT", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 210),
              sf::Vector2f(400, 100), ButtonType::QUIT)};
   pauseButtonList = {
       Button("RESUME", 70,
@@ -81,7 +81,7 @@ Menu::Menu() {
              sf::Vector2f(400, 100), ButtonType::RESTART),
       Button("QUIT", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 40),
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 70),
              sf::Vector2f(400, 100), ButtonType::QUIT)};
 }
 
@@ -158,7 +158,7 @@ void Menu::displayMenu(sf::RenderWindow &window) {
                                  backgroundRect.getLocalBounds().height / 2.0f);
     backgroundRect.setPosition(
         sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                     GameConstants::WINDOW_HEIGHT / 2.0f));
+                     GameConstants::WINDOW_HEIGHT / 2.0f + 70));
     backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
     window.draw(backgroundRect);
     for (auto button : startButtonList) {
@@ -166,7 +166,7 @@ void Menu::displayMenu(sf::RenderWindow &window) {
     }
     break;
   case MenuState::DEATHSCREEN:
-    backgroundRect.setSize(sf::Vector2f(600, 300));
+    backgroundRect.setSize(sf::Vector2f(600, 400));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
