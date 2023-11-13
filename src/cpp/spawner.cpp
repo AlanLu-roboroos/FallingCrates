@@ -1,46 +1,6 @@
 #include "spawner.hpp"
 
-Spawner::Spawner() {
-  m_clock.restart();
-  m_lastTime = 0;
-  first = true;
-
-  m_cratesTargets[CrateType::PURPLE_CRATE] = 0.5;
-  m_cratesTargets[CrateType::BLUE_CRATE] = 0.4;
-  m_cratesTargets[CrateType::GREEN_CRATE] = 0.04;
-  m_cratesTargets[CrateType::YELLOW_CRATE] = 0.03;
-  m_cratesTargets[CrateType::ORANGE_CRATE] = 0.01;
-  m_cratesTargets[CrateType::RED_CRATE] = 0.008;
-  m_cratesTargets[CrateType::PINK_CRATE] = 0.007;
-  m_cratesTargets[CrateType::GOLD_CRATE] = 0.005;
-
-  m_cratesTargets[CrateType::BOMB_CRATE] = 0.6;
-  m_cratesTargets[CrateType::MEGA_BOMB_CRATE] = 0.3;
-  m_cratesTargets[CrateType::HYPER_BOMB_CRATE] = 0.1;
-
-  m_cratesTargets[CrateType::MULTICOLOR_CRATE] = 0.3;
-  m_cratesTargets[CrateType::HEAVY_CRATE] = 0.3;
-  m_cratesTargets[CrateType::UNBREAKABLE_CRATE] = 0.3;
-  m_cratesTargets[CrateType::INFECTED_CRATE] = 0.1;
-
-  m_normalCrates = {CrateType::PURPLE_CRATE, CrateType::BLUE_CRATE};
-  m_bombCrates = {CrateType::BOMB_CRATE};
-  m_otherCrates = {CrateType::MULTICOLOR_CRATE, CrateType::HEAVY_CRATE,
-                   CrateType::UNBREAKABLE_CRATE, CrateType::INFECTED_CRATE};
-
-  m_normalCratesTarget = {CrateType::PURPLE_CRATE, CrateType::BLUE_CRATE,
-                          CrateType::GREEN_CRATE,  CrateType::YELLOW_CRATE,
-                          CrateType::ORANGE_CRATE, CrateType::RED_CRATE,
-                          CrateType::PINK_CRATE,   CrateType::GOLD_CRATE};
-  m_bombCratesTarget = {CrateType::BOMB_CRATE, CrateType::MEGA_BOMB_CRATE,
-                        CrateType::HYPER_BOMB_CRATE};
-  m_otherCratesTarget = {CrateType::MULTICOLOR_CRATE, CrateType::HEAVY_CRATE,
-                         CrateType::UNBREAKABLE_CRATE,
-                         CrateType::INFECTED_CRATE};
-
-  gen.seed(rd());
-  m_type.param({0.90, 0.08, 0.02});
-}
+Spawner::Spawner() { reset(); }
 
 void Spawner::reset() {
   m_clock.restart();
