@@ -296,9 +296,8 @@ void Crates::mergeCrates() {
     crate_col &currentColumn = m_crates[column];
     if (currentColumn.size() >= 3) {
       for (int i = 1; i < currentColumn.size() - 1; i++) {
-        if (currentColumn[i - 1]->getState() == Crate::CrateState::IDLE &&
-            currentColumn[i]->getState() == Crate::CrateState::IDLE &&
-            currentColumn[i + 1]->getState() == Crate::CrateState::IDLE) {
+        if (currentColumn[i - 1]->mergable() && currentColumn[i]->mergable() &&
+            currentColumn[i + 1]->mergable()) {
           std::set<GameConstants::CrateType> crates;
           Crate *crate;
           for (int j = -1; j <= 1; j++) {

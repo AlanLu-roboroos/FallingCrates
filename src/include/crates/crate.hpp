@@ -46,6 +46,7 @@ public:
   GameConstants::CrateType getCrateType();
 
   virtual ~Crate() = default;
+  virtual bool mergable();
   virtual bool isExploded();
   virtual bool explodable() = 0;
   virtual bool moveable() = 0;

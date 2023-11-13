@@ -9,6 +9,8 @@ void Crate::init() {
   crateSprite.setPosition(sf::Vector2f(-1000, -1000));
   crateSprite.setOrigin(sf::Vector2f(8, 8));
   state = Crate::NONE;
+
+  infected = false;
 }
 
 bool Crate::isExploded() { return false; }
@@ -42,6 +44,8 @@ float Crate::getInitHeight() { return initHeight; }
 GameConstants::CrateType Crate::getCrateType() { return crateType; }
 
 void Crate::setClockFactor(float _factor) { clock.setFactor(_factor); }
+
+bool Crate::mergable() { return state == CrateState::IDLE && !infected; }
 
 void Crate::play() { clock.play(); }
 void Crate::pause() { clock.pause(); }
