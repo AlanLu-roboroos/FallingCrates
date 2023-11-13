@@ -35,19 +35,21 @@ void Scorer::drawScore(sf::RenderWindow &window) {
 
   for (int i = m_scoreMarkers.size() - 1; i >= 0; i--) {
     if (255 - 0.51 * (m_clock.getElapsedTime().asMilliseconds() -
-                      m_scoreMarkers[i].second) <=
+                      m_scoreMarkers[i].initTime.asMilliseconds()) <=
         0)
       m_scoreMarkers.erase(m_scoreMarkers.begin() + i);
     else {
 
-      m_scoreMarkers[i].first.setFillColor(
-          sf::Color(255, 255, 255,
-                    255 - 0.51 * (m_clock.getElapsedTime().asMilliseconds() -
-                                  m_scoreMarkers[i].second)));
-      m_scoreMarkers[i].first.move(
-          0, -0.001 * (m_clock.getElapsedTime().asMilliseconds() -
-                       m_scoreMarkers[i].second));
-      window.draw(m_scoreMarkers[i].first);
+      m_scoreMarkers[i].text.setFillColor(sf::Color(
+          255, 255, 255,
+          255 - 0.51 * (m_clock.getElapsedTime().asMilliseconds() -
+                        m_scoreMarkers[i].initTime.asMilliseconds())));
+      m_scoreMarkers[i].text.setPosition(
+          m_scoreMarkers[i].initPos.x,
+          m_scoreMarkers[i].initPos.y -
+              0.1 * (m_clock.getElapsedTime().asMilliseconds() -
+                     m_scoreMarkers[i].initTime.asMilliseconds()));
+      window.draw(m_scoreMarkers[i].text);
     }
   }
   m_highScore.setOrigin(m_highScore.getLocalBounds().left +
@@ -61,17 +63,19 @@ void Scorer::drawScore(sf::RenderWindow &window) {
 void Scorer::addScore(int score_add, sf::Vector2f pos) {
   m_scoreNum += score_add;
   m_highScoreNum = std::max(m_highScoreNum, m_scoreNum);
-  sf::Text tempText;
-  tempText.setFont(GameConstants::Resources::SCORE_FONT);
-  tempText.setCharacterSize(60);
-  tempText.setFillColor(sf::Color(255, 255, 255));
-  tempText.setString("+" + std::to_string(score_add));
-  tempText.setOrigin(
-      tempText.getLocalBounds().left + tempText.getLocalBounds().width / 2.0f,
-      tempText.getLocalBounds().top + tempText.getLocalBounds().height / 2.0f);
-  tempText.setPosition(pos);
-  m_scoreMarkers.push_back(
-      std::make_pair(tempText, m_clock.getElapsedTime().asMilliseconds()));
+  ScoreMarker temp;
+  temp.text.setFont(GameConstants::Resources::SCORE_FONT);
+  temp.text.setCharacterSize(60);
+  temp.text.setFillColor(sf::Color(255, 255, 255));
+  temp.text.setString("+" + std::to_string(score_add));
+  temp.text.setOrigin(temp.text.getLocalBounds().left +
+                          temp.text.getLocalBounds().width / 2.0f,
+                      temp.text.getLocalBounds().top +
+                          temp.text.getLocalBounds().height / 2.0f);
+  temp.text.setPosition(pos);
+  temp.initTime = m_clock.getElapsedTime();
+  temp.initPos = pos;
+  m_scoreMarkers.push_back(temp);
 }
 
 void Scorer::addMergeScore(Crate *crate) {

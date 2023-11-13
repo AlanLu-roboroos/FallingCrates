@@ -22,7 +22,13 @@ private:
 
   Clock m_clock;
 
-  std::vector<std::pair<sf::Text, int>> m_scoreMarkers;
+  struct ScoreMarker {
+    sf::Text text;
+    sf::Time initTime;
+    sf::Vector2f initPos;
+  };
+
+  std::vector<ScoreMarker> m_scoreMarkers;
 
 public:
   Scorer();
