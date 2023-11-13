@@ -46,51 +46,53 @@ int main(int argc, char **args) {
           window.close();
         }
         // TEMPORARY CODE
-        // else if (event.key.code == sf::Keyboard::P) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::B) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::BOMB_CRATE)) {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::U) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::UNBREAKABLE_CRATE))
-        //                          {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::H) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::HEAVY_CRATE)) {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::B) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::BOMB_CRATE)) {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::M) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::MULTICOLOR_CRATE))
-        //                          {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::V) {
-        //   if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-        //                          GameConstants::CrateType::VIRUS_CRATE)) {
-        //   }
-        // } else if (event.key.code == sf::Keyboard::R) {
-        //   crates.clear();
-        //   crates.resetSeenCrates();
-        // } else if (event.key.code == sf::Keyboard::Home) {
-        //   scorer.pause();
-        //   crates.pause();
-        //   grabber.pause();
-        //   spawner.pause();
-        //   items.pause();
-        // } else if (event.key.code == sf::Keyboard::End) {
-        //   scorer.play();
-        //   crates.play();
-        //   grabber.play();
-        //   spawner.play();
-        //   items.play();
-        // }
+        if (argc == 2 && strcmp(args[1], "hi") == 0) {
+          if (event.key.code == sf::Keyboard::P) {
+            if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive())) {
+            }
+          } else if (event.key.code == sf::Keyboard::B) {
+            if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                   GameConstants::CrateType::BOMB_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::U) {
+            if (!crates.spawnCrate(
+                    grabber.getColumn(), grabber.isActive(),
+                    GameConstants::CrateType::UNBREAKABLE_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::H) {
+            if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                   GameConstants::CrateType::HEAVY_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::B) {
+            if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                   GameConstants::CrateType::BOMB_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::M) {
+            if (!crates.spawnCrate(
+                    grabber.getColumn(), grabber.isActive(),
+                    GameConstants::CrateType::MULTICOLOR_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::V) {
+            if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
+                                   GameConstants::CrateType::VIRUS_CRATE)) {
+            }
+          } else if (event.key.code == sf::Keyboard::R) {
+            crates.clear();
+            crates.resetSeenCrates();
+          } else if (event.key.code == sf::Keyboard::Home) {
+            scorer.pause();
+            crates.pause();
+            grabber.pause();
+            spawner.pause();
+            items.pause();
+          } else if (event.key.code == sf::Keyboard::End) {
+            scorer.play();
+            crates.play();
+            grabber.play();
+            spawner.play();
+            items.play();
+          }
+        }
         // END TEMPORARY CODE
       }
       try {
