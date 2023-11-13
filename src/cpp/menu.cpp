@@ -18,6 +18,8 @@ Menu::Button::Button(std::string _text, int fontSize, sf::Vector2f pos,
       border.getLocalBounds().top + border.getLocalBounds().height / 2.0f);
   border.setPosition(pos);
   border.setFillColor(sf::Color(50, 50, 50, 100));
+  border.setOutlineThickness(5);
+  border.setOutlineColor(sf::Color(20, 20, 20, 150));
 
   type = _type;
 }
@@ -103,7 +105,8 @@ void Menu::checkButtons(ButtonType type) {
 
 bool Menu::update(sf::Vector2f mousePos, bool click) {
   if (pauseButton.update(mousePos, click)) {
-    m_state = MenuState::PAUSING;
+    if (m_state == MenuState::NONE)
+      m_state = MenuState::PAUSING;
   }
   switch (m_state) {
   case MenuState::STARTING:
