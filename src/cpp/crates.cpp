@@ -151,8 +151,9 @@ int Crates::getRowIgnoringFadingIn(int column, int row) {
 
 void Crates::update() {
   mergeCrates();
-  explodeCrate();
+  explodeCrates();
   updateCrates();
+  infectCrates();
 }
 
 void Crates::updateCrates() {
@@ -341,7 +342,7 @@ void Crates::mergeCrates() {
   }
 }
 
-void Crates::explodeCrate() {
+void Crates::explodeCrates() {
   for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
     for (int row = 0; row < m_crates[column].size(); row++) {
       Crate *currentCrate = m_crates[column][row];
@@ -367,6 +368,40 @@ void Crates::explodeCrate() {
             break;
           }
           return;
+        }
+      }
+    }
+  }
+}
+
+void Crates::infectCrates() {
+  for (int column = 0; column < GameConstants::CRATE_COLUMNS; column++) {
+    crate_col &currentColumn = m_crates[column];
+    for (int i = 0; i < currentColumn.size(); i++) {
+      int reset = 0;
+      if (currentColumn[i]->getState() == Crate::CrateState::IDLE) {
+        if (i > 0) {
+          if (currentColumn[i - 1]->isInfected()) {
+            if (currentColumn[i]->getElapsedTime().asMilliseconds() >
+                GameConstants::INFECT_TIME) {
+              currentColumn[i]->setInfected();
+            }
+          } else
+            reset++;
+        } else
+          reset++;
+        if (i < currentColumn.size() - 1) {
+          if (currentColumn[i + 1]->isInfected()) {
+            if (currentColumn[i]->getElapsedTime().asMilliseconds() >
+                GameConstants::INFECT_TIME) {
+              currentColumn[i]->setInfected();
+            }
+          } else
+            reset++;
+        } else
+          reset++;
+        if (reset == 2) {
+          currentColumn[i]->restartClock();
         }
       }
     }
@@ -539,6 +574,9 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
     break;
   case GameConstants::CrateType::MULTICOLOR_CRATE:
     tempCrate = new MultiColorCrate();
+    break;
+  case GameConstants::CrateType::INFECTED_CRATE:
+    tempCrate = new InfectedCrate();
     break;
   default:
     tempCrate = nullptr;

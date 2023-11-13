@@ -20,6 +20,7 @@ protected:
   float initHeight;
 
   sf::Sprite crateSprite;
+  sf::Sprite infectedSprite;
 
   virtual sf::Texture &getTexture() = 0;
 
@@ -42,6 +43,9 @@ public:
 
   void setInitHeight(int height);
   float getInitHeight();
+
+  void setInfected();
+  bool isInfected();
 
   GameConstants::CrateType getCrateType();
 

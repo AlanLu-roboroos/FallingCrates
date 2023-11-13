@@ -9,6 +9,7 @@
 #include "crates/greenCrate.hpp"
 #include "crates/heavyCrate.hpp"
 #include "crates/hyperBombCrate.hpp"
+#include "crates/infectedCrate.hpp"
 #include "crates/megaBombCrate.hpp"
 #include "crates/multiColorCrate.hpp"
 #include "crates/orangeCrate.hpp"
@@ -47,7 +48,8 @@ private:
   bool isBomb(GameConstants::CrateType type);
   void updateCrates();
   void mergeCrates();
-  void explodeCrate();
+  void explodeCrates();
+  void infectCrates();
   bool explodeCrateRange(int line, int start, int end);
   int getRowIgnoringFadingIn(int column, int row);
 

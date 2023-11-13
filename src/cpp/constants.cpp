@@ -20,6 +20,8 @@ float GameConstants::CRATE_GROWTH_TIME = 150;
 float GameConstants::CRATE_FADE_TIME = 150;
 float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
 
+float GameConstants::INFECT_TIME = 5000;
+
 float GameConstants::BOMB_FLASHING_TIME = 200;
 float GameConstants::BOMB_EXPLODE_TIME = 5000;
 
@@ -99,6 +101,11 @@ sf::Texture GameConstants::Resources::CRATE_HEAVY_TEXTURE;
 sf::Texture GameConstants::Resources::CRATE_UNBREAKABLE_TEXTURE;
 
 sf::Texture GameConstants::Resources::CRATE_MULTICOLOR_TEXTURE;
+
+sf::Texture GameConstants::Resources::CRATE_VIRUS_TEXTURE;
+
+sf::Texture GameConstants::Resources::INFECTED_TEXTURE;
+
 sf::Texture GameConstants::Resources::ITEM0_TEXTURE;
 sf::Texture GameConstants::Resources::ITEM1_TEXTURE;
 sf::Texture GameConstants::Resources::ITEM2_TEXTURE;
@@ -143,6 +150,10 @@ bool GameConstants::Resources::loadResources(std::string path) {
 
   loaded &=
       CRATE_MULTICOLOR_TEXTURE.loadFromFile(path + "res/crates/multicolor.png");
+
+  loaded &= CRATE_VIRUS_TEXTURE.loadFromFile(path + "res/crates/virus.png");
+
+  loaded &= INFECTED_TEXTURE.loadFromFile(path + "res/crates/infected.png");
 
   loaded &= ITEM0_TEXTURE.loadFromFile(path + "res/items/item0.png");
   loaded &= ITEM1_TEXTURE.loadFromFile(path + "res/items/item1.png");

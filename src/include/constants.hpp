@@ -43,6 +43,8 @@ public:
   static float CRATE_FADE_TIME;
   static float CRATE_FALLING_ACCELERATION;
 
+  static float INFECT_TIME;
+
   static float BOMB_FLASHING_TIME;
   static float BOMB_EXPLODE_TIME;
 
@@ -115,6 +117,10 @@ public:
     static sf::Texture CRATE_UNBREAKABLE_TEXTURE;
 
     static sf::Texture CRATE_MULTICOLOR_TEXTURE;
+
+    static sf::Texture CRATE_VIRUS_TEXTURE;
+
+    static sf::Texture INFECTED_TEXTURE;
 
     static sf::Texture ITEM0_TEXTURE;
     static sf::Texture ITEM1_TEXTURE;
