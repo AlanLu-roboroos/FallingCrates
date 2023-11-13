@@ -80,7 +80,7 @@ public:
     HEAVY_CRATE,
     UNBREAKABLE_CRATE,
     MULTICOLOR_CRATE,
-    INFECTED_CRATE,
+    VIRUS_CRATE,
     NONE
   };
 

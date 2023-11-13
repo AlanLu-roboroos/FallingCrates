@@ -1,11 +1,11 @@
-#ifndef INFECTEDCRATE_H
-#define INFECTEDCRATE_H
+#ifndef VIRUSCRATE_H
+#define VIRUSCRATE_H
 
 #include "crates/crate.hpp"
 
-class InfectedCrate : public Crate {
+class VirusCrate : public Crate {
 public:
-  InfectedCrate();
+  VirusCrate();
 
   virtual sf::Texture &getTexture();
   virtual bool explodable();

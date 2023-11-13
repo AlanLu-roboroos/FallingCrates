@@ -9,7 +9,6 @@
 #include "crates/greenCrate.hpp"
 #include "crates/heavyCrate.hpp"
 #include "crates/hyperBombCrate.hpp"
-#include "crates/infectedCrate.hpp"
 #include "crates/megaBombCrate.hpp"
 #include "crates/multiColorCrate.hpp"
 #include "crates/orangeCrate.hpp"
@@ -17,6 +16,7 @@
 #include "crates/purpleCrate.hpp"
 #include "crates/redCrate.hpp"
 #include "crates/unbreakableCrate.hpp"
+#include "crates/virusCrate.hpp"
 #include "crates/yellowCrate.hpp"
 #include "scorer.hpp"
 #include <algorithm>

@@ -71,7 +71,7 @@ int main(int argc, char **args) {
           }
         } else if (event.key.code == sf::Keyboard::V) {
           if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
-                                 GameConstants::CrateType::INFECTED_CRATE)) {
+                                 GameConstants::CrateType::VIRUS_CRATE)) {
           }
         } else if (event.key.code == sf::Keyboard::R) {
           crates.clear();

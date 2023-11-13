@@ -23,12 +23,12 @@ void Spawner::reset() {
   m_cratesTargets[CrateType::MULTICOLOR_CRATE] = 0.3;
   m_cratesTargets[CrateType::HEAVY_CRATE] = 0.3;
   m_cratesTargets[CrateType::UNBREAKABLE_CRATE] = 0.3;
-  m_cratesTargets[CrateType::INFECTED_CRATE] = 0.1;
+  m_cratesTargets[CrateType::VIRUS_CRATE] = 0.1;
 
   m_normalCrates = {CrateType::PURPLE_CRATE, CrateType::BLUE_CRATE};
   m_bombCrates = {CrateType::BOMB_CRATE};
   m_otherCrates = {CrateType::MULTICOLOR_CRATE, CrateType::HEAVY_CRATE,
-                   CrateType::UNBREAKABLE_CRATE, CrateType::INFECTED_CRATE};
+                   CrateType::UNBREAKABLE_CRATE, CrateType::VIRUS_CRATE};
 
   m_normalCratesTarget = {CrateType::PURPLE_CRATE, CrateType::BLUE_CRATE,
                           CrateType::GREEN_CRATE,  CrateType::YELLOW_CRATE,
@@ -37,8 +37,7 @@ void Spawner::reset() {
   m_bombCratesTarget = {CrateType::BOMB_CRATE, CrateType::MEGA_BOMB_CRATE,
                         CrateType::HYPER_BOMB_CRATE};
   m_otherCratesTarget = {CrateType::MULTICOLOR_CRATE, CrateType::HEAVY_CRATE,
-                         CrateType::UNBREAKABLE_CRATE,
-                         CrateType::INFECTED_CRATE};
+                         CrateType::UNBREAKABLE_CRATE, CrateType::VIRUS_CRATE};
 
   gen.seed(rd());
   m_type.param({0.90, 0.08, 0.02});

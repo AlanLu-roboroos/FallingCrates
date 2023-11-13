@@ -575,8 +575,8 @@ Crate *Crates::getCrateFromEnum(GameConstants::CrateType type) {
   case GameConstants::CrateType::MULTICOLOR_CRATE:
     tempCrate = new MultiColorCrate();
     break;
-  case GameConstants::CrateType::INFECTED_CRATE:
-    tempCrate = new InfectedCrate();
+  case GameConstants::CrateType::VIRUS_CRATE:
+    tempCrate = new VirusCrate();
     break;
   default:
     tempCrate = nullptr;
