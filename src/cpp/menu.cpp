@@ -62,13 +62,17 @@ Menu::Menu() {
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f - 140),
              sf::Vector2f(400, 100), ButtonType::RESUME),
-      Button("HELP", 70,
+      Button("RESTART", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f),
+             sf::Vector2f(400, 100), ButtonType::RESTART),
+      Button("HELP", 70,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
              sf::Vector2f(400, 100), ButtonType::HELP),
       Button("QUIT", 70,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 280),
              sf::Vector2f(400, 100), ButtonType::QUIT)};
   deathButtonList = {
       Button("RESTART", 70,
@@ -179,14 +183,14 @@ void Menu::displayMenu(sf::RenderWindow &window) {
   case MenuState::HELPSCREEN:
     break;
   case MenuState::PAUSING:
-    backgroundRect.setSize(sf::Vector2f(600, 500));
+    backgroundRect.setSize(sf::Vector2f(600, 700));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
                                  backgroundRect.getLocalBounds().height / 2.0f);
     backgroundRect.setPosition(
         sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                     GameConstants::WINDOW_HEIGHT / 2.0f));
+                     GameConstants::WINDOW_HEIGHT / 2.0f + 70));
     backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
     window.draw(backgroundRect);
     for (auto button : pauseButtonList) {
