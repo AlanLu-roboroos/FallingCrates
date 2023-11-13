@@ -17,6 +17,7 @@ class Spawner {
 private:
   Clock m_clock;
   float m_lastTime;
+  bool first;
 
   std::discrete_distribution<int> m_type;
 

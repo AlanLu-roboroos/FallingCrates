@@ -3,6 +3,7 @@
 Spawner::Spawner() {
   m_clock.restart();
   m_lastTime = 0;
+  first = true;
 
   m_cratesTargets[CrateType::PURPLE_CRATE] = 0.5;
   m_cratesTargets[CrateType::BLUE_CRATE] = 0.4;
@@ -44,6 +45,7 @@ Spawner::Spawner() {
 void Spawner::reset() {
   m_clock.restart();
   m_lastTime = 0;
+  first = true;
 
   m_cratesTargets[CrateType::PURPLE_CRATE] = 0.5;
   m_cratesTargets[CrateType::BLUE_CRATE] = 0.4;
@@ -112,6 +114,8 @@ GameConstants::CrateType Spawner::update(std::set<CrateType> seenCrates) {
   if (m_clock.getMilliSeconds() - m_lastTime >
       getSpawnTime().asMilliseconds()) {
     m_lastTime = m_clock.getElapsedTime().asMilliseconds();
+    if (first)
+      first = false;
 
     CrateType crate = CrateType::NONE;
     m_probabilities.clear();
@@ -152,6 +156,8 @@ void Spawner::play() { m_clock.play(); }
 void Spawner::pause() { m_clock.pause(); }
 
 sf::Time Spawner::getSpawnTime() {
+  if (first)
+    return sf::milliseconds(200);
   sf::Time temp;
   temp = sf::milliseconds(
       2000 -
