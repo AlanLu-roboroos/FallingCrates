@@ -11,6 +11,20 @@
 #include "spawner.hpp"
 #include <iostream>
 
+sf::Vector2f mouseToCoords(float x, float y, const sf::RenderWindow &window,
+                           bool flipped = false) {
+  if (flipped)
+    return sf::Vector2f(x * (static_cast<float>(window.getSize().x) /
+                             static_cast<float>(GameConstants::WINDOW_WIDTH)),
+                        y * (static_cast<float>(window.getSize().y) /
+                             static_cast<float>(GameConstants::WINDOW_HEIGHT)));
+  else
+    return sf::Vector2f(x * (static_cast<float>(GameConstants::WINDOW_WIDTH) /
+                             static_cast<float>(window.getSize().x)),
+                        y * (static_cast<float>(GameConstants::WINDOW_HEIGHT) /
+                             static_cast<float>(window.getSize().y)));
+}
+
 int main(int argc, char **args) {
   sf::RenderWindow window(
       sf::VideoMode(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT),
@@ -98,9 +112,9 @@ int main(int argc, char **args) {
       try {
         if (event.type == sf::Event::MouseButtonPressed) {
           if (event.mouseButton.button == sf::Mouse::Left) {
-            if (!menu.update(
-                    sf::Vector2f(event.mouseButton.x, event.mouseButton.y),
-                    true)) {
+            if (!menu.update(mouseToCoords(event.mouseButton.x,
+                                           event.mouseButton.y, window, false),
+                             true)) {
               if (event.mouseButton.y > GameConstants::BORDER_HEIGHT &&
                   !items.isSelected()) {
                 int line = std::max(
@@ -111,15 +125,18 @@ int main(int argc, char **args) {
                     0.0);
                 grabber.queueGoTo(line);
               }
-              items.activate(event.mouseButton.x, event.mouseButton.y,
+              sf::Vector2f temp = mouseToCoords(event.mouseButton.x,
+                                                event.mouseButton.y, window);
+              items.activate(event.mouseButton.x, temp.x, temp.y,
                              window.getSize().x);
             }
           }
         }
         if (event.type == sf::Event::MouseMoved) {
           items.updateMousePos(
-              sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
-          menu.update(sf::Vector2f(event.mouseMove.x, event.mouseMove.y),
+              mouseToCoords(event.mouseMove.x, event.mouseMove.y, window));
+          menu.update(mouseToCoords(event.mouseMove.x, event.mouseMove.y,
+                                    window, false),
                       false);
         }
       } catch (...) {

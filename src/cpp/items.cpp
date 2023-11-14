@@ -1,7 +1,7 @@
 #include "items.hpp"
 
 Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
-  m_items = {0, 0, 0};
+  m_items = {1, 1, 1};
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM0_TEXTURE));
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM1_TEXTURE));
   m_sprites.push_back(sf::Sprite(GameConstants::Resources::ITEM2_TEXTURE));
@@ -60,8 +60,8 @@ void Items::drawItems(sf::RenderWindow &window) {
   }
 }
 
-void Items::activate(int x, int y, int wx) {
-  int line = std::abs((x - (0.025987526 * wx)) / (0.1185031185 * wx));
+void Items::activate(int ox, int x, int y, int wx) {
+  int line = std::abs((ox - (0.025987526 * wx)) / (0.1185031185 * wx));
   for (int i = 0; i < m_items.size(); i++) {
     if (selected == m_itemTypeOrder[i]) {
       if (m_items[i] > 0 && y < GameConstants::BORDER_HEIGHT) {

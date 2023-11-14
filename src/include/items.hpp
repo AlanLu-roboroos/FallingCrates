@@ -32,7 +32,7 @@ public:
   Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner);
   void reset();
   void drawItems(sf::RenderWindow &window);
-  void activate(int x, int y, int wx);
+  void activate(int ox, int x, int y, int wx);
   void update();
   bool isSelected();
   void updateMousePos(sf::Vector2f pos);
