@@ -4,12 +4,14 @@ Crates::Crates(Scorer *_scorer) {
   m_crates = vector<crate_col>(8);
   m_grabbedCrate = nullptr;
   m_scorer = _scorer;
+  m_mergeCount = 0;
 }
 
 void Crates::reset() {
   clear();
   delete m_grabbedCrate;
   m_grabbedCrate = nullptr;
+  m_mergeCount = 0;
 }
 
 Crates::~Crates() {
@@ -20,6 +22,10 @@ Crates::~Crates() {
   }
   delete m_grabbedCrate;
 }
+
+int Crates::getMergeCount() { return m_mergeCount; }
+
+void Crates::resetMergeCount() { m_mergeCount = 0; }
 
 bool Crates::isDead() {
   if (m_grabbedCrate != nullptr && m_grabbedCrate->isExploded()) {
@@ -127,7 +133,10 @@ void Crates::clearLine(int line) {
   m_crates[line].clear();
 }
 
-void Crates::freezeLine(int line) { frozenLines.insert(line); }
+void Crates::freezeLine(int line) {
+  if (frozenLines.find(line) == frozenLines.end())
+    frozenLines.insert(line);
+}
 
 void Crates::unfreezeLine() { frozenLines.erase(frozenLines.begin()); }
 
@@ -323,6 +332,7 @@ void Crates::mergeCrates() {
             // toMerge.push_back(std::make_pair(i,
             // currentColumn[i]->nextCrate()));
             m_seenCrates.insert(crate->nextCrate());
+            m_mergeCount++;
 
             // NOTE: Change so spawner checks only when new crate found, no need
             // for three finds every frame

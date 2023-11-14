@@ -28,6 +28,10 @@ private:
   Grabber *m_grabber;
   Spawner *m_spawner;
 
+  std::random_device rd;
+  std::mt19937 eng;
+  std::uniform_int_distribution<> distr;
+
 public:
   Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner);
   void reset();
@@ -36,6 +40,7 @@ public:
   void update();
   bool isSelected();
   void updateMousePos(sf::Vector2f pos);
+  void addItem();
 
   void play();
   void pause();

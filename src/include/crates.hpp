@@ -43,6 +43,8 @@ private:
 
   set<int> frozenLines;
 
+  int m_mergeCount;
+
   sf::Vector2f getCratePos(int line, int row);
   Crate *getCrateFromEnum(GameConstants::CrateType type);
   bool isBomb(GameConstants::CrateType type);
@@ -82,6 +84,9 @@ public:
   void clearLine(int line);
   void freezeLine(int line);
   void unfreezeLine();
+
+  int getMergeCount();
+  void resetMergeCount();
 
   bool isDead();
 

@@ -1,4 +1,5 @@
 #include "items.hpp"
+#include <random>
 
 Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
   m_items = {1, 1, 1};
@@ -26,6 +27,9 @@ Items::Items(Crates *_crates, Grabber *_grabber, Spawner *_spawner) {
   m_timeFreezeBackdrop.setSize(
       sf::Vector2f(GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT));
   m_timeFreezeBackdrop.setFillColor(sf::Color(0, 0, 100, 30));
+
+  eng = std::mt19937(rd());
+  distr = std::uniform_int_distribution<int>(0, 2);
 }
 
 void Items::reset() {
@@ -67,24 +71,26 @@ void Items::activate(int ox, int x, int y, int wx) {
       if (m_items[i] > 0 && y < GameConstants::BORDER_HEIGHT) {
         selected = ItemTypes::NONE;
       } else {
-        m_items[i]--;
-        m_clocks[i].restart();
-        m_activated[i] = true;
-        switch (selected) {
-        case ItemTypes::COLUMN_FREEZE:
-          m_crates->freezeLine(line);
-          break;
-        case ItemTypes::TIME_SLOW:
-          m_crates->setClockFactor(0.5);
-          m_spawner->setClockFactor(0.5);
-          m_grabber->setClockFactor(0.5);
-          break;
-        case ItemTypes::LINE_CLEAR:
-          m_crates->clearLine(line);
-          m_activated[i] = false;
-          break;
-        default:
-          break;
+        if (!m_activated[i]) {
+          m_activated[i] = true;
+          m_clocks[i].restart();
+          m_items[i]--;
+          switch (selected) {
+          case ItemTypes::COLUMN_FREEZE:
+            m_crates->freezeLine(line);
+            break;
+          case ItemTypes::TIME_SLOW:
+            m_crates->setClockFactor(0.5);
+            m_spawner->setClockFactor(0.5);
+            m_grabber->setClockFactor(0.5);
+            break;
+          case ItemTypes::LINE_CLEAR:
+            m_crates->clearLine(line);
+            m_activated[i] = false;
+            break;
+          default:
+            break;
+          }
         }
         selected = ItemTypes::NONE;
       }
@@ -115,6 +121,8 @@ void Items::update() {
 bool Items::isSelected() { return selected != ItemTypes::NONE; }
 
 void Items::updateMousePos(sf::Vector2f pos) { m_mousePos = pos; }
+
+void Items::addItem() { m_items[distr(eng)]++; }
 
 void Items::play() {
   for (auto clock : m_clocks) {

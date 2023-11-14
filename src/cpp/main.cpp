@@ -90,6 +90,8 @@ int main(int argc, char **args) {
             if (!crates.spawnCrate(grabber.getColumn(), grabber.isActive(),
                                    GameConstants::CrateType::VIRUS_CRATE)) {
             }
+          } else if (event.key.code == sf::Keyboard::I) {
+            items.addItem();
           } else if (event.key.code == sf::Keyboard::R) {
             crates.clear();
             crates.resetSeenCrates();
@@ -175,6 +177,11 @@ int main(int argc, char **args) {
     grabber.update();
     crates.update();
     items.update();
+
+    if (crates.getMergeCount() > 100) {
+      items.addItem();
+      crates.resetMergeCount();
+    }
 
     background.drawBackground(window);
     grabber.drawGrabber(window);
