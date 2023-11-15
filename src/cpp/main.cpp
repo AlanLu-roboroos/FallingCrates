@@ -58,7 +58,23 @@ int main(int argc, char **args) {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Q) {
           window.close();
-        }
+        } else if (event.key.code == sf::Keyboard::Num1)
+          grabber.queueGoTo(0);
+        else if (event.key.code == sf::Keyboard::Num2)
+          grabber.queueGoTo(1);
+        else if (event.key.code == sf::Keyboard::Num3)
+          grabber.queueGoTo(2);
+        else if (event.key.code == sf::Keyboard::Num4)
+          grabber.queueGoTo(3);
+        else if (event.key.code == sf::Keyboard::Num5)
+          grabber.queueGoTo(4);
+        else if (event.key.code == sf::Keyboard::Num6)
+          grabber.queueGoTo(5);
+        else if (event.key.code == sf::Keyboard::Num7)
+          grabber.queueGoTo(6);
+        else if (event.key.code == sf::Keyboard::Num8)
+          grabber.queueGoTo(7);
+
         // TEMPORARY CODE
         if (argc == 2 && strcmp(args[1], "hi") == 0) {
           if (event.key.code == sf::Keyboard::P) {
