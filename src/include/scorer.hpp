@@ -7,6 +7,7 @@
 #include "constants.hpp"
 #include "crates/crate.hpp"
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <utility>
@@ -30,8 +31,11 @@ private:
 
   std::vector<ScoreMarker> m_scoreMarkers;
 
+  std::fstream scoreFile;
+
 public:
   Scorer();
+  ~Scorer();
   void addScore(int score_add, sf::Vector2f pos);
   void addMergeScore(Crate *crate);
   void addExplodeScore(Crate *crate);
@@ -40,6 +44,9 @@ public:
   void pause();
 
   void reset();
+
+  void readHighScore();
+  void writeHighScore();
 };
 
 #endif

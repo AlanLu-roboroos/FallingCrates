@@ -128,6 +128,8 @@ public:
 
     static sf::Font SCORE_FONT;
 
+    static std::string SCORE_FILE_PATH;
+
     static bool loadResources(std::string path);
   };
 };

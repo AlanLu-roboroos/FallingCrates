@@ -112,6 +112,8 @@ sf::Texture GameConstants::Resources::ITEM2_TEXTURE;
 
 sf::Font GameConstants::Resources::SCORE_FONT;
 
+std::string GameConstants::Resources::SCORE_FILE_PATH;
+
 bool GameConstants::Resources::loadResources(std::string path) {
   path = path.substr(0, path.size() - 4);
   bool loaded = true;
@@ -160,6 +162,8 @@ bool GameConstants::Resources::loadResources(std::string path) {
   loaded &= ITEM2_TEXTURE.loadFromFile(path + "res/items/item2.png");
 
   loaded &= SCORE_FONT.loadFromFile(path + "res/font.otf");
+
+  SCORE_FILE_PATH = path + "scoreFile.txt";
 
   return loaded;
 }

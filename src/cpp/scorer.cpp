@@ -24,10 +24,35 @@ Scorer::Scorer() {
                         m_highScore.getLocalBounds().top +
                             m_highScore.getLocalBounds().height / 2.0f);
   m_score.setPosition(sf::Vector2f(300, 73));
-  m_highScore.setPosition(sf::Vector2f(1924 - 100, 73));
+  m_highScore.setPosition(sf::Vector2f(GameConstants::WINDOW_WIDTH - 100, 73));
+  readHighScore();
 }
 
+Scorer::~Scorer() { writeHighScore(); }
+
 void Scorer::reset() { m_scoreNum = 0; }
+
+void Scorer::readHighScore() {
+  if (!std::filesystem::exists(GameConstants::Resources::SCORE_FILE_PATH)) {
+    scoreFile.open(GameConstants::Resources::SCORE_FILE_PATH,
+                   std::ofstream::out | std::ofstream::trunc);
+    scoreFile << 0;
+    scoreFile.close();
+  } else {
+    scoreFile.open(GameConstants::Resources::SCORE_FILE_PATH,
+                   std::ifstream::in);
+    int temp;
+    scoreFile >> temp;
+    m_highScoreNum = temp;
+    scoreFile.close();
+  }
+}
+void Scorer::writeHighScore() {
+  scoreFile.open(GameConstants::Resources::SCORE_FILE_PATH,
+                 std::ofstream::out | std::ofstream::trunc);
+  scoreFile << m_highScoreNum;
+  scoreFile.close();
+}
 
 void Scorer::drawScore(sf::RenderWindow &window) {
   m_score.setString(std::to_string(m_scoreNum));
