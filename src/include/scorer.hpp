@@ -32,6 +32,16 @@ private:
   std::vector<ScoreMarker> m_scoreMarkers;
 
   std::fstream scoreFile;
+  std::vector<int> key;
+
+  int gcd(int a, int b);
+  void extendedGCD(int a, int b, int &x, int &y);
+  int modInverse(int a, int m);
+  int mod(int a, int b);
+  int c2i(char c);
+  char i2c(int i);
+  std::string encrypt(std::string raw, std::vector<int> key);
+  std::string decrypt(std::string raw, std::vector<int> key);
 
 public:
   Scorer();
