@@ -67,7 +67,7 @@ void Grabber::setPosition(sf::Vector2f pos) {
 
   m_grabVert.setScale(GameConstants::CRATE_SIZE.x /
                           m_grabVert.getLocalBounds().width,
-                      (pos.y - 98 - GameConstants::BORDER_HEIGHT) /
+                      (pos.y - 49 - GameConstants::BORDER_HEIGHT) /
                           m_grabVert.getLocalBounds().height);
   // _vertBoundingBox.setOrigin(sf::Vector2f(_vertBoundingBox.getGlobalBounds().width
   // / 2, _vertBoundingBox.getGlobalBounds().height / 2));
@@ -87,7 +87,7 @@ void Grabber::move(sf::Vector2f delta) {
 
   m_grabVert.setScale(
       GameConstants::CRATE_SIZE.x / m_grabVert.getLocalBounds().width,
-      (m_grabHori.getPosition().y - 98 - GameConstants::BORDER_HEIGHT) /
+      (m_grabHori.getPosition().y - 49 - GameConstants::BORDER_HEIGHT) /
           m_grabVert.getLocalBounds().height);
   // _vertBoundingBox.setOrigin(sf::Vector2f(_vertBoundingBox.getGlobalBounds().width
   // / 2, _vertBoundingBox.getGlobalBounds().height / 2));

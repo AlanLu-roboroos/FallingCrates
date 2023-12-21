@@ -7,10 +7,10 @@ Scorer::Scorer() {
   m_score.setFont(GameConstants::Resources::SCORE_FONT);
   m_highScore.setFont(GameConstants::Resources::SCORE_FONT);
 
-  m_score.setCharacterSize(80);
+  m_score.setCharacterSize(40);
   m_score.setFillColor(sf::Color(0, 0, 0));
 
-  m_highScore.setCharacterSize(80);
+  m_highScore.setCharacterSize(40);
   m_highScore.setFillColor(sf::Color(255, 0, 0));
 
   m_score.setString(std::to_string(m_scoreNum));
@@ -23,8 +23,8 @@ Scorer::Scorer() {
                             m_highScore.getLocalBounds().width,
                         m_highScore.getLocalBounds().top +
                             m_highScore.getLocalBounds().height / 2.0f);
-  m_score.setPosition(sf::Vector2f(300, 73));
-  m_highScore.setPosition(sf::Vector2f(GameConstants::WINDOW_WIDTH - 100, 73));
+  m_score.setPosition(sf::Vector2f(150, 36));
+  m_highScore.setPosition(sf::Vector2f(GameConstants::WINDOW_WIDTH - 50, 36));
 
   key.push_back(5);
   key.push_back(4);
@@ -96,7 +96,7 @@ void Scorer::addScore(int score_add, sf::Vector2f pos) {
   m_highScoreNum = std::max(m_highScoreNum, m_scoreNum);
   ScoreMarker temp;
   temp.text.setFont(GameConstants::Resources::SCORE_FONT);
-  temp.text.setCharacterSize(60);
+  temp.text.setCharacterSize(30);
   temp.text.setFillColor(sf::Color(255, 255, 255));
   temp.text.setString("+" + std::to_string(score_add));
   temp.text.setOrigin(temp.text.getLocalBounds().left +

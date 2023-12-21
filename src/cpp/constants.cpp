@@ -1,44 +1,44 @@
 #include "constants.hpp"
 
-int GameConstants::WINDOW_WIDTH = 1924;
-int GameConstants::WINDOW_HEIGHT = 1350;
+int GameConstants::WINDOW_WIDTH = 962;
+int GameConstants::WINDOW_HEIGHT = 675;
 
 int GameConstants::CRATES_PER_LINE = 6;
 int GameConstants::CRATE_COLUMNS = 8;
 
-sf::Vector2f GameConstants::CRATE_SIZE = sf::Vector2f(128, 128);
-sf::Vector2f GameConstants::SPAWN_SIZE = sf::Vector2f(176, 176);
-sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(176, 176);
-sf::Vector2f GameConstants::ITEMS_BACKGROUND_SIZE = sf::Vector2f(100, 100);
-sf::Vector2f GameConstants::ITEM_SIZE = sf::Vector2f(90, 90);
+sf::Vector2f GameConstants::CRATE_SIZE = sf::Vector2f(64, 64);
+sf::Vector2f GameConstants::SPAWN_SIZE = sf::Vector2f(88, 88);
+sf::Vector2f GameConstants::PLATFORM_SIZE = sf::Vector2f(88, 88);
+sf::Vector2f GameConstants::ITEMS_BACKGROUND_SIZE = sf::Vector2f(50, 50);
+sf::Vector2f GameConstants::ITEM_SIZE = sf::Vector2f(45, 45);
 
-sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(962, 300);
-float GameConstants::GRABBER_HORIZONTAL_SPEED = 8;
-float GameConstants::GRABBER_VERTICAL_SPEED = 8;
+sf::Vector2f GameConstants::GRABBER_START_POS = sf::Vector2f(481, 150);
+float GameConstants::GRABBER_HORIZONTAL_SPEED = 5;
+float GameConstants::GRABBER_VERTICAL_SPEED = 5;
 
 float GameConstants::CRATE_GROWTH_TIME = 150;
 float GameConstants::CRATE_FADE_TIME = 150;
-float GameConstants::CRATE_FALLING_ACCELERATION = 0.0008;
+float GameConstants::CRATE_FALLING_ACCELERATION = 0.0004;
 
 float GameConstants::INFECT_TIME = 2000;
 
 float GameConstants::BOMB_FLASHING_TIME = 200;
 float GameConstants::BOMB_EXPLODE_TIME = 8000;
 
-int GameConstants::BORDER_HEIGHT = 146;
-int GameConstants::BORDER_WIDTH = 10;
+int GameConstants::BORDER_HEIGHT = 73;
+int GameConstants::BORDER_WIDTH = 5;
 
 sf::Color GameConstants::BACKGROUND_COLOR = sf::Color(180, 180, 180);
 sf::Color GameConstants::BORDER_COLOR = sf::Color(50, 50, 50);
 sf::Color GameConstants::HEADER_COLOR = sf::Color(120, 120, 120);
 sf::Color GameConstants::ITEM_BACKGROUND_COLOR = sf::Color(80, 80, 80);
 
-int GameConstants::PLATFORM_HEIGHT = 1262;
-int GameConstants::SPAWN_HEIGHT = 436;
+int GameConstants::PLATFORM_HEIGHT = 631;
+int GameConstants::SPAWN_HEIGHT = 218;
 
-std::vector<int> GameConstants::COLUMN_X = {164,  392,  620,  848,
-                                            1076, 1304, 1532, 1760};
-std::vector<int> GameConstants::ROW_Y = {1262, 1134, 1006, 878, 750, 622};
+std::vector<int> GameConstants::COLUMN_X = {82,  196, 310, 424,
+                                            538, 652, 766, 880};
+std::vector<int> GameConstants::ROW_Y = {631, 567, 503, 439, 375, 311};
 
 std::vector<sf::Vector2f> GameConstants::PLATFORM_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[0], GameConstants::PLATFORM_HEIGHT),
@@ -61,7 +61,7 @@ std::vector<sf::Vector2f> GameConstants::SPAWN_POS = {
     sf::Vector2f(GameConstants::COLUMN_X[7], GameConstants::SPAWN_HEIGHT)};
 
 std::vector<sf::Vector2f> GameConstants::ITEMS_POS = {
-    sf::Vector2f(842, 80), sf::Vector2f(962, 80), sf::Vector2f(1082, 80)};
+    sf::Vector2f(421, 40), sf::Vector2f(481, 40), sf::Vector2f(541, 40)};
 
 std::map<GameConstants::CrateType, int> GameConstants::CRATE_MERGE_SCORE{
     {PURPLE_CRATE, 30},     {BLUE_CRATE, 90},        {GREEN_CRATE, 270},

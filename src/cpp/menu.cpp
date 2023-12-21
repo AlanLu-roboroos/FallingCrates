@@ -45,44 +45,44 @@ void Menu::Button::drawButton(sf::RenderWindow &window) {
 Menu::Menu() {
   m_state = MenuState::STARTING;
   startButtonList = {
-      Button("START", 70,
+      Button("START", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f - 35),
+             sf::Vector2f(200, 50), ButtonType::START),
+      Button("HELP", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 35),
+             sf::Vector2f(200, 50), ButtonType::HELP),
+      Button("QUIT", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 105),
+             sf::Vector2f(200, 50), ButtonType::QUIT)};
+  pauseButtonList = {
+      Button("RESUME", 35,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f - 70),
-             sf::Vector2f(400, 100), ButtonType::START),
-      Button("HELP", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 70),
-             sf::Vector2f(400, 100), ButtonType::HELP),
-      Button("QUIT", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 210),
-             sf::Vector2f(400, 100), ButtonType::QUIT)};
-  pauseButtonList = {
-      Button("RESUME", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f - 140),
-             sf::Vector2f(400, 100), ButtonType::RESUME),
-      Button("RESTART", 70,
+             sf::Vector2f(200, 50), ButtonType::RESUME),
+      Button("RESTART", 35,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f),
-             sf::Vector2f(400, 100), ButtonType::RESTART),
-      Button("HELP", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
-             sf::Vector2f(400, 100), ButtonType::HELP),
-      Button("QUIT", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f + 280),
-             sf::Vector2f(400, 100), ButtonType::QUIT)};
-  deathButtonList = {
-      Button("RESTART", 70,
-             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                          GameConstants::WINDOW_HEIGHT / 2.0f - 70),
-             sf::Vector2f(400, 100), ButtonType::RESTART),
-      Button("QUIT", 70,
+             sf::Vector2f(200, 50), ButtonType::RESTART),
+      Button("HELP", 35,
              sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
                           GameConstants::WINDOW_HEIGHT / 2.0f + 70),
-             sf::Vector2f(400, 100), ButtonType::QUIT)};
+             sf::Vector2f(200, 50), ButtonType::HELP),
+      Button("QUIT", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 140),
+             sf::Vector2f(200, 50), ButtonType::QUIT)};
+  deathButtonList = {
+      Button("RESTART", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f - 35),
+             sf::Vector2f(200, 50), ButtonType::RESTART),
+      Button("QUIT", 35,
+             sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
+                          GameConstants::WINDOW_HEIGHT / 2.0f + 35),
+             sf::Vector2f(200, 50), ButtonType::QUIT)};
 }
 
 Menu::MenuState Menu::getState() { return m_state; }
@@ -151,14 +151,14 @@ void Menu::displayMenu(sf::RenderWindow &window) {
   pauseButton.drawButton(window);
   switch (m_state) {
   case MenuState::STARTING:
-    backgroundRect.setSize(sf::Vector2f(600, 500));
+    backgroundRect.setSize(sf::Vector2f(300, 250));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
                                  backgroundRect.getLocalBounds().height / 2.0f);
     backgroundRect.setPosition(
         sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                     GameConstants::WINDOW_HEIGHT / 2.0f + 70));
+                     GameConstants::WINDOW_HEIGHT / 2.0f + 35));
     backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
     window.draw(backgroundRect);
     for (auto button : startButtonList) {
@@ -166,7 +166,7 @@ void Menu::displayMenu(sf::RenderWindow &window) {
     }
     break;
   case MenuState::DEATHSCREEN:
-    backgroundRect.setSize(sf::Vector2f(600, 400));
+    backgroundRect.setSize(sf::Vector2f(300, 200));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
@@ -183,14 +183,14 @@ void Menu::displayMenu(sf::RenderWindow &window) {
   case MenuState::HELPSCREEN:
     break;
   case MenuState::PAUSING:
-    backgroundRect.setSize(sf::Vector2f(600, 700));
+    backgroundRect.setSize(sf::Vector2f(300, 175));
     backgroundRect.setOrigin(backgroundRect.getLocalBounds().left +
                                  backgroundRect.getLocalBounds().width / 2.0f,
                              backgroundRect.getLocalBounds().top +
                                  backgroundRect.getLocalBounds().height / 2.0f);
     backgroundRect.setPosition(
         sf::Vector2f(GameConstants::WINDOW_WIDTH / 2.0f,
-                     GameConstants::WINDOW_HEIGHT / 2.0f + 70));
+                     GameConstants::WINDOW_HEIGHT / 2.0f + 35));
     backgroundRect.setFillColor(sf::Color(50, 50, 50, 150));
     window.draw(backgroundRect);
     for (auto button : pauseButtonList) {

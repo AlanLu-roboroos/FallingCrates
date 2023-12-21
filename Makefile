@@ -1,5 +1,5 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
-CXX := /usr/bin/g++
+CXX := /usr/bin/clang++
 
 TARGET_EXEC := main
 
@@ -31,6 +31,22 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP -std=c++17
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/res
 	echo "Building"
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS) ./lib/*
+	cp -r macos/Frameworks $(BUILD_DIR)/Frameworks
+
+	install_name_tool -change @rpath/libsfml-audio.2.6.dylib @executable_path/../lib/libsfml-audio.2.6.1.dylib $@
+	install_name_tool -change @rpath/libsfml-graphics.2.6.dylib @executable_path/../lib/libsfml-graphics.2.6.1.dylib $@
+	install_name_tool -change @rpath/libsfml-network.2.6.dylib @executable_path/../lib/libsfml-network.2.6.1.dylib $@
+	install_name_tool -change @rpath/libsfml-system.2.6.dylib @executable_path/../lib/libsfml-system.2.6.1.dylib $@
+	install_name_tool -change @rpath/libsfml-window.2.6.dylib @executable_path/../lib/libsfml-window.2.6.1.dylib $@
+
+	# install_name_tool -change @rpath/../Frameworks/OpenAL.framework/Versions/A/OpenAL @executable_path/../Frameworks/OpenAL.framework/Versions/A/OpenAL $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+	# install_name_tool -change @rpath/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc @executable_path/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+	# install_name_tool -change @rpath/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile @executable_path/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+	# install_name_tool -change @rpath/../Frameworks/vorbis.framework/Versions/A/vorbis @executable_path/../Frameworks/vorbis.framework/Versions/A/vorbis $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+	# install_name_tool -change @rpath/../Frameworks/ogg.framework/Versions/A/ogg @executable_path/../Frameworks/ogg.framework/Versions/A/ogg $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+	# install_name_tool -change @rpath/../Frameworks/FLAC.framework/Versions/A/FLAC @executable_path/../Frameworks/FLAC.framework/Versions/A/FLAC $(BUILD_DIR)/Frameworks/libsfml-audio.2.6.1.dylib;
+
+	# install_name_tool -change @rpath/../Frameworks/freetype.framework/Versions/A/freetype @executable_path/../Frameworks/freetype.framework/Versions/A/freetype $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-graphics.2.6.1.dylib
 
 # Build step for C source
 $(BUILD_DIR)/%.c.o: %.c
@@ -71,20 +87,20 @@ release: $(BUILD_DIR)/$(TARGET_EXEC) rclean
 	cp $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
 	cp macos/Info.plist $(BUILD_DIR)/FallingCrates.app/contents/Info.plist
 
-	install_name_tool -change @rpath/libsfml-audio.2.5.dylib @executable_path/../Frameworks/libsfml-audio.2.5.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
-	install_name_tool -change @rpath/libsfml-graphics.2.5.dylib @executable_path/../Frameworks/libsfml-graphics.2.5.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
-	install_name_tool -change @rpath/libsfml-network.2.5.dylib @executable_path/../Frameworks/libsfml-network.2.5.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
-	install_name_tool -change @rpath/libsfml-system.2.5.dylib @executable_path/../Frameworks/libsfml-system.2.5.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
-	install_name_tool -change @rpath/libsfml-window.2.5.dylib @executable_path/../Frameworks/libsfml-window.2.5.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
+	install_name_tool -change @executable_path/../lib/libsfml-audio.2.6.1.dylib @executable_path/../Frameworks/libsfml-audio.2.6.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
+	install_name_tool -change @executable_path/../lib/libsfml-graphics.2.6.1.dylib @executable_path/../Frameworks/libsfml-graphics.2.6.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
+	install_name_tool -change @executable_path/../lib/libsfml-network.2.6.1.dylib @executable_path/../Frameworks/libsfml-network.2.6.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
+	install_name_tool -change @executable_path/../lib/libsfml-system.2.6.1.dylib @executable_path/../Frameworks/libsfml-system.2.6.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
+	install_name_tool -change @executable_path/../lib/libsfml-window.2.6.1.dylib @executable_path/../Frameworks/libsfml-window.2.6.1.dylib $(BUILD_DIR)/FallingCrates.app/contents/MacOS/main
 
-	install_name_tool -change @rpath/../Frameworks/OpenAL.framework/Versions/A/OpenAL @executable_path/../Frameworks/OpenAL.framework/Versions/A/OpenAL $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
-	install_name_tool -change @rpath/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc @executable_path/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
-	install_name_tool -change @rpath/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile @executable_path/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
-	install_name_tool -change @rpath/../Frameworks/vorbis.framework/Versions/A/vorbis @executable_path/../Frameworks/vorbis.framework/Versions/A/vorbis $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
-	install_name_tool -change @rpath/../Frameworks/ogg.framework/Versions/A/ogg @executable_path/../Frameworks/ogg.framework/Versions/A/ogg $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
-	install_name_tool -change @rpath/../Frameworks/FLAC.framework/Versions/A/FLAC @executable_path/../Frameworks/FLAC.framework/Versions/A/FLAC $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.5.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/OpenAL.framework/Versions/A/OpenAL @executable_path/../Frameworks/OpenAL.framework/Versions/A/OpenAL $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc @executable_path/../Frameworks/vorbisenc.framework/Versions/A/vorbisenc $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile @executable_path/../Frameworks/vorbisfile.framework/Versions/A/vorbisfile $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/vorbis.framework/Versions/A/vorbis @executable_path/../Frameworks/vorbis.framework/Versions/A/vorbis $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/ogg.framework/Versions/A/ogg @executable_path/../Frameworks/ogg.framework/Versions/A/ogg $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
+	install_name_tool -change @rpath/../Frameworks/FLAC.framework/Versions/A/FLAC @executable_path/../Frameworks/FLAC.framework/Versions/A/FLAC $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-audio.2.6.1.dylib;
 
-	install_name_tool -change @rpath/../Frameworks/freetype.framework/Versions/A/freetype @executable_path/../Frameworks/freetype.framework/Versions/A/freetype $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-graphics.2.5.1.dylib
+	install_name_tool -change @rpath/../Frameworks/freetype.framework/Versions/A/freetype @executable_path/../Frameworks/freetype.framework/Versions/A/freetype $(BUILD_DIR)/FallingCrates.app/contents/Frameworks/libsfml-graphics.2.6.1.dylib
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those
